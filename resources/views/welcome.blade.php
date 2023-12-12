@@ -71,7 +71,29 @@
                 padding-left: 200px;
                 padding-right: 160px;
             }
+            button {
+        background-color: transparent;
+        border: 2px solid #fff; /* White border */
+        border-radius: 5px; /* Rounded corners */
+        padding: 10px 20px; /* Adjust padding as needed */
+        transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+        margin-left: 900px;
+    }
 
+    button a {
+        text-decoration: none;
+        color: #fff; /* White text */
+        display: block;
+    }
+
+    /* Hover styles */
+    button:hover {
+        background-color: rgba(255, 255, 255, 0.888); /* White background with 20% opacity */
+    }
+
+    button:hover a {
+        color: #000; /* Black text */
+    }
         </style>
     </head>
     <body>
@@ -98,12 +120,16 @@
 
                
             </nav> 
-            <div style="height: 200px"></div>
+            <div style="height: 250px"></div>
             
             <div class="heading"><h3>Welcome to Gym Manager X,</h3></div>
             <div class="description">Your professional gym management solution. 
                 Where precision meets performance in gym management. Our software effortlessly handles member management, fitness equipment tracking, and payment monitoring, ensuring a seamless and professional experience. 
                 Simplify your gym operations with Gym Manager X, where efficiency and excellence unite.</div>
+
+                <div style="height: 50px"></div>
+
+                <button><a href="{{ route('login') }}">Login</a></button>   
             
         </div>      
     </body>
