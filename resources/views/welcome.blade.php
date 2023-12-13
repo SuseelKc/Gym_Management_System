@@ -77,7 +77,8 @@
         border-radius: 5px; /* Rounded corners */
         padding: 10px 20px; /* Adjust padding as needed */
         transition: background-color 0.3s, color 0.3s; /* Smooth transition */
-        margin-left: 900px;
+        margin: 0 auto; /* Center the button horizontally */
+        display: block;
     }
 
     button a {
@@ -129,7 +130,7 @@
 
                 <div style="height: 50px"></div>
 
-                <button><a href="{{ route('login') }}">Login</a></button>   
+                <button href="{{ route('login') }}"><a href="{{ route('login') }}">Member Login</a></button>   
             
         </div>      
     </body>
