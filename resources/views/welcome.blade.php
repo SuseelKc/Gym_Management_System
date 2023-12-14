@@ -71,17 +71,17 @@
                 padding-left: 200px;
                 padding-right: 160px;
             }
-            button {
-        background-color: transparent;
-        border: 2px solid #fff; /* White border */
-        border-radius: 5px; /* Rounded corners */
-        padding: 10px 20px; /* Adjust padding as needed */
-        transition: background-color 0.3s, color 0.3s; /* Smooth transition */
-        margin: 0 auto; /* Center the button horizontally */
-        display: block;
-    }
+        button {
+            background-color: transparent;
+            border: 2px solid #fff; /* White border */
+            border-radius: 5px; /* Rounded corners */
+            padding: 10px 20px; /* Adjust padding as needed */
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+            margin: 0 auto; /* Center the button horizontally */
+            display: block;
+        }
 
-    button a {
+    a button  {
         text-decoration: none;
         color: #fff; /* White text */
         display: block;
@@ -92,7 +92,7 @@
         background-color: rgba(255, 255, 255, 0.888); /* White background with 20% opacity */
     }
 
-    button:hover a {
+    a button:hover  {
         color: #000; /* Black text */
     }
         </style>
@@ -130,7 +130,7 @@
 
                 <div style="height: 50px"></div>
 
-                <button href="{{ route('login') }}"><a href="{{ route('login') }}">Member Login</a></button>   
+                <a href="{{ route('login') }}"><button href="{{ route('login') }}">Member Login</button> </a> 
             
         </div>      
     </body>

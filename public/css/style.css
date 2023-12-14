@@ -1,0 +1,29 @@
+body * {
+    font-family: "Poppins", 'Helvetica Neue', Helvetica, Arial, 'sans-serif';
+    /* background-image: linear-gradient(
+        to right top,
+        #759eb8,
+        #0086c1,
+        #0098cd,
+        #00abd9,
+        #1fbee3
+    ); */
+    /* height: 100vh; */
+}
+.status {
+    background-color: #ceefd1;
+    color: green !important;
+
+}
+.date{
+    border: 2px solid #007bff69;
+    border-radius: 4px;
+    padding: 4px;
+
+}
+.date:focus{
+    outline: none;
+}
+.date.date{
+    color: #007bff;
+}
