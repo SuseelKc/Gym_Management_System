@@ -27,7 +27,18 @@
                             Dashboard
                         </p>
                     </a>
-                </li>                  
+                </li>  
+                <li class="nav-item m-1">
+                    <a href="
+                    {{-- {{ route('dashboard') }} --}}
+                    "
+                        class="nav-link {{ request()->is('member') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-users  m-1 p-1"></i>
+                        <p>
+                            Members
+                        </p>
+                    </a>
+                </li>                 
             
             </ul>
         </nav>
