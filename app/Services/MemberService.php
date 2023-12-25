@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Exception;
 use App\Models\Member;
+use Illuminate\Support\Facades\DB;
 use App\Repositories\MemberRepository;
 
 class MemberService

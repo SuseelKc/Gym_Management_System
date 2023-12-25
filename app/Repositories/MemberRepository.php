@@ -13,5 +13,8 @@ class MemberRepository
     {
         return Member::find($id);
     }
-    
+    public function getWhere()
+    {
+        return Member::where($query);
+    }
 }

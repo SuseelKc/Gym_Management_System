@@ -32,7 +32,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     require __DIR__ . '/web/member.php';
-
+    foreach (glob(__DIR__ . '/web/*.php') as $filename) {
+        require $filename;
+    }
 
 
 });

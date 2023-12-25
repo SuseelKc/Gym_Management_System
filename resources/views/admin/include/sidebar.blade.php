@@ -31,9 +31,7 @@
 
                 {{--members  --}}
                 <li class="nav-item m-1">
-                    <a href="
-                    {{-- {{ route('dashboard') }} --}}
-                    "
+                    <a href="{{ route('member.index') }} "
                         class="nav-link {{ request()->is('member') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-users  m-1 p-1"></i>
                         <p>
@@ -47,7 +45,7 @@
                     <a href="
                     {{-- {{ route('dashboard') }} --}}
                     "
-                        class="nav-link {{ request()->is('member') ? 'active' : '' }}">
+                        class="nav-link {{ request()->is('equipments') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-dumbbell  m-1 p-1"></i>
                         <p>
                             Equipments
