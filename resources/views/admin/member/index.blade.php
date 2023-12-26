@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <ol class="breadcrumb float-right">
-                            <li class="breadcrumb-item active">Employee</li>
+                            <li class="breadcrumb-item active">Gym Clients</li>
                         </ol>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                 <div class="col-12">
                     <div class="card">
                             <div class="">                             
-                                <a href="#"
+                                <a href="{{route('member.create')}}"
                                     class="btn btn-primary px-4 m-2 float-right">Add</a>  
                             </div>
                             <div class="card-body table-responsive p-2">
@@ -29,7 +29,8 @@
                                     <thead>
                                         <tr>
                                             <th>S.No</th>
-                                            <th>Name</th>
+                                            <th>Photo</th>
+                                            <th>Name</th>                                         
                                             <th>Gym</th>
                                             <th>Email</th>
                                             <th>DOB</th>
@@ -37,6 +38,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($member as $member)
                                         <tr>
                                             <td></td>
                                             <td></td>
@@ -44,7 +46,9 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
+                                            <td></td>
                                         </tr>
+                                        @endforeach    
                                     </tbody>
                                 </table>
                             </div>

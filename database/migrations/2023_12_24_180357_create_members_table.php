@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('members', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('photo')->default('defaultimage.jpg')->nullable();
             $table->string('gym_name');
             $table->string('serial_no');
             $table->string('dob')->nullable();
