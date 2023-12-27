@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use Exception;
 use App\Models\User;
+use App\Models\Member;
 use Illuminate\Http\Request;
 use App\Services\MemberService;
 use App\Http\Controllers\Controller;
@@ -37,6 +38,18 @@ class MemberController extends Controller
             $gym_id=auth()->id();
             $gym=User::FindOrFail($gym_id);
             return view('admin.member.create',compact('gym'));
+           
+        }
+        catch(Exception $e){
+
+        }
+    }
+
+    public function store(Request $request){
+        try{
+           $member= new Member();
+           $addMember= $this->memberService->add($member,$request);
+           return redirect()->intended(route('employee.create'));
            
         }
         catch(Exception $e){

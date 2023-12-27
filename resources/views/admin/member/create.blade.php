@@ -35,7 +35,7 @@
                                 <h2 class="card-title font-weight-bold">Add Members</h2>
                             </div>
                             <form method="POST" action=" 
-                            
+                            {{route('member.store')}}
                             " enctype="multipart/form-data">
                                 @csrf
                                 
@@ -71,18 +71,62 @@
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="gym_name">Gym Name</label>
-                                                <input type="text" class="form-control" id="gym_name"
-                                                    placeholder="Enter Name Here" name="gym_name" value="{{ $gym->name }}">
-                                                @if ($errors->has('gym_name'))
+                                                <label for="dob">Date Of Birth</label>
+                                                <input type="date" class="form-control" id="dob"
+                                                     name="dob" value="">
+                                                @if ($errors->has('dob'))
                                                     <x-validation-errors>
-                                                        {{ $errors->first('gym_name') }}
+                                                        {{ $errors->first('dob') }}
                                                     </x-validation-errors>
                                                 @endif
                                             </div>
                                         </div>
 
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="address">Address</label>
+                                                <input type="text" class="form-control" id="address"
+                                                    placeholder="Enter Your Address" name="address" value="">
+                                                @if ($errors->has('address'))
+                                                    <x-validation-errors>
+                                                        {{ $errors->first('address') }}
+                                                    </x-validation-errors>
+                                                @endif
+                                            </div>
+                                        </div>
 
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="contactno">Contact No.</label>
+                                                <input type="text" class="form-control" id="contactno"
+                                                    placeholder="Enter Your Address" name="contactno" value="">
+                                                @if ($errors->has('contactno'))
+                                                    <x-validation-errors>
+                                                        {{ $errors->first('contactno') }}
+                                                    </x-validation-errors>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="email">Email</label>
+                                                <input type="text" class="form-control" id="email"
+                                                    placeholder="Enter Your Email" name="email" value="">
+                                                @if ($errors->has('contactno'))
+                                                    <x-validation-errors>
+                                                        {{ $errors->first('contactno') }}
+                                                    </x-validation-errors>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="photo">Upload Image</label>
+                                                <input type="file" class="form-control" id="photo" name="photo">
+                                            </div>
+                                        </div>
 
                                     </div>
                                     <div class="card-footer">
