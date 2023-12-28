@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: rgb(29, 28, 28);">
+<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: rgb(28, 28, 28);">
     <!-- Sidebar -->
     <div class="sidebar p-1" >
         <!-- Sidebar user panel (optional) -->
@@ -32,7 +32,7 @@
                 {{--members  --}}
                 <li class="nav-item m-1">
                     <a href="{{ route('member.index') }} "
-                        class="nav-link {{ request()->is('members') ? 'active' : '' }}">
+                        class="nav-link {{ request()->is('members*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-users  m-1 p-1"></i>
                         <p>
                             Members
@@ -45,7 +45,7 @@
                     <a href="
                     {{-- {{ route('dashboard') }} --}}
                     "
-                        class="nav-link {{ request()->is('equipments') ? 'active' : '' }}">
+                        class="nav-link {{ request()->is('equipments*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-dumbbell  m-1 p-1"></i>
                         <p>
                             Equipments

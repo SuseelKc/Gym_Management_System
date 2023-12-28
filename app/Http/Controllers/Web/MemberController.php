@@ -48,9 +48,33 @@ class MemberController extends Controller
     public function store(Request $request){
         try{
            $member= new Member();
-           $addMember= $this->memberService->add($member,$request);
-           return redirect()->intended(route('employee.create'));
+          
+           $member= $this->memberService->add($member,$request);
+     
+           return redirect()->intended(route('member.index'));
            
+        }
+        catch(Exception $e){
+
+        }
+    }
+
+    public function edit($id){
+        try{            
+            $member=Member::FindOrFail($id);
+            // dd($member);
+            return view('admin.member.edit',compact('member'));          
+        }
+        catch(Exception $e){
+
+        }
+    }
+
+    public function update(Request $request,$id){
+        try{            
+            $member=Member::FindOrFail($id);
+            $member=$this->memberService->update($member,$id,$request);
+            return redirect()->intended(route('member.index'));    
         }
         catch(Exception $e){
 

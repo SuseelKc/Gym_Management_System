@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Member extends Model
 {
@@ -12,13 +13,21 @@ class Member extends Model
 
     protected $fillable=[
     'name',
-    'gym_name',
+    'photo',
+    'user_id',
     'serial_no',
     'dob',
     'address',
     'contact_no',
     'email',
     'package'
+    
     ];
     
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
 }

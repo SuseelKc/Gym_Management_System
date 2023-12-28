@@ -3,10 +3,12 @@
 namespace App\Services;
 
 use Exception;
+use App\Models\User;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\File;
 use App\Repositories\MemberRepository;
 
 class MemberService
@@ -29,46 +31,155 @@ class MemberService
         }
     }
 
-   public function add(Member $member,Request $request){
-        try{
-            DB::beginTransaction();
+//    public function add(Member $member,Request $request){
+//         try{
+//             DB::beginTransaction();
             
-            // $member = new Member();
-            $gym_id=auth()->id();
+//             // $member = new Member();
+//             $user = auth()->user();
             
-
-            $member->gym_name=$request->gym_name;
-            $member->name=$request->name;
-            $member->dob=$request->dob;
-          
-            $member->address=$request->address;
-            $member->contact_no=$request->contact_no;
-            $member->email=$request->email;
-            // $member->package=$request->package;
+//             $member->user_id=$user->id;
+//             $member->name=$request->name;
+//             $member->dob=$request->dob;
+//             $member->serial_no="abc";
+//             $member->address=$request->address;
+//             $member->contact_no=$request->contact_no;
+//             $member->email=$request->email;
+            
            
-            if ($request->hasFile('photo')) {
-                $gallery = $request->file('photo');
-                $extension = $gallery->getClientOriginalExtension();
-                $filename = $gallery->getClientOriginalName() . '.' . $extension;
-                $gallery->move('./images/members', $filename);
-                $member->gallery = $filename;
-            }
-            // $user=$this->userRepository->getAll();
-            // dd("here");
-            // dd($member->toArray());
-            $member->save();
+//             if ($request->hasFile('photo')) {
+//                 $gallery = $request->file('photo');
+//                 $extension = $gallery->getClientOriginalExtension();
+//                 $filename = $gallery->getClientOriginalName() . '.' . $extension;
+//                 $gallery->move('./images/members', $filename);
+//                 $member->photo = $filename;
+//                 // dd($member->photo);
+
+//             }
             
-            DB::commit();
-            return $member;
+//             $member->save();
+           
+            
+//             DB::commit();
+//             return $member;
+//         }
+//         catch (Exception $e) {
+//             DB::rollBack();
+            
+//             // Log the error message
+//             \Log::info('Error during member save: ' . $e->getMessage());
+        
+//             // Display a generic error message to the user
+//             return redirect()->back()->with('error', 'An error occurred while saving the member information.');
+//         }
+        
+        
+//    }
+
+public function add(Member $member, Request $request)
+{
+    try {
+        DB::beginTransaction();
+
+        $user = auth()->user();
+        $gym=User::FindOrFail($user->id);
+        $gymName = (string) $gym->name;
+
+        // 
+        $count=Member::where('user_id',$user->id)->count();
+        $words = explode(' ', $gymName);
+        $initials = '';
+        for ($i = 0; $i < min(3, count($words)); $i++) {
+            $initials .= strtoupper($words[$i][0]);
         }
-        catch(Execption $e){
-            DB::rollBack();
-            throw new Exception(Message::Failed);
+        $serialNumber = $initials . sprintf('%03d', $count + 1);      
+        // 
+        // dd($serialNumber);
+        $member->serial_no =  $serialNumber;
+        $member->user_id = $user->id;
+        $member->name = $request->name;
+        $member->dob = $request->dob;      
+        $member->address = $request->address;
+        $member->contact_no = $request->contact_no;
+        $member->email = $request->email;
+
+        if ($request->hasFile('photo')) {
+            $gallery = $request->file('photo');
+            $extension = $gallery->getClientOriginalExtension();
+            $filename = $gallery->getClientOriginalName() . '.' . $extension;
+            $gallery->move('./images/members/', $filename);
+            $member->photo = $filename;
         }
-   }
+
+        $member->save();
+
+        DB::commit();
+        return $member;
+        
+    } catch (Exception $e) {
+        DB::rollBack();
+        // Log the error message
+        \Log::info('Error during member save: ' . $e->getMessage());
+        // Display a generic error message to the user
+        return redirect()->back()->with('error', 'An error occurred while saving the member information.');
+    }
+}
+
+public function update(Member $member, $id, Request $request)
+{
+    try {
+        DB::beginTransaction();
+
+        $user = auth()->user();
+        // $gym=User::FindOrFail($user->id);
+        // $gymName = (string) $gym->name;
+
+        // 
+        // $count=Member::where('user_id',$user->id)->count();
+        // $words = explode(' ', $gymName);
+        // $initials = '';
+        // for ($i = 0; $i < min(3, count($words)); $i++) {
+        //     $initials .= strtoupper($words[$i][0]);
+        // }
+        // $serialNumber = $initials . sprintf('%03d', $count + 1);      
+        // 
+        // dd($serialNumber);
+        // $member->serial_no =  $serialNumber;
+        $member->user_id = $user->id;
+        $member->name = $request->name;
+        $member->dob = $request->dob;      
+        $member->address = $request->address;
+        $member->contact_no = $request->contact_no;
+        $member->email = $request->email;
+
+        if ($request->hasFile('photo')) {
+
+            $path='images/members/'.$member->photo;
+            if(File::exists($path)){
+                   File::delete($path);
+            }
 
 
+            $gallery = $request->file('photo');
+            $extension = $gallery->getClientOriginalExtension();
+            $filename = $gallery->getClientOriginalName() . '.' . $extension;
+            $gallery->move('./images/members/', $filename);
+            $member->photo = $filename;
+        }
 
+        $member->update();
+
+        DB::commit();
+        return $member;
+        
+    } catch (Exception $e) {
+        DB::rollBack();
+        // Log the error message
+        \Log::info('Error during member save: ' . $e->getMessage());
+        // Display a generic error message to the user
+        return redirect()->back()->with('error', 'An error occurred while saving the member information.');
+    }
+}
 
     
     

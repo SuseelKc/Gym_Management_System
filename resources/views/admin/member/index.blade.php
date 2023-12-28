@@ -29,24 +29,43 @@
                                     <thead>
                                         <tr>
                                             <th>S.No</th>
+                                            <th>ID No.</th>
                                             <th>Photo</th>
                                             <th>Name</th>                                         
                                             <th>Gym</th>
                                             <th>Email</th>
                                             <th>DOB</th>
                                             <th>Contact</th>
+                                            <th>Package</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($member as $member)
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>
+                                                    @if ($member->photo == null)
+                                                        <img src = "/images/defaultimage.jpg" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
+                                                    @else
+                                                        <img src = "/images/members/{{$member->photo}}" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
+                                                    @endif
+                                            </td>
+                                            <td>{{$member->name}}</td>
+                                            <td>{{$member->user->name}}</td>
+                                            <td>{{$member->email}}</td>
+                                            <td>{{$member->dob}}</td>
+                                            <td>{{$member->contact_no}}</td>
+                                            <td>{{$member->package}}</td>
+                                            <td>
+                                            <a href="{{route('member.edit', $member->id)}}" title="Edit Member">
+                                                        <i class="fas fa-edit fa-lg"></i></a>
+                                            <a href="#" title="Delete Member">
+                                            <i class="fas fa-times-circle fa-lg" style="color: red;"></i>
+</a>            
+                                            </td>
+
                                         </tr>
                                         @endforeach    
                                     </tbody>
