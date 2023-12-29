@@ -80,4 +80,15 @@ class MemberController extends Controller
 
         }
     }
+
+    public function delete($id){
+        try{            
+            $member=Member::FindOrFail($id);
+            $member=$this->memberService->delete($id);
+            return redirect()->intended(route('member.index'));    
+        }
+        catch(Exception $e){
+
+        }
+    }
 }

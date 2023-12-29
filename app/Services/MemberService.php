@@ -23,7 +23,9 @@ class MemberService
     {
         try {
             DB::beginTransaction();
-            return $this->memberRepository->getAll();
+            $user = auth()->user();
+            $user_id=$user->id;
+            return $this->memberRepository->getAll()->where('user_id',$user_id);
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
@@ -31,50 +33,7 @@ class MemberService
         }
     }
 
-//    public function add(Member $member,Request $request){
-//         try{
-//             DB::beginTransaction();
-            
-//             // $member = new Member();
-//             $user = auth()->user();
-            
-//             $member->user_id=$user->id;
-//             $member->name=$request->name;
-//             $member->dob=$request->dob;
-//             $member->serial_no="abc";
-//             $member->address=$request->address;
-//             $member->contact_no=$request->contact_no;
-//             $member->email=$request->email;
-            
-           
-//             if ($request->hasFile('photo')) {
-//                 $gallery = $request->file('photo');
-//                 $extension = $gallery->getClientOriginalExtension();
-//                 $filename = $gallery->getClientOriginalName() . '.' . $extension;
-//                 $gallery->move('./images/members', $filename);
-//                 $member->photo = $filename;
-//                 // dd($member->photo);
 
-//             }
-            
-//             $member->save();
-           
-            
-//             DB::commit();
-//             return $member;
-//         }
-//         catch (Exception $e) {
-//             DB::rollBack();
-            
-//             // Log the error message
-//             \Log::info('Error during member save: ' . $e->getMessage());
-        
-//             // Display a generic error message to the user
-//             return redirect()->back()->with('error', 'An error occurred while saving the member information.');
-//         }
-        
-        
-//    }
 
 public function add(Member $member, Request $request)
 {
@@ -181,6 +140,25 @@ public function update(Member $member, $id, Request $request)
     }
 }
 
-    
+    public function delete($id){
+        try{
+            DB::beginTransaction();         
+            $member=$this->memberRepository->getById($id);
+            if($member->photo){
+                $path='images/members/'.$member->photo;
+                if(File::exists($path)){
+                       File::delete($path);
+                }
+            }
+            
+            $member->delete();
+            DB::commit();
+            return $member;
+
+        }
+        catch(Exception $e){
+            DB::rollBack();
+        }
+    }
     
 }
