@@ -46,12 +46,29 @@ public function add(Member $member, Request $request)
 
         // 
         $count=Member::where('user_id',$user->id)->count();
-        $words = explode(' ', $gymName);
-        $initials = '';
-        for ($i = 0; $i < min(3, count($words)); $i++) {
-            $initials .= strtoupper($words[$i][0]);
-        }
-        $serialNumber = $initials . sprintf('%03d', $count + 1);      
+        
+        if($count>1){
+                $words = explode(' ', $gymName);
+                $initials = ''; 
+                for ($i = 0; $i < min(3, count($words)); $i++) {
+                    $initials .= strtoupper($words[$i][0]);
+                }
+                $lastRecordMember=Member::where('user_id',$user->id)->latest()->first();
+                $last_serialno=$lastRecordMember->serial_no;
+                // aplabetic and numeric seperation
+                $alphabeticalPart = preg_replace('/[^A-Za-z]/', '', $last_serialno);
+                $numericPart = preg_replace('/[^0-9]/', '', $last_serialno);
+
+                $serialNumber = $initials . sprintf('%03d', $numericPart + 1);
+            }
+        else{    
+            $words = explode(' ', $gymName);
+            $initials = '';
+            for ($i = 0; $i < min(3, count($words)); $i++) {
+                $initials .= strtoupper($words[$i][0]);
+            }
+            $serialNumber = $initials . sprintf('%03d', $count + 1);    
+        }  
         // 
         // dd($serialNumber);
         $member->serial_no =  $serialNumber;
