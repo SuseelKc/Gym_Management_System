@@ -58,7 +58,7 @@ public function add(Member $member, Request $request)
                 // aplabetic and numeric seperation
                 $alphabeticalPart = preg_replace('/[^A-Za-z]/', '', $last_serialno);
                 $numericPart = preg_replace('/[^0-9]/', '', $last_serialno);
-
+                // 
                 $serialNumber = $initials . sprintf('%03d', $numericPart + 1);
             }
         else{    
