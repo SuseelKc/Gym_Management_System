@@ -65,6 +65,21 @@
                         </p>
                     </a>
                 </li> 
+
+
+                <li class="nav-item m-1">
+                    <a href="
+                    {{-- {{ route('dashboard') }} --}}
+                    "
+                        class="nav-link {{ request()->is('shop*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-shopping-bag  m-1 p-1"></i>
+                        <p>
+                            Shop
+                        </p>
+                    </a>
+                </li> 
+
+
             
             </ul>
         </nav>
