@@ -80,6 +80,18 @@
                 </li> 
 
 
+                <li class="nav-item m-1">
+                    <a href="
+                    {{-- {{ route('dashboard') }} --}}
+                    "
+                        class="nav-link {{ request()->is('shop*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-cash-register  m-1 p-1"></i>
+                        <p>
+                            Payments
+                        </p>
+                    </a>
+                </li> 
+
             
             </ul>
         </nav>
