@@ -43,7 +43,7 @@
                 {{-- equipments/assets --}}
                 <li class="nav-item m-1">
                     <a href="
-                    {{-- {{ route('dashboard') }} --}}
+                    {{ route('equipments.index') }}
                     "
                         class="nav-link {{ request()->is('equipments*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-dumbbell  m-1 p-1"></i>
