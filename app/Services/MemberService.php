@@ -107,20 +107,7 @@ public function update(Member $member, $id, Request $request)
         DB::beginTransaction();
 
         $user = auth()->user();
-        // $gym=User::FindOrFail($user->id);
-        // $gymName = (string) $gym->name;
-
-        // 
-        // $count=Member::where('user_id',$user->id)->count();
-        // $words = explode(' ', $gymName);
-        // $initials = '';
-        // for ($i = 0; $i < min(3, count($words)); $i++) {
-        //     $initials .= strtoupper($words[$i][0]);
-        // }
-        // $serialNumber = $initials . sprintf('%03d', $count + 1);      
-        // 
-        // dd($serialNumber);
-        // $member->serial_no =  $serialNumber;
+   
         $member->user_id = $user->id;
         $member->name = $request->name;
         $member->dob = $request->dob;      
