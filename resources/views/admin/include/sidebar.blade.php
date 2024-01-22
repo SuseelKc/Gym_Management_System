@@ -51,6 +51,7 @@
                             Equipments
                         </p>
                     </a>
+         
                 </li> 
 
 
