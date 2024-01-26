@@ -112,6 +112,19 @@
                         </p>
                     </a>
                 </li> 
+
+                {{-- Paymets --}}
+                <li class="nav-item m-1">
+                    <a href="
+                    {{-- {{ route('dashboard') }} --}}
+                    "
+                        class="nav-link {{ request()->is('reports*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-chart-bar  m-1 p-1"></i>
+                        <p>
+                            Reports
+                        </p>
+                    </a>
+                </li> 
             
             </ul>
         </nav>
