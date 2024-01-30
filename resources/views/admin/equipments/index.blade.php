@@ -40,7 +40,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ()
+                                        {{-- @foreach () --}}
                                         <tr>
                                             <td></td>
                                             <td></td>
@@ -63,7 +63,7 @@
                                             </td>
 
                                         </tr>
-                                        @endforeach    
+                                        {{-- @endforeach     --}}
                                     </tbody>
                                 </table>
                             </div>
@@ -97,7 +97,7 @@
   </div>
 </div>
 <!--  -->
-{{-- <script>
+<script>
     $(document).ready(function () {
         // Update the modal input field when the anchor tag is clicked
         $('a[data-target="#deleteModal"]').on('click', function () {
@@ -121,7 +121,7 @@
             window.location.href = deleteRoute;
         };
     });
-</script> --}}
+</script>
 
 <!--  -->
 @endsection

@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\DB;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\File;
 use App\Repositories\MemberRepository;
+use App\Repositories\EquipmentRepository;
 
 class EquipmentService
 {
-    public function __construct(EquipmentService $equipmentService,EquipmentRepository $equipmentRepository)
-    {
-        $this->equipmentService = $equipmentService;
+    public function __construct(EquipmentRepository $equipmentRepository)
+    {       
         $this->equipmentRepository = $equipmentRepository;
     }
 

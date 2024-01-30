@@ -2,25 +2,30 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Services\EquipmentService;
-use App\Repositories\EquipmentRepository;
 use Illuminate\Http\Request;
+use App\Services\MemberService;
+use App\Services\EquipmentService;
 use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
+use App\Repositories\MemberRepository;
+use App\Repositories\EquipmentRepository;
 
 class EquipmentsController extends Controller
 {
     //
 
-    public function __construct(EquipmentService $equipmentService,EquipmentRepository $equipmentRepository,UserRepository $userRepository){
+    public function __construct(MemberService $memberService,MemberRepository $memberRepository,EquipmentService $equipmentService)
+    {
+        $this->memberService = $memberService;
+        $this->memberRepository = $memberRepository;
         $this->equipmentService = $equipmentService;
-        $this->equipmentRepository = $equipmentRepository;
-        $this->userRepository = $userRepository;
+       
     }
 
     public function index(Request $request){
+        // dd("Here");
         try{
-            dd("Here");
+            // dd("Here");
             $equipment=$this->equipmentService->all();
             return view('admin.equipments.index',compact('equipment'));
         }

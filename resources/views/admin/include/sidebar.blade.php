@@ -53,11 +53,12 @@
                     </a>
          
                 </li> 
+                {{--  --}}
 
-                {{-- Paymets --}}
+    
                 <li class="nav-item m-1">
                     <a href="
-                    {{-- {{ route('dashboard') }} --}}
+                    {{ route('staff.index') }}
                     "
                         class="nav-link {{ request()->is('reports*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user-friends  m-1 p-1"></i>
@@ -78,7 +79,7 @@
                 {{-- shifts--}}
                 <li class="nav-item m-1">
                     <a href="
-                    {{-- {{ route('dashboard') }} --}}
+                  
                     "
                         class="nav-link {{ request()->is('shift*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-clock  m-1 p-1"></i>
@@ -92,7 +93,7 @@
                  {{-- Shop --}}
                  <li class="nav-item m-1">
                     <a href="
-                    {{-- {{ route('dashboard') }} --}}
+                    
                     "
                         class="nav-link {{ request()->is('shop*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-shopping-bag  m-1 p-1"></i>
@@ -105,7 +106,7 @@
                 {{-- Paymets --}}
                 <li class="nav-item m-1">
                     <a href="
-                    {{-- {{ route('dashboard') }} --}}
+                   
                     "
                         class="nav-link {{ request()->is('payments*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-cash-register  m-1 p-1"></i>
@@ -118,7 +119,7 @@
                 {{-- Paymets --}}
                 <li class="nav-item m-1">
                     <a href="
-                    {{-- {{ route('dashboard') }} --}}
+                   
                     "
                         class="nav-link {{ request()->is('reports*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-chart-bar  m-1 p-1"></i>
