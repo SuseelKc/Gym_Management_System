@@ -22,7 +22,7 @@
                     <div class="card">
                             <div class="">                             
                                 <a href="
-                                {{-- {{route('member.create')}} --}}
+                                {{route('equipments.create')}}
                                 "
                                     class="btn btn-primary px-4 m-2 float-right">Add</a>  
                             </div>
@@ -40,18 +40,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @foreach () --}}
+                                        @foreach ($equipment as $equipment)
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td>
-                                                   
-                                            </td>
-                                            <td></td>
-                                            <td></td>
-                                            
-                                            <td></td>
-                                            <td></td>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$equipment->serial_no}}</td>
+                                            <td>{{$equipment->image}}</td>
+                                            <td>{{$equipment->name}}</td>
+                                            <td>{{$equipment->maintenance_period}}</td>
+                                            <td>{{$equipment->upcoming_date}}</td>
+                                         
                                             <td>
                                             {{-- <a href="{{route('member.edit', $member->id)}}" title="Edit Member">
                                                         <i class="fas fa-edit fa-lg"></i></a>
@@ -63,7 +60,7 @@
                                             </td>
 
                                         </tr>
-                                        {{-- @endforeach     --}}
+                                        @endforeach    
                                     </tbody>
                                 </table>
                             </div>

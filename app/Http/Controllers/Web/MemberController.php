@@ -47,10 +47,8 @@ class MemberController extends Controller
 
     public function store(Request $request){
         try{
-           $member= new Member();
-          
+           $member= new Member();        
            $member= $this->memberService->add($member,$request);
-     
            return redirect()->intended(route('member.index'));
            
         }

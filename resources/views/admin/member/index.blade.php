@@ -44,7 +44,7 @@
                                         @foreach ($member as $member)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$member->serial_no}}</td>
                                             <td>
                                                     {{-- @if ($member->photo == null)
                                                         <img src = "/images/defaultimage.jpg" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">

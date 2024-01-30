@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Models\User;
+use App\Models\Equipment;
 use Illuminate\Http\Request;
 use App\Services\MemberService;
 use App\Services\EquipmentService;
@@ -31,10 +33,35 @@ class EquipmentsController extends Controller
         }
         catch(Exception $e){
 
-
         }
 
+    }
 
+    public function create(){
+        try{
+            
+            $gym_id=auth()->id();
+            $gym=User::FindOrFail($gym_id);
+            return view('admin.equipments.create',compact('gym'));
+           
+        }
+        catch(Exception $e){
+
+        }
+    }
+
+    public function store(Request $request){
+        try{
+           $equipment= new Equipment();
+          
+           $equipment= $this->equipmentService->add($equipment,$request);
+     
+           return redirect()->intended(route('member.index'));
+           
+        }
+        catch(Exception $e){
+
+        }
     }
 
 }
