@@ -14,7 +14,9 @@ class Equipment extends Model
         'name',
         'image',
         'serial_no',
+        'weight',
         'maintenance_period',
+        'maintenance_type',
         'upcoming_date',
         'gym_id'
     ];

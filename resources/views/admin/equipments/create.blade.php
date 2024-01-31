@@ -32,7 +32,7 @@
                             <h2 class="card-title font-weight-bold">Add Equipments</h2>
                         </div>
                         <form method="POST" action=" 
-                        {{-- {{route('equipments.store')}} --}}
+                        {{route('equipments.store')}}
                         " enctype="multipart/form-data">
                             @csrf
                             
@@ -66,11 +66,33 @@
                                     </div>
                                     <!--  -->
 
+
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="maintenance_period">Maintenence Period</label>
-                                            <input type="date" class="form-control" id="dob"
-                                                 name="maintenance_period" value="">
+                                            <label for="weight">Weight</label>
+                                            <input type="number" class="form-control" id="weight"
+                                                placeholder="Enter Weight Here" name="weight" value="{{ $gym->name }}">
+                                            @if ($errors->has('weight'))
+                                                <x-validation-errors>
+                                                    {{ $errors->first('weight') }}
+                                                </x-validation-errors>
+                                            @endif
+                                        </div>
+                                    </div>
+                                
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="maintenance_period">Maintenance Period (Gap)</label>
+                                            <div class="d-flex align-items-center">
+                                                <input type="number" class="form-control mr-2" id="maintenance_period_input" style="width: 150px;"
+                                                       name="maintenance_period" value="">
+                                                <select id="maintenance_period" style="height: 30px;">
+                                                    <option value="year">Year</option>
+                                                    <option value="month">Month</option>
+                                                    <option value="days">Days</option>
+                                                </select>
+                                            </div>
                                             @if ($errors->has('maintenance_period'))
                                                 <x-validation-errors>
                                                     {{ $errors->first('maintenance_period') }}
@@ -78,45 +100,7 @@
                                             @endif
                                         </div>
                                     </div>
-
-                                    {{-- <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="address">Address</label>
-                                            <input type="text" class="form-control" id="address"
-                                                placeholder="Enter Your Address" name="address" value="">
-                                            @if ($errors->has('address'))
-                                                <x-validation-errors>
-                                                    {{ $errors->first('address') }}
-                                                </x-validation-errors>
-                                            @endif
-                                        </div>
-                                    </div> --}}
-
-                                    {{-- <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="contactno">Contact No.</label>
-                                            <input type="text" class="form-control" id="contact_no"
-                                                placeholder="Enter Your Address" name="contact_no" value="">
-                                            @if ($errors->has('contact_no'))
-                                                <x-validation-errors>
-                                                    {{ $errors->first('contact_no') }}
-                                                </x-validation-errors>
-                                            @endif
-                                        </div>
-                                    </div> --}}
-
-                                    {{-- <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="email">Email</label>
-                                            <input type="text" class="form-control" id="email"
-                                                placeholder="Enter Your Email" name="email" value="">
-                                            @if ($errors->has('email'))
-                                                <x-validation-errors>
-                                                    {{ $errors->first('email') }}
-                                                </x-validation-errors>
-                                            @endif
-                                        </div>
-                                    </div> --}}
+                                                                                                       
 
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -138,3 +122,22 @@
 </div>
 
 @endsection
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    // Attach an event listener to the select element
+    $('#maintenance_period').on('change', function () {
+        var selectedOption = $(this).val();
+        var inputField = $('#maintenance_period_input');
+
+        // If the selected option is 'days', add a validation for digits above 0
+        if (selectedOption === 'days') {
+            inputField.attr('min', 1); // Set minimum value to 1
+            inputField.attr('required', true); // Make the input field required
+        } else {
+            // If the selected option is not 'days', remove the validation
+            inputField.removeAttr('min');
+            inputField.removeAttr('required');
+        }
+    });
+</script>

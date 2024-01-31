@@ -9,6 +9,7 @@ use App\Models\Equipment;
 use Illuminate\Http\Request;
 use App\Services\EquipmentService;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\Mime\Message;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\File;
 use App\Repositories\MemberRepository;
@@ -70,6 +71,7 @@ class EquipmentService
         }
 
         $equipment->serial_no =  $serialNumber;
+        $equipment->weight =  $request->weight;
         $equipment->gym_id = $user->id;
         $equipment->name = $request->name;
         // $equipment->dob = $request->dob;      
@@ -87,11 +89,12 @@ class EquipmentService
         $equipment->save();
 
         DB::commit();
-        return $member;
+        return $equipment;
 
         }
         catch(Exception $e){
-
+            DB::rollBack();
+            throw new Exception(Message::Failed);
         }
 
     }

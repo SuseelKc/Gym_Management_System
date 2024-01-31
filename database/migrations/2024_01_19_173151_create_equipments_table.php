@@ -16,8 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('image')->default('defaultequipment.jpg')->nullable();
             $table->string('serial_no');
-            $table->string('maintenance_period')->nullable();
-            $table->string('upcoming_date')->nullable();
+            $table->integer('weight')->nullable();
+            $table->integer('maintenance_period')->nullable();
+            $table->string('maintenance_type')->nullable();
+            $table->date('upcoming_date')->nullable();
             $table->foreignId('gym_id')->constrained('users','id');
             $table->timestamps();
         });
