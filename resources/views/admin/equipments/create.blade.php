@@ -69,12 +69,25 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="weight">Weight</label>
+                                            <label for="weight">Weight(KG)</label>
                                             <input type="number" class="form-control" id="weight"
-                                                placeholder="Enter Weight Here" name="weight" value="{{ $gym->name }}">
+                                             placeholder="Enter Weight Here" name="weight"  step="any">
                                             @if ($errors->has('weight'))
                                                 <x-validation-errors>
                                                     {{ $errors->first('weight') }}
+                                                </x-validation-errors>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="qty">Quantity</label>
+                                            <input type="decimal" class="form-control" id="qty"
+                                                placeholder="Enter Quantity Here" name="qty" value="">
+                                            @if ($errors->has('qty'))
+                                                <x-validation-errors>
+                                                    {{ $errors->first('qty') }}
                                                 </x-validation-errors>
                                             @endif
                                         </div>
@@ -87,7 +100,7 @@
                                             <div class="d-flex align-items-center">
                                                 <input type="number" class="form-control mr-2" id="maintenance_period_input" style="width: 150px;"
                                                        name="maintenance_period" value="">
-                                                <select id="maintenance_period" style="height: 30px;">
+                                                <select id="maintenance_type" style="height: 30px;" name="maintenance_type">
                                                     <option value="year">Year</option>
                                                     <option value="month">Month</option>
                                                     <option value="days">Days</option>
@@ -122,22 +135,3 @@
 </div>
 
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-<script>
-    // Attach an event listener to the select element
-    $('#maintenance_period').on('change', function () {
-        var selectedOption = $(this).val();
-        var inputField = $('#maintenance_period_input');
-
-        // If the selected option is 'days', add a validation for digits above 0
-        if (selectedOption === 'days') {
-            inputField.attr('min', 1); // Set minimum value to 1
-            inputField.attr('required', true); // Make the input field required
-        } else {
-            // If the selected option is not 'days', remove the validation
-            inputField.removeAttr('min');
-            inputField.removeAttr('required');
-        }
-    });
-</script>

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Exception;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Member;
 use App\Models\Equipment;
@@ -23,18 +24,46 @@ class EquipmentService
     }
 
     public function all()
-    {
-        try {
-            DB::beginTransaction();
-            $user = auth()->user();
-            $user_id=$user->id;
-            return $this->equipmentRepository->getAll()->where('gym_id',$user_id);
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollBack();
-            throw new Exception(Message::Failed);
+{
+    try {
+        DB::beginTransaction();
+        $user = auth()->user();
+        $user_id = $user->id;
+
+        // for increasing upcoming date if upcoming date is today
+        $todayDate = Carbon::now();
+
+        $datesEqual = Equipment::whereDate('upcoming_date', $todayDate)
+            ->where('gym_id', $user_id)
+            ->get();
+
+        if ($datesEqual->isNotEmpty()) {
+            foreach ($datesEqual as $equipment) {
+                // Check maintenance_type and update upcoming_date accordingly
+                if ($equipment->maintenance_type === 'Year') {
+                    $equipment->upcoming_date = Carbon::now()->addYears($equipment->maintenance_period);
+                } elseif ($equipment->maintenance_type === 'Month') {
+                    $equipment->upcoming_date = Carbon::now()->addMonths($equipment->maintenance_period);
+                } else {
+                    $equipment->upcoming_date = Carbon::now()->addDays($equipment->maintenance_period);
+                }
+
+                // Save the changes to the database
+                $equipment->update();
+            }
         }
+
+        // The rest of your code
+        // $result = $this->equipmentRepository->getAll()->where('gym_id', $user_id);
+
+        DB::commit();
+        return $this->equipmentRepository->getAll()->where('gym_id', $user_id);
+    } catch (Exception $e) {
+        DB::rollBack();
+        throw new Exception(Message::Failed);
     }
+}
+
 
     public function add(Equipment $equipment,Request $request){
 
@@ -43,9 +72,10 @@ class EquipmentService
          $user=auth()->user();
          $gym=User::FindOrFail($user->id);
          $equipmentName=(string) $request->name; 
-
+            
         // count
         $count=Equipment::where('gym_id',$user->id)->count();   
+        // dd($count);
         // 
         if($count>1){
             $words = explode(' ', $equipmentName);
@@ -69,14 +99,48 @@ class EquipmentService
             }
             $serialNumber = $initials . sprintf('%03d', $count + 1);   
         }
-
+    
         $equipment->serial_no =  $serialNumber;
         $equipment->weight =  $request->weight;
+        $equipment->qty = $request->qty;
         $equipment->gym_id = $user->id;
         $equipment->name = $request->name;
-        // $equipment->dob = $request->dob;      
-        $equipment->maintenance_period = $request->maintenance_period;
-        $equipment->upcoming_date = $request->upcoming_date;
+    
+        if($request->maintenance_period){
+
+                if ($request->maintenance_type === 'year') {
+                   
+                    $equipment->maintenance_period = $request->maintenance_period;
+                    $equipment->maintenance_type = "Year";
+
+                    
+                    $upcomingDate = Carbon::now()->addYears($request->maintenance_period);
+                    
+                    // Assign the calculated date to the upcoming_date property
+                    $equipment->upcoming_date = $upcomingDate;
+
+                } elseif ($request->maintenance_type === 'month') {
+                   
+                    $equipment->maintenance_period = $request->maintenance_period;
+                    $equipment->maintenance_type = "Month";
+
+                    $upcomingDate = Carbon::now()->addMonth($request->maintenance_period);
+                    
+                    // Assign the calculated date to the upcoming_date property
+                    $equipment->upcoming_date = $upcomingDate;
+
+                } else {
+
+                    $equipment->maintenance_period = $request->maintenance_period;
+                    $equipment->maintenance_type = "Days";
+
+                    $upcomingDate = Carbon::now()->addDays($request->maintenance_period);
+                    
+                    // Assign the calculated date to the upcoming_date property
+                    $equipment->upcoming_date = $upcomingDate;
+                }
+
+        }
         
         if ($request->hasFile('photo')) {
             $gallery = $request->file('photo');

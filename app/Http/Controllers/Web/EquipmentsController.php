@@ -56,7 +56,7 @@ class EquipmentsController extends Controller
           
            $equipment= $this->equipmentService->add($equipment,$request);
      
-           return redirect()->intended(route('member.index'));
+           return redirect()->intended(route('equipments.index'));
            
         }
         catch(Exception $e){

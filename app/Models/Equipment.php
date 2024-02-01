@@ -15,6 +15,7 @@ class Equipment extends Model
         'image',
         'serial_no',
         'weight',
+        'qty',
         'maintenance_period',
         'maintenance_type',
         'upcoming_date',

@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('image')->default('defaultequipment.jpg')->nullable();
             $table->string('serial_no');
-            $table->integer('weight')->nullable();
+            $table->decimal('weight', 8, 2)->nullable();
+            $table->integer('qty')->nullable();
             $table->integer('maintenance_period')->nullable();
             $table->string('maintenance_type')->nullable();
             $table->date('upcoming_date')->nullable();

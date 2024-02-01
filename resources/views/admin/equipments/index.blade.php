@@ -33,8 +33,11 @@
                                             <th>S.No</th>
                                             <th>ID No.</th>
                                             <th>Image</th>
-                                            <th>Name</th>                                                                                    
-                                            <th>Maintainence Period</th>
+                                            <th>Name</th>  
+                                            <th>Weight</th>
+                                            <th>Qty</th>                                                                                  
+                                            <th>Maintainence Period</th>                                            
+                                            <th>Maintainence Type</th>
                                             <th>Upcoming Maintenance</th>                                   
                                             <th>Action</th>
                                         </tr>
@@ -44,19 +47,33 @@
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$equipment->serial_no}}</td>
-                                            <td>{{$equipment->image}}</td>
+                                            <td>
+                                                <img src = "/images/equipments/{{$equipment->image}}" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
+                                                
+                                            </td>
                                             <td>{{$equipment->name}}</td>
+
+                                             @if($equipment->weight)
+                                                <td>{{$equipment->weight}} KG</td>
+                                            
+                                            @else
+                                                <td></td>
+                                            
+                                            @endif
+
+                                            <td>{{$equipment->qty}}</td>
                                             <td>{{$equipment->maintenance_period}}</td>
+                                            <th>{{$equipment->maintenance_type}}</th>
                                             <td>{{$equipment->upcoming_date}}</td>
                                          
                                             <td>
-                                            {{-- <a href="{{route('member.edit', $member->id)}}" title="Edit Member">
+                                            <a href="{{route('equipments.edit', $equipment->id)}}" title="Edit Member">
                                                         <i class="fas fa-edit fa-lg"></i></a>
-                                            <a type="button"  data-toggle="modal" data-target="#deleteModal"  data-member-id="{{$member->id}}"
-                                             data-member-name="{{$member->name}}"
+                                            <a type="button"  data-toggle="modal" data-target="#deleteModal"  data-member-id="{{$equipment->id}}"
+                                             data-member-name="{{$equipment->name}}"
                                              href="#" title="Delete Member">
                                             <i class="fas fa-times-circle fa-lg" style="color: red;"></i>
-                                            </a>                                         --}}
+                                            </a>                                        
                                             </td>
 
                                         </tr>
