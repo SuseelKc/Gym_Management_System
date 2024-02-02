@@ -162,5 +162,46 @@ class EquipmentService
         }
 
     }
+
+    public function update(Equipment $equipment,$id,Request $request ){
+
+        try{
+            DB::beginTransaction();
+            $user = auth()->user();
+            $equipment->gym_id = $user->id;
+            $equipment->name= $request->name;
+            $equipment->weight =  $request->weight;
+            $equipment->qty = $request->qty;
+           
+            
+            if ($request->hasFile('photo')) {
+
+                $path='images/equipments/'.$equipment->image;
+                if(File::exists($path)){
+                       File::delete($path);
+                }
+    
+    
+                $gallery = $request->file('photo');
+                $extension = $gallery->getClientOriginalExtension();
+                $filename = $gallery->getClientOriginalName() . '.' . $extension;
+                $gallery->move('./images/equipments/', $filename);
+                $equipment->photo = $filename;
+            }
+
+            $equipment->update();
+            DB::commit();
+            return $equipment;
+
+        }
+        catch(Exception $e){
+            DB::rollBack();
+            // Log the error message
+            Log::info('Error during member save: ' . $e->getMessage());
+            // Display a generic error message to the user
+            return redirect()->back()->with('error', 'An error occurred while saving the member information.'); 
+        }
+    }
+
     
 }

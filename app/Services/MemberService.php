@@ -138,7 +138,7 @@ public function update(Member $member, $id, Request $request)
     } catch (Exception $e) {
         DB::rollBack();
         // Log the error message
-        \Log::info('Error during member save: ' . $e->getMessage());
+        Log::info('Error during member save: ' . $e->getMessage());
         // Display a generic error message to the user
         return redirect()->back()->with('error', 'An error occurred while saving the member information.');
     }

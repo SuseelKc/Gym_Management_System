@@ -24,10 +24,8 @@ class EquipmentsController extends Controller
        
     }
 
-    public function index(Request $request){
-        // dd("Here");
-        try{
-            // dd("Here");
+    public function index(Request $request){     
+        try{       
             $equipment=$this->equipmentService->all();
             return view('admin.equipments.index',compact('equipment'));
         }
@@ -63,5 +61,32 @@ class EquipmentsController extends Controller
 
         }
     }
+
+    public function edit($id){
+        try{
+           $equipment=Equipment::FindOrFail($id);           
+           $gym_id=auth()->id();
+           $gym=User::FindOrFail($gym_id);
+           return view('admin.equipments.edit',compact('equipment','gym')); 
+           
+        }
+        catch(Exception $e){
+
+        }
+    }
+
+    public function update(Request $request,$id){
+        try{
+
+            $equipment=Equipment::FindOrFail($id);
+            $equipment=$this->equipmentService->update($equipment,$id,$request);
+            return redirect()->intended(route('equipments.index'));
+
+        }
+        catch(Exception $e){
+
+        }
+    }
+
 
 }
