@@ -87,6 +87,16 @@ class EquipmentsController extends Controller
 
         }
     }
+    
+    public function delete($id){
+        try{            
+            $equipment=Equipment::FindOrFail($id);
+            $equipment=$this->equipmentService->delete($id);
+            return redirect()->intended(route('equipments.index'));    
+        }
+        catch(Exception $e){
 
+        }
+    }
 
 }

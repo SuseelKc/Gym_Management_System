@@ -93,6 +93,19 @@
                                             @endif
                                         </div>
                                     </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="created_at">Added At</label>
+                                            <input type="text" class="form-control" id="created_at"
+                                                name="created_at"  value="{{ $equipment->created_at->format('Y-m-d') }}">
+                                            @if ($errors->has('created_at'))
+                                                <x-validation-errors>
+                                                    {{ $errors->first('created_at') }}
+                                                </x-validation-errors>
+                                            @endif
+                                        </div>
+                                    </div>
                                 
 
                                     <div class="col-md-6">
@@ -120,11 +133,11 @@
                                         <div class="form-group">
                                             <label for="photo">Upload Image</label>
                                             <input type="file" class="form-control" id="photo" name="photo">
-                                            @if($equipment->photo == null)
-                                                <img src = "/images/defaultimage.jpg" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
+                                            @if($equipment->image == null)
+                                                <img src = "/images/equipments/defaultequipment.jpg" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
 
                                             @else
-                                            <img src="{{asset('/images/equipments/'.$equipment->photo)}}"
+                                            <img src="/images/equipments/{{$equipment->image}}"
                                             style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;"/>
                                             @endif
                                         </div>

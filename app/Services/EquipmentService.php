@@ -73,10 +73,9 @@ class EquipmentService
          $gym=User::FindOrFail($user->id);
          $equipmentName=(string) $request->name; 
             
-        // count
+    
         $count=Equipment::where('gym_id',$user->id)->count();   
-        // dd($count);
-        // 
+       
         if($count>1){
             $words = explode(' ', $equipmentName);
             $initials = ''; 
@@ -172,15 +171,49 @@ class EquipmentService
             $equipment->name= $request->name;
             $equipment->weight =  $request->weight;
             $equipment->qty = $request->qty;
-           
-            
+          
+
+            if($request->maintenance_period){
+
+                if ($request->maintenance_type === 'year') {
+                   
+                    $equipment->maintenance_period = $request->maintenance_period;
+                    $equipment->maintenance_type = "Year";
+                    $addedDate = Carbon::parse($equipment->created_at);                  
+                    $upcomingDate =  $addedDate->addYears($request->maintenance_period);
+                    
+                    // Assign the calculated date to the upcoming_date property
+                    $equipment->upcoming_date = $upcomingDate;
+
+                } elseif ($request->maintenance_type === 'month') {
+                   
+                    $equipment->maintenance_period = $request->maintenance_period;
+                    $equipment->maintenance_type = "Month";
+                    $addedDate = Carbon::parse($equipment->created_at);
+                    $upcomingDate = $addedDate->addMonth($request->maintenance_period);
+                    
+                    // Assign the calculated date to the upcoming_date property
+                    $equipment->upcoming_date = $upcomingDate;
+
+                } else {
+
+                    $equipment->maintenance_period = $request->maintenance_period;
+                    $equipment->maintenance_type = "Days";
+                    $addedDate = Carbon::parse($equipment->created_at);
+                    $upcomingDate = $addedDate->addDays($request->maintenance_period);                    
+                    // Assign the calculated date to the upcoming_date property
+                    $equipment->upcoming_date = $upcomingDate;
+                }
+
+        }
+                      
             if ($request->hasFile('photo')) {
 
                 $path='images/equipments/'.$equipment->image;
                 if(File::exists($path)){
                        File::delete($path);
                 }
-    
+
     
                 $gallery = $request->file('photo');
                 $extension = $gallery->getClientOriginalExtension();
@@ -192,7 +225,6 @@ class EquipmentService
             $equipment->update();
             DB::commit();
             return $equipment;
-
         }
         catch(Exception $e){
             DB::rollBack();
@@ -200,6 +232,27 @@ class EquipmentService
             Log::info('Error during member save: ' . $e->getMessage());
             // Display a generic error message to the user
             return redirect()->back()->with('error', 'An error occurred while saving the member information.'); 
+        }
+    }
+
+    public function delete($id){
+        try{
+            DB::beginTransaction();         
+            $equipment=$this->equipmentRepository->getById($id);
+            if($equipment->image){
+                $path='images/equipments/'.$equipment->image;
+                if(File::exists($path)){
+                       File::delete($path);
+                }
+            }
+            
+            $equipment->delete();
+            DB::commit();
+            return $equipment;
+
+        }
+        catch(Exception $e){
+            DB::rollBack();
         }
     }
 
