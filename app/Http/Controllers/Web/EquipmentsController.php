@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
 use App\Repositories\MemberRepository;
 use App\Repositories\EquipmentRepository;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class EquipmentsController extends Controller
 {
@@ -80,6 +81,7 @@ class EquipmentsController extends Controller
 
             $equipment=Equipment::FindOrFail($id);
             $equipment=$this->equipmentService->update($equipment,$id,$request);
+            toast('Equipment Updated!','success');
             return redirect()->intended(route('equipments.index'));
 
         }

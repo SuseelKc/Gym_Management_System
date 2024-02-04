@@ -11,7 +11,7 @@
             @include('admin.include.sidebar')
 
             <div class="content-wrapper">
-                {{-- @include('sweetalert::alert') --}}
+                @include('sweetalert::alert')
 
                 @yield('content')
             </div>

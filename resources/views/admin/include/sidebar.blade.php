@@ -58,9 +58,9 @@
     
                 <li class="nav-item m-1">
                     <a href="
-                    {{ route('staff.index') }}
+                    {{ route('staffs.index') }}
                     "
-                        class="nav-link {{ request()->is('reports*') ? 'active' : '' }}">
+                        class="nav-link {{ request()->is('staffs*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user-friends  m-1 p-1"></i>
                         <p>
                             Staffs

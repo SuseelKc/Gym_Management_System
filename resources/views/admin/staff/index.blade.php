@@ -1,5 +1,5 @@
 @extends('admin.admin')
-@section('title','Equipments')
+@section('title','Staff')
 @section('content')
 
 
@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <ol class="breadcrumb float-right">
-                            <li class="breadcrumb-item active">Equipments</li>
+                            <li class="breadcrumb-item active">Staff</li>
                         </ol>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                     <div class="card">
                             <div class="">                             
                                 <a href="
-                                {{route('equipments.create')}}
+                                {{route('staffs.create')}}
                                 "
                                     class="btn btn-primary px-4 m-2 float-right">Add</a>  
                             </div>
@@ -39,49 +39,41 @@
                                     <thead>
                                         <tr>
                                             <th>S.No</th>
-                                            <th>ID No.</th>
+                                            <th>ID</th>
                                             <th>Image</th>
-                                            <th>Name</th>  
-                                            <th>Weight</th>
-                                            <th>Qty</th>                                                                                  
-                                            <th>Maintainence Period</th>                                            
-                                            <th>Maintainence Type</th>
-                                            <th>Upcoming Maintenance</th>                                   
+                                            <th>Name</th>            
+                                            {{-- <th>Gym</th>   --}}
+                                            <th>D.O.B</th>
+                                            <th>Address</th>                                                                                  
+                                            <th>Contact No.</th>                                            
+                                            <th>Email</th>                                                                     
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($equipment as $equipment)
+                                        @foreach ($staff as $staff)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{$equipment->serial_no}}</td>
+                                            <td>{{$staff->serial_no}}</td>
                                             <td>
-                                                <img src = "/images/equipments/{{$equipment->image}}" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
+                                                {{-- <img src = "/images/equipments/{{$equipment->image}}" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;"> --}}
                                                 
                                             </td>
-                                            <td>{{$equipment->name}}</td>
-
-                                             @if($equipment->weight)
-                                                <td>{{$equipment->weight}} KG</td>
-                                            
-                                            @else
-                                                <td></td>
-                                            
-                                            @endif
-
-                                            <td>{{$equipment->qty}}</td>
-                                            <td>{{$equipment->maintenance_period}}</td>
-                                            <th>{{$equipment->maintenance_type}}</th>
-                                            <td>{{$equipment->upcoming_date}}</td>
-                                         
+                                            <td>{{$staff->name}}</td>
+                              
+                                            {{-- <td>{{$}}</td> --}}
+                                            <td>{{$equipment->dob}}</td>
+                                            <th>{{$equipment->address}}</th>
+                                            <td>{{$equipment->contact_no}}</td>
+                                            <td>{{$equipment->email}}</td>
                                             <td>
-                                            <a href="{{route('equipments.edit', $equipment->id)}}" title="Edit Equipments">
+                                            {{-- <a href="{{route('equipments.edit', $equipment->id)}}" title="Edit Equipments">
                                                         <i class="fas fa-edit fa-lg"></i></a>
                                             <a type="button"  data-toggle="modal" data-target="#deleteModal"  data-equipment-id="{{$equipment->id}}"
                                              data-equipment-name="{{$equipment->name}}"
                                              href="#" title="Delete Equipment">
                                             <i class="fas fa-times-circle fa-lg" style="color: red;"></i>
-                                            </a>                                        
+                                            </a>                                         --}}
                                             </td>
 
                                         </tr>

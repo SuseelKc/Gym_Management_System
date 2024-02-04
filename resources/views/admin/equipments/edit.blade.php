@@ -98,7 +98,7 @@
                                         <div class="form-group">
                                             <label for="created_at">Added At</label>
                                             <input type="text" class="form-control" id="created_at"
-                                                name="created_at"  value="{{ $equipment->created_at->format('Y-m-d') }}">
+                                                name="created_at"  value="{{ $equipment->created_at->format('Y-m-d') }}" readonly>
                                             @if ($errors->has('created_at'))
                                                 <x-validation-errors>
                                                     {{ $errors->first('created_at') }}
