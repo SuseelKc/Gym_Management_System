@@ -19,6 +19,7 @@ class Staff extends Model
         'dob',
         'address',
         'contact_no',
+        'position',
         'email'               
         ];
 

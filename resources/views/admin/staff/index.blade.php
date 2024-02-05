@@ -44,7 +44,8 @@
                                             <th>Name</th>            
                                             {{-- <th>Gym</th>   --}}
                                             <th>D.O.B</th>
-                                            <th>Address</th>                                                                                  
+                                            <th>Address</th>  
+                                            <th>Position</th>                                                                                  
                                             <th>Contact No.</th>                                            
                                             <th>Email</th>                                                                     
                                             <th>Action</th>
@@ -56,24 +57,25 @@
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$staff->serial_no}}</td>
                                             <td>
-                                                {{-- <img src = "/images/equipments/{{$equipment->image}}" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;"> --}}
+                                                <img src = "/images/staff/{{$staff->image}}" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
                                                 
                                             </td>
                                             <td>{{$staff->name}}</td>
                               
                                             {{-- <td>{{$}}</td> --}}
-                                            <td>{{$equipment->dob}}</td>
-                                            <th>{{$equipment->address}}</th>
-                                            <td>{{$equipment->contact_no}}</td>
-                                            <td>{{$equipment->email}}</td>
+                                            <td>{{$staff->dob}}</td>
+                                            <th>{{$staff->address}}</th>
+                                            <th>{{$staff->position}}</th>
+                                            <td>{{$staff->contact_no}}</td>
+                                            <td>{{$staff->email}}</td>
                                             <td>
-                                            {{-- <a href="{{route('equipments.edit', $equipment->id)}}" title="Edit Equipments">
+                                            <a href="{{route('staffs.edit', $staff->id)}}" title="Edit Staff">
                                                         <i class="fas fa-edit fa-lg"></i></a>
-                                            <a type="button"  data-toggle="modal" data-target="#deleteModal"  data-equipment-id="{{$equipment->id}}"
-                                             data-equipment-name="{{$equipment->name}}"
-                                             href="#" title="Delete Equipment">
+                                            <a type="button"  data-toggle="modal" data-target="#deleteModal"  data-staff-id="{{$staff->id}}"
+                                             data-equipment-name="{{$staff->name}}"
+                                             href="#" title="Delete staff">
                                             <i class="fas fa-times-circle fa-lg" style="color: red;"></i>
-                                            </a>                                         --}}
+                                            </a>                                        
                                             </td>
 
                                         </tr>
@@ -99,13 +101,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input type="hidden" id="equipmentIdToDelete">
-                 <p id="equipmentNameToDelete"></p>
+                <input type="hidden" id="staffIdToDelete">
+                 <p id="staffNameToDelete"></p>
                 <!-- ... other modal content ... -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" onclick="deleteEquipment()">Delete</button>
+                <button type="button" class="btn btn-danger" onclick="deleteStaff()">Delete</button>
             </div>
     </div>
   </div>
@@ -115,21 +117,21 @@
     $(document).ready(function () {
         // Update the modal input field when the anchor tag is clicked
         $('a[data-target="#deleteModal"]').on('click', function () {
-            var equipmentId = $(this).data('equipment-id');
-            var equipmentName = $(this).data('equipment-name');
+            var staffId = $(this).data('staff-id');
+            var staffName = $(this).data('equipment-name');
 
-            $('#equipmentIdToDelete').val(equipmentId);
-            $('#equipmentNameToDelete').text('Are you sure you want to delete ' + equipmentName + '?');
+            $('#staffIdToDelete').val(staffId);
+            $('#staffNameToDelete').text('Are you sure you want to delete ' + staffName + '?');
         });
 
         // Function to handle the delete button click
-        window.deleteEquipment = function () {
+        window.deleteStaff = function () {
             // Get the ID from the input field
-            var equipmentId = $('#equipmentIdToDelete').val();
+            var staffId = $('#staffIdToDelete').val();
 
-            // Construct the delete route with the equipmentId
-            var deleteRoute = '{{ route("equipments.delete", ":id") }}';
-            deleteRoute = deleteRoute.replace(':id', equipmentId);
+            // Construct the delete route with the staffId
+            var deleteRoute = '{{ route("staffs.delete", ":id") }}';
+            deleteRoute = deleteRoute.replace(':id', staffId);
 
             // Perform the delete operation by navigating to the delete route
             window.location.href = deleteRoute;

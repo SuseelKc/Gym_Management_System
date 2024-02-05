@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('dob')->nullable();
             $table->string('address');
             $table->string('contact_no');
+            $table->string('position');
             $table->string('email')->nullable();
             $table->timestamps();
         });
