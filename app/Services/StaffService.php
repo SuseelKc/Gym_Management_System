@@ -13,6 +13,7 @@ use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\File;
 use App\Repositories\StaffRepository;
 use App\Repositories\MemberRepository;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class StaffService
 {
@@ -92,6 +93,7 @@ class StaffService
         $staff->save();   
        
         DB::commit();
+       
         return $staff;
         } 
         catch (Exception $e) {
@@ -131,7 +133,7 @@ class StaffService
 
         $user = auth()->user();
    
-        $staff->user_id = $user->id;
+        $staff->gym_id = $user->id;
         $staff->name = $request->name;
         $staff->dob = $request->dob;      
         $staff->address = $request->address;

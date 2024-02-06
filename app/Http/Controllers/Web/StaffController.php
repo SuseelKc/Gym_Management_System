@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Services\StaffService;
 use App\Http\Controllers\Controller;
 use App\Repositories\StaffRepository;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class StaffController extends Controller
 {
@@ -25,6 +26,7 @@ class StaffController extends Controller
         try{
             // dd("Here");
             $staff= $this->staffService->all();
+            toast('Welcome','success');
             return view('admin.staff.index',compact('staff'));
         }
         catch(Exception $e){
@@ -49,12 +51,16 @@ class StaffController extends Controller
         try{
             $staff= new Staff();        
             $staff= $this->staffService->add($staff,$request);
+            toast('Your Post as been submited!','success');
             return redirect()->intended(route('staffs.index'));
         }
-        catch(Exception $e){
-        
+        catch (\Exception $e) {
+            // If an exception occurs, log the error
+            \Log::error('Error adding staff: ' . $e->getMessage());
+            
+            // Redirect back with error message and input data
+            return redirect()->back()->withInput()->withErrors(['An error occurred while saving the staff information.']);
         }
-    
     }
 
     public function delete($id){

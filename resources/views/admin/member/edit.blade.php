@@ -47,7 +47,7 @@
                                             <div class="form-group">
                                                 <label for="Name">Name</label>
                                                 <input type="text" class="form-control" id="name"
-                                                    placeholder="Enter Name Here" name="name" value="{{$member->name}}">
+                                                    placeholder="Enter Name Here" name="name" value="{{$member->name}}" required>
                                                 @if ($errors->has('name'))
                                                     <x-validation-errors>
                                                         {{ $errors->first('name') }}
@@ -73,7 +73,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="dob">Date Of Birth</label>
-                                                <input type="date" class="form-control" id="dob"
+                                                <input type="date" class="form-control" id="dob" required
                                                      name="dob" value="{{$member->dob}}">
                                                 @if ($errors->has('dob'))
                                                     <x-validation-errors>
@@ -87,7 +87,7 @@
                                             <div class="form-group">
                                                 <label for="address">Address</label>
                                                 <input type="text" class="form-control" id="address"
-                                                    placeholder="Enter Your Address" name="address" value="{{$member->address}}">
+                                                    placeholder="Enter Your Address" name="address" value="{{$member->address}}" required>
                                                 @if ($errors->has('address'))
                                                     <x-validation-errors>
                                                         {{ $errors->first('address') }}
@@ -100,7 +100,7 @@
                                             <div class="form-group">
                                                 <label for="contactno">Contact No.</label>
                                                 <input type="text" class="form-control" id="contact_no"
-                                                    placeholder="Enter Your Address" name="contact_no" value="{{$member->contact_no}}">
+                                                    placeholder="Enter Your Address" name="contact_no" value="{{$member->contact_no}}" required>
                                                 @if ($errors->has('contact_no'))
                                                     <x-validation-errors>
                                                         {{ $errors->first('contact_no') }}
@@ -113,7 +113,7 @@
                                             <div class="form-group">
                                                 <label for="email">Email</label>
                                                 <input type="text" class="form-control" id="email"
-                                                    placeholder="Enter Your Email" name="email" value="{{$member->email}}">
+                                                    placeholder="Enter Your Email" name="email" value="{{$member->email}}" required>
                                                 @if ($errors->has('email'))
                                                     <x-validation-errors>
                                                         {{ $errors->first('email') }}
@@ -127,7 +127,7 @@
                                                 <label for="photo">Upload Image</label>
                                                 <input type="file" class="form-control" id="photo" name="photo">
                                                 @if($member->photo == null)
-                                                <img src = /images/members/defaultimage.jpg" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
+                                                <img src = "/images/defaultimage.jpg" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
 
                                                 @else
                                                 <img src="{{asset('/images/members/'.$member->photo)}}"

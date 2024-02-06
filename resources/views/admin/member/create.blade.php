@@ -46,7 +46,7 @@
                                             <div class="form-group">
                                                 <label for="Name">Name</label>
                                                 <input type="text" class="form-control" id="name"
-                                                    placeholder="Enter Name Here" name="name" >
+                                                    placeholder="Enter Name Here" name="name"  required>
                                                 @if ($errors->has('name'))
                                                     <x-validation-errors>
                                                         {{ $errors->first('name') }}
@@ -59,7 +59,7 @@
                                             <div class="form-group">
                                                 <label for="gym_name">Gym Name</label>
                                                 <input type="text" class="form-control" id="gym_name"
-                                                    placeholder="Enter Name Here" name="gym_name" value="{{ $gym->name }}">
+                                                    placeholder="Enter Name Here" name="gym_name" value="{{ $gym->name }}" readonly>
                                                 @if ($errors->has('gym_name'))
                                                     <x-validation-errors>
                                                         {{ $errors->first('gym_name') }}
@@ -72,7 +72,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="dob">Date Of Birth</label>
-                                                <input type="date" class="form-control" id="dob"
+                                                <input type="date" class="form-control" id="dob" required
                                                      name="dob" value="">
                                                 @if ($errors->has('dob'))
                                                     <x-validation-errors>
@@ -86,7 +86,7 @@
                                             <div class="form-group">
                                                 <label for="address">Address</label>
                                                 <input type="text" class="form-control" id="address"
-                                                    placeholder="Enter Your Address" name="address" value="">
+                                                    placeholder="Enter Your Address" name="address"  required>
                                                 @if ($errors->has('address'))
                                                     <x-validation-errors>
                                                         {{ $errors->first('address') }}
@@ -99,7 +99,7 @@
                                             <div class="form-group">
                                                 <label for="contactno">Contact No.</label>
                                                 <input type="text" class="form-control" id="contact_no"
-                                                    placeholder="Enter Your Address" name="contact_no" value="">
+                                                    placeholder="Enter Your Address" name="contact_no" required>
                                                 @if ($errors->has('contact_no'))
                                                     <x-validation-errors>
                                                         {{ $errors->first('contact_no') }}
@@ -112,7 +112,7 @@
                                             <div class="form-group">
                                                 <label for="email">Email</label>
                                                 <input type="text" class="form-control" id="email"
-                                                    placeholder="Enter Your Email" name="email" value="">
+                                                    placeholder="Enter Your Email" name="email" required>
                                                 @if ($errors->has('email'))
                                                     <x-validation-errors>
                                                         {{ $errors->first('email') }}

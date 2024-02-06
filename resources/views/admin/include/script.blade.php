@@ -8,6 +8,10 @@
 <!-- Bootstrap 4 -->
 <script src="{{ asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('admin/dist/js/adminlte.js') }}"></script>
+
+{{-- sweetalert --}}
+<script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
+{{--  --}}
 <script>
     jQuery(document).ready(function() {
         jQuery('.datepicker').datepicker({

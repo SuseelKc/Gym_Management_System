@@ -43,7 +43,7 @@
                                         <div class="form-group">
                                             <label for="Name">Name</label>
                                             <input type="text" class="form-control" id="name"
-                                                placeholder="Enter Name Here" name="name" >
+                                                placeholder="Enter Name Here" name="name"  required>
                                             @if ($errors->has('name'))
                                                 <x-validation-errors>
                                                     {{ $errors->first('name') }}
@@ -70,7 +70,7 @@
                                         <div class="form-group">
                                             <label for="dob">Date Of Birth</label>
                                             <input type="date" class="form-control" id="dob"
-                                             placeholder="Enter Date of Birth" name="dob" >
+                                             placeholder="Enter Date of Birth" name="dob" required >
                                             @if ($errors->has('dob'))
                                                 <x-validation-errors>
                                                     {{ $errors->first('dob') }}
@@ -86,7 +86,7 @@
                                         <div class="form-group">
                                             <label for="address">Address</label>
                                             <input type="text" class="form-control" id="address"
-                                                placeholder="Enter Address Here" name="address">
+                                                placeholder="Enter Address Here" name="address" required>
                                             @if ($errors->has('address'))
                                                 <x-validation-errors>
                                                     {{ $errors->first('address') }}
@@ -100,7 +100,7 @@
                                         <div class="form-group">
                                             <label for="email">Email</label>
                                             <input type="email" class="form-control" id="email"
-                                                placeholder="Enter Email Here" name="email">
+                                                placeholder="Enter Email Here" name="email" required>
                                             @if ($errors->has('email'))
                                                 <x-validation-errors>
                                                     {{ $errors->first('email') }}
@@ -115,7 +115,7 @@
                                         <div class="form-group">
                                             <label for="contact_no">Contact No</label>
                                             <input type="contact_no" class="form-control" id="contact_no"
-                                                placeholder="Enter Email Here" name="contact_no">
+                                                placeholder="Enter Email Here" name="contact_no" required>
                                             @if ($errors->has('contact_no'))
                                                 <x-validation-errors>
                                                     {{ $errors->first('contact_no') }}

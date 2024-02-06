@@ -3,11 +3,12 @@
 @section('content')
 
 
-@if(session('message'))
+{{-- @if(session('message'))
 <div class="alert alert-success">
     {{session('message')}}
 </div>
-@endif
+@endif --}}
+@include('sweetalert::alert')
 
 
 <div class="content">
@@ -56,9 +57,13 @@
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$staff->serial_no}}</td>
-                                            <td>
-                                                <img src = "/images/staff/{{$staff->image}}" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
-                                                
+                                            <td>                                                                
+                                                @if ($staff->photo == null)
+                                                    <img src = "/images/defaultimage.jpg" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
+                                                 
+                                                @else
+                                                    <img src = "/images/staff/{{$staff->photo}}" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
+                                                @endif
                                             </td>
                                             <td>{{$staff->name}}</td>
                               

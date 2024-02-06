@@ -171,6 +171,14 @@ class EquipmentService
             $equipment->name= $request->name;
             $equipment->weight =  $request->weight;
             $equipment->qty = $request->qty;
+
+            if($request->maintenance_period== 0 || empty($request->maintenance_period) ){
+
+                $equipment->maintenance_type= null;
+                $equipment->maintenance_period= null; 
+                $equipment->upcoming_date= null; 
+            }    
+            
           
 
             if($request->maintenance_period){

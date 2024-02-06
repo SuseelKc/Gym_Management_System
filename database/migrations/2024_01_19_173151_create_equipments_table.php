@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('equipments', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('image')->default('defaultequipment.jpg')->nullable();
+            $table->string('image')->nullable();
             $table->string('serial_no');
             $table->decimal('weight', 8, 2)->nullable();
             $table->integer('qty')->nullable();

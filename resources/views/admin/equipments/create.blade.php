@@ -56,7 +56,7 @@
                                         <div class="form-group">
                                             <label for="gym_name">Gym Name</label>
                                             <input type="text" class="form-control" id="gym_name"
-                                                placeholder="Enter Name Here" name="gym_name" value="{{ $gym->name }}">
+                                                placeholder="Enter Name Here" name="gym_name" value="{{ $gym->name }}" readonly>
                                             @if ($errors->has('gym_name'))
                                                 <x-validation-errors>
                                                     {{ $errors->first('gym_name') }}
@@ -118,7 +118,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="photo">Upload Image</label>
-                                            <input type="file" class="form-control" id="photo" name="photo">
+                                            <input type="file" class="form-control" id="photo" name="photo" >
                                         </div>
                                     </div>
 

@@ -56,7 +56,12 @@
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$equipment->serial_no}}</td>
                                             <td>
-                                                <img src = "/images/equipments/{{$equipment->image}}" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
+                                                @if ($equipment->image == null)
+                                                <img src = "/images/defaultequipment.jpg" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">  
+                                                @else
+                                                 <img src = "/images/equipments/{{$equipment->image}}" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
+                                                @endif
+                                         
                                                 
                                             </td>
                                             <td>{{$equipment->name}}</td>
