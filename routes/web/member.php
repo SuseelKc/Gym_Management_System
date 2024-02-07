@@ -11,3 +11,4 @@ Route::post('/members/store',[MemberController::class,'store'])->name('member.st
 Route::get('/members/edit/{id}',[MemberController::class,'edit'])->name('member.edit');
 Route::patch('/members/update/{id}',[MemberController::class,'update'])->name('member.update');
 Route::get('/members/{id}',[MemberController::class,'delete'])->name('member.delete');
+Route::get('/members/toggle/{id}',[MemberController::class,'toggle'])->name('member.toggle');

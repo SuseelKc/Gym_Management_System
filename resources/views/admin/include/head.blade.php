@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
     <!-- sweetalert -->
-    <link rel="stylesheet" href="{{ asset('vendor/sweetalert/sweetalert.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('vendor/sweetalert/sweetalert.css') }}"> --}}
 
     <!--Font Awesome -->
     <link rel="stylesheet" href="{{ asset('admin/plugins/fontawesome-free/css/all.min.css') }}">

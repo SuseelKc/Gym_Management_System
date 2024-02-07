@@ -36,6 +36,7 @@
                                             <th>Email</th>
                                             <th>DOB</th>
                                             <th>Contact</th>
+                                            <th>Shifts</th>
                                             <th>Package</th>
                                             <th>Action</th>
                                         </tr>
@@ -57,6 +58,29 @@
                                             <td>{{$member->email}}</td>
                                             <td>{{$member->dob}}</td>
                                             <td>{{$member->contact_no}}</td>
+                                            <td>
+                                                @if ($member->shifts== \App\Enums\Shifts::Morning)
+                                                <a id="shifts"
+                                                href="{{ route('member.toggle', $member->id) }}"
+                                                class="badge p-2 rounded "
+                                                style="background-color: #ceefd1;color:#007b0b">
+                                                Morning</a>
+                                                @elseif($member->shifts== \App\Enums\Shifts::Day)
+                                                <a id="shifts"
+                                                href="{{ route('member.toggle', $member->id) }}"
+                                                class="badge p-2 rounded "
+                                                style="background-color: #ceefd1;color:#3790e8">
+                                                Day</a>
+                                                @else
+                                                <a id="shifts"
+                                                href="{{ route('member.toggle', $member->id) }}"
+                                                class="badge p-2 rounded "
+                                                style="background-color: #ceefd1;color:#ca9843">
+                                                Evening</a>
+                                                @endif
+
+
+                                            </td>
                                             <td>{{$member->package}}</td>
                                             <td>
                                             <a href="{{route('member.edit', $member->id)}}" title="Edit Member">

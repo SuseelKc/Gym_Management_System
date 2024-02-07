@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Exception;
 use App\Models\User;
+use App\Enums\Shifts;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -163,6 +164,30 @@ public function update(Member $member, $id, Request $request)
         catch(Exception $e){
             DB::rollBack();
         }
+    }
+    public function toggle($id){
+
+        try {
+            DB::beginTransaction();
+            $member = $this->memberRepository->getById($id);
+            
+            if ($member->shifts == Shifts::Morning) {
+                $member->shifts = Shifts::Day;
+            } 
+            elseif($member->shifts == Shifts::Day){
+                $member->shifts = Shifts::Evening;
+            }
+            else {
+                $member->shifts = Shifts::Morning;
+            }
+            $member->save();
+            DB::commit();
+            return $member;
+        } catch (Exception $e) {
+            DB::rollback();
+            throw new Exception(Message::Failed);
+        }
+
     }
     
 }

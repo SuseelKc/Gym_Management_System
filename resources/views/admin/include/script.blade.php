@@ -10,7 +10,7 @@
 <script src="{{ asset('admin/dist/js/adminlte.js') }}"></script>
 
 {{-- sweetalert --}}
-<script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
+{{-- <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script> --}}
 {{--  --}}
 <script>
     jQuery(document).ready(function() {

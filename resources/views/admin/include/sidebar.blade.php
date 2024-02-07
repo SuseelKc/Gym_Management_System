@@ -116,7 +116,7 @@
                     </a>
                 </li> 
 
-                {{-- Paymets --}}
+                {{-- Reports --}}
                 <li class="nav-item m-1">
                     <a href="
                    

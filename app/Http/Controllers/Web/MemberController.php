@@ -92,4 +92,17 @@ class MemberController extends Controller
 
         }
     }
+
+    public function toggle($id){
+        try{            
+            $member=Member::FindOrFail($id);
+            $member=$this->memberService->toggle($id);
+            toast('Member Shift Changed Successfully!','success');
+            return redirect()->intended(route('member.index'));    
+        }
+        catch(Exception $e){
+
+        }
+    }
+
 }
