@@ -54,6 +54,7 @@ class EquipmentsController extends Controller
            $equipment= new Equipment();
           
            $equipment= $this->equipmentService->add($equipment,$request);
+           toast('Equipment Added Successfully!','success');
      
            return redirect()->intended(route('equipments.index'));
            
@@ -81,7 +82,7 @@ class EquipmentsController extends Controller
 
             $equipment=Equipment::FindOrFail($id);
             $equipment=$this->equipmentService->update($equipment,$id,$request);
-            toast('Equipment Updated!','success');
+            toast('Equipment Updated Successfully!','success');
             return redirect()->intended(route('equipments.index'));
 
         }
@@ -94,6 +95,7 @@ class EquipmentsController extends Controller
         try{            
             $equipment=Equipment::FindOrFail($id);
             $equipment=$this->equipmentService->delete($id);
+            toast('Equipment Deleted Successfully!','success');
             return redirect()->intended(route('equipments.index'));    
         }
         catch(Exception $e){

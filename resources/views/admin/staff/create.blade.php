@@ -94,6 +94,20 @@
                                             @endif
                                         </div>
                                     </div>
+
+                                     {{--  --}}
+                                     <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="contact_no">Contact No</label>
+                                            <input type="contact_no" class="form-control" id="contact_no"
+                                                placeholder="Enter Contact Here" name="contact_no" required>
+                                            @if ($errors->has('contact_no'))
+                                                <x-validation-errors>
+                                                    {{ $errors->first('contact_no') }}
+                                                </x-validation-errors>
+                                            @endif
+                                        </div>
+                                    </div>
                                                                                                                                                                      
                                     {{--  --}}
                                     <div class="col-md-6">
@@ -110,19 +124,7 @@
                                     </div>
 
 
-                                    {{--  --}}
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="contact_no">Contact No</label>
-                                            <input type="contact_no" class="form-control" id="contact_no"
-                                                placeholder="Enter Email Here" name="contact_no" required>
-                                            @if ($errors->has('contact_no'))
-                                                <x-validation-errors>
-                                                    {{ $errors->first('contact_no') }}
-                                                </x-validation-errors>
-                                            @endif
-                                        </div>
-                                    </div>
+                                   
 
 
                                     {{--  --}}

@@ -24,9 +24,8 @@ class StaffController extends Controller
 
     public function index(Request $request){
         try{
-            // dd("Here");
+           
             $staff= $this->staffService->all();
-            toast('Welcome','success');
             return view('admin.staff.index',compact('staff'));
         }
         catch(Exception $e){
@@ -51,7 +50,7 @@ class StaffController extends Controller
         try{
             $staff= new Staff();        
             $staff= $this->staffService->add($staff,$request);
-            toast('Your Post as been submited!','success');
+            toast('New Staff Created Successfully!','success');
             return redirect()->intended(route('staffs.index'));
         }
         catch (\Exception $e) {
@@ -67,6 +66,7 @@ class StaffController extends Controller
         try{            
             $staff=Staff::FindOrFail($id);
             $staff=$this->staffService->delete($id);
+            toast('Staff Deleted Successfully!','success');
             return redirect()->intended(route('staffs.index'));    
         }
         catch(Exception $e){
@@ -90,6 +90,7 @@ class StaffController extends Controller
         try{            
             $staff=Staff::FindOrFail($id);
             $staff=$this->staffService->update($staff,$id,$request);
+            toast('Staff Updated Successfully!','success');
             return redirect()->intended(route('staffs.index'));    
         }
         catch(Exception $e){

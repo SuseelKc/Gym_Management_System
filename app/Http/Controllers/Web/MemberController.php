@@ -49,6 +49,7 @@ class MemberController extends Controller
         try{
            $member= new Member();        
            $member= $this->memberService->add($member,$request);
+           toast('Member Added Successfully!','success');
            return redirect()->intended(route('member.index'));
            
         }
@@ -72,6 +73,7 @@ class MemberController extends Controller
         try{            
             $member=Member::FindOrFail($id);
             $member=$this->memberService->update($member,$id,$request);
+            toast('Member Updated Successfully!','success');
             return redirect()->intended(route('member.index'));    
         }
         catch(Exception $e){
@@ -83,6 +85,7 @@ class MemberController extends Controller
         try{            
             $member=Member::FindOrFail($id);
             $member=$this->memberService->delete($id);
+            toast('Member Deleted Successfully!','success');
             return redirect()->intended(route('member.index'));    
         }
         catch(Exception $e){
