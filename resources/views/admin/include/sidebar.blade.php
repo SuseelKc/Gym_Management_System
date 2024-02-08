@@ -19,7 +19,7 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- ... (your existing menu items) ... -->
                 
-                <li class="nav-item m-1">
+                <li class="nav-item">
                     <a href="{{ route('dashboard') }}"
                         class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-home m-1 p-1"></i>
@@ -30,7 +30,7 @@
                 </li>
 
                 {{--members  --}}
-                <li class="nav-item m-1">
+                <li class="nav-item">
                     <a href="{{ route('member.index') }} "
                         class="nav-link {{ request()->is('members*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-users  m-1 p-1"></i>
@@ -41,7 +41,7 @@
                 </li>  
                 
                 {{-- equipments/assets --}}
-                <li class="nav-item m-1">
+                <li class="nav-item">
                     <a href="
                     {{ route('equipments.index') }}
                     "
@@ -55,8 +55,8 @@
                 </li> 
                 {{--  --}}
 
-    
-                <li class="nav-item m-1">
+                {{-- Staff --}}
+                <li class="nav-item">
                     <a href="
                     {{ route('staffs.index') }}
                     "
@@ -67,19 +67,25 @@
                         </p>
                     </a>
                 </li> 
-
-
-
                 {{--  --}}
 
-                
 
-                {{--  --}}
+                {{-- Reports --}}
+                <li class="nav-item">
+                    <a href="               
+                    "
+                        class="nav-link {{ request()->is('package*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-donate  m-1 p-1"></i>
+                        <p>
+                             Pricing & Package 
+                        </p>
+                    </a>
+                </li>
+                 {{--  --}}
 
                 {{-- shifts--}}
-                <li class="nav-item m-1">
-                    <a href="
-                  
+                <li class="nav-item">
+                    <a href="                 
                     "
                         class="nav-link {{ request()->is('shift*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-clock  m-1 p-1"></i>
@@ -88,12 +94,11 @@
                         </p>
                     </a>
                 </li> 
-
+                {{--  --}}
 
                  {{-- Shop --}}
-                 <li class="nav-item m-1">
-                    <a href="
-                    
+                 <li class="nav-item">
+                    <a href="                  
                     "
                         class="nav-link {{ request()->is('shop*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-shopping-bag  m-1 p-1"></i>
@@ -102,9 +107,10 @@
                         </p>
                     </a>
                 </li> 
+                {{--  --}}
 
                 {{-- Paymets --}}
-                <li class="nav-item m-1">
+                <li class="nav-item">
                     <a href="
                    
                     "
@@ -114,12 +120,12 @@
                             Payments
                         </p>
                     </a>
-                </li> 
+                </li>
+                 {{--  --}}
 
                 {{-- Reports --}}
-                <li class="nav-item m-1">
-                    <a href="
-                   
+                <li class="nav-item">
+                    <a href="               
                     "
                         class="nav-link {{ request()->is('reports*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-chart-bar  m-1 p-1"></i>
@@ -127,7 +133,9 @@
                             Reports
                         </p>
                     </a>
-                </li> 
+                </li>
+                 {{--  --}}
+                
             
             </ul>
         </nav>

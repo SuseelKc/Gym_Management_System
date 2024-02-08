@@ -63,19 +63,19 @@
                                                 <a id="shifts"
                                                 href="{{ route('member.toggle', $member->id) }}"
                                                 class="badge p-2 rounded "
-                                                style="background-color: #ceefd1;color:#007b0b">
+                                                style="background-color: #ceefd1;color:#53b15b">
                                                 Morning</a>
                                                 @elseif($member->shifts== \App\Enums\Shifts::Day)
                                                 <a id="shifts"
                                                 href="{{ route('member.toggle', $member->id) }}"
                                                 class="badge p-2 rounded "
-                                                style="background-color: #ceefd1;color:#3790e8">
+                                                style="background-color: #e1c32c;color:#3685d3">
                                                 Day</a>
                                                 @else
                                                 <a id="shifts"
                                                 href="{{ route('member.toggle', $member->id) }}"
                                                 class="badge p-2 rounded "
-                                                style="background-color: #ceefd1;color:#ca9843">
+                                                style="background-color: #303030;color:#dedcd9">
                                                 Evening</a>
                                                 @endif
 
