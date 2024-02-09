@@ -61,7 +61,6 @@ class MemberController extends Controller
     public function edit($id){
         try{            
             $member=Member::FindOrFail($id);
-            // dd($member);
             return view('admin.member.edit',compact('member'));          
         }
         catch(Exception $e){

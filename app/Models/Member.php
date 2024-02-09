@@ -20,8 +20,7 @@ class Member extends Model
     'address',
     'contact_no',
     'email',
-    'package'
-    
+    'package'   
     ];
     
     public function user()
