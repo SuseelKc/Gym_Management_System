@@ -38,4 +38,19 @@ class PricingController extends Controller
         }
     }
 
+    public function store(Request $request){
+        try{
+           $pricing= new Pricing();        
+           $pricing=  $this->pricingService->add($pricing,$request);
+           toast('Gym Package Added Successfully!','success');
+           return redirect()->intended(route('pricing.index'));
+           
+        }
+        catch(Exception $e){
+
+        }
+    }
+
+    
+
 }

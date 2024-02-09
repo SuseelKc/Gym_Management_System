@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\User;
+use App\Models\Pricing;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\PricingRepository;
 
@@ -26,7 +29,35 @@ public function all(){
         throw new Exception(Message::Failed);
     }
 
+}
 
+public function add(Pricing $pricing,Request $request){
+    try{
+        DB::beginTransaction();
+        $user = auth()->user();
+        $gym=User::FindOrFail($user->id);
+        $gymName = (string) $gym->name;
+
+        $pricing->name=$request->name;
+        $pricing->costs=$request->costs;
+        $pricing->costs_type=$request->costs_type;
+        $pricing->start_date=$request->start_date;
+        $pricing->end_date=$request->end_date;
+        $pricing->gym_id=$user->id;
+
+        $pricing->save();
+        
+        
+        DB::commit();
+        return $pricing;
+    }
+    catch(Exception $e){
+        DB::rollBack();
+        // Log the error message
+        \Log::info('Error during package save: ' . $e->getMessage());
+        // Display a generic error message to the user
+        return redirect()->back()->with('error', 'An error occurred while saving the package and pricing information.');
+    }
 
 }
 

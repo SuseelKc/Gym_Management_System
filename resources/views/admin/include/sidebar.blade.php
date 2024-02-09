@@ -77,8 +77,8 @@
                     "
                         class="nav-link {{ request()->is('pricing*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-donate  m-1 p-1"></i>
-                        <p>
-                             Pricing & Packages
+                        <p>                            
+                            Packages & Pricing
                         </p>
                     </a>
                 </li>

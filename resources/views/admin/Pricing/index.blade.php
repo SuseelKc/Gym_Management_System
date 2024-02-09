@@ -30,7 +30,8 @@
                                 <table class="datatable table">
                                     <thead>
                                         <tr>
-                                            <th>S.No</th>                         
+                                            <th>S.No</th> 
+                                            <th>Name</th>                        
                                             <th>Costs</th>
                                             <th>Costs Type</th>                                                                                  
                                             <th>Start Date</th>                                            
@@ -43,28 +44,19 @@
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$pricing->name}}</td>                  
-                                            <td>{{$pricing->costs}}</td>
-
-                                            {{-- @if($pricing->weight)
-                                                <td>{{$pricing->weight}} KG</td>
-                                            
-                                            @else
-                                                <td></td>
-                                            
-                                            @endif --}}
-
+                                            <td>{{$pricing->costs}}</td>                                         
                                             <td>{{$pricing->costs_type}}</td>
                                             <td>{{$pricing->start_date}}</td>
-                                            <th>{{$pricing->end_date}}</th>                                     
-                                            {{-- <td>
-                                                <a href="{{route('equipments.edit', $equipment->id)}}" title="Edit Equipments">
+                                            <td>{{$pricing->end_date}}</td>                                     
+                                            <td>
+                                                {{-- <a href="{{route('equipments.edit', $equipment->id)}}" title="Edit Equipments">
                                                             <i class="fas fa-edit fa-lg"></i></a>
                                                 <a type="button"  data-toggle="modal" data-target="#deleteModal"  data-equipment-id="{{$equipment->id}}"
                                                 data-equipment-name="{{$equipment->name}}"
                                                 href="#" title="Delete Equipment">
                                                 <i class="fas fa-times-circle fa-lg" style="color: red;"></i>
-                                                </a>                                        
-                                            </td> --}}
+                                                </a>                                         --}}
+                                            </td>
 
                                         </tr>
                                         @endforeach    
