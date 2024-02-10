@@ -1,12 +1,6 @@
 @extends('admin.admin')
-@section('title','Create Equipments')
+@section('title','Create Package')
 @section('content')
-
-@if(session('message'))
-<div class="alert alert-danger">
-    {{ session('message') }}
-</div>
-@endif
 
 <div class="content">
     <section class="content-header">
@@ -15,7 +9,7 @@
                 <div class="col-sm-12">
                     <ol class="breadcrumb float-right">
                         <li class="breadcrumb-item">
-                            <a href="{{ route('equipments.index') }}">Equipments</a>
+                            <a href="{{ route('pricing.index') }}">Pricing & Packages</a>
                         </li> 
                         <li class="breadcrumb-item active">Edit</li>
                     </ol>
@@ -29,13 +23,13 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h2 class="card-title font-weight-bold">Add Equipments</h2>
+                            <h2 class="card-title font-weight-bold">Edit Package/Pricing</h2>
                         </div>
                         <form method="POST" action=" 
-                        {{route('equipments.update',$equipment->id)}}
+                        {{route('pricing.update',$pricing->id)}}
                         " enctype="multipart/form-data">
+                        @method('PATCH')
                             @csrf
-                            @method('PATCH')
                             
                             <div class="card-body">
                                 <div class="row">
@@ -44,7 +38,7 @@
                                         <div class="form-group">
                                             <label for="Name">Name</label>
                                             <input type="text" class="form-control" id="name"
-                                                placeholder="Enter Name Here" name="name" value="{{$equipment->name}}">
+                                                placeholder="Enter Name Here" name="name" value="{{$pricing->name}}" >
                                             @if ($errors->has('name'))
                                                 <x-validation-errors>
                                                     {{ $errors->first('name') }}
@@ -67,82 +61,58 @@
                                     </div>
                                     <!--  -->
 
-
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="weight">Weight(KG)</label>
-                                            <input type="number" class="form-control" id="weight"
-                                             placeholder="Enter Weight Here" name="weight"  value="{{$equipment->weight}}" step="any">
-                                            @if ($errors->has('weight'))
-                                                <x-validation-errors>
-                                                    {{ $errors->first('weight') }}
-                                                </x-validation-errors>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="qty">Quantity</label>
-                                            <input type="decimal" class="form-control" id="qty"
-                                                placeholder="Enter Quantity Here" name="qty" value="{{$equipment->qty}}">
-                                            @if ($errors->has('qty'))
-                                                <x-validation-errors>
-                                                    {{ $errors->first('qty') }}
-                                                </x-validation-errors>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="created_at">Added At</label>
-                                            <input type="text" class="form-control" id="created_at"
-                                                name="created_at"  value="{{ $equipment->created_at->format('Y-m-d') }}" readonly>
-                                            @if ($errors->has('created_at'))
-                                                <x-validation-errors>
-                                                    {{ $errors->first('created_at') }}
-                                                </x-validation-errors>
-                                            @endif
-                                        </div>
-                                    </div>
-                                
-
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="maintenance_period">Maintenance Period (Gap)</label>
+                                            <label for="costs">Costs</label>
                                             <div class="d-flex align-items-center">
-                                                <input type="number" class="form-control mr-2" id="maintenance_period_input" style="width: 150px;" 
-                                                       name="maintenance_period" value="{{$equipment->maintenance_period}}">
-                                                <select id="maintenance_type" style="height: 30px;" name="maintenance_type" value="{{$equipment->maintenance_type}}">
-                                                    <option value="year">Year</option>
-                                                    <option value="month">Month</option>
-                                                    <option value="days">Days</option>
+                                                <input type="decimal" class="form-control mr-2" id="costs" style="width: 150px;"
+                                                       name="costs" value="{{$pricing->costs}}">
+                                                <select id="costs_type" style="height: 30px;" name="costs_type">
+                                                    <option value="Year" {{ $pricing->costs_type == 'Year' ? 'selected' : '' }}>Yearly</option>
+                                                    <option value="Month" {{ $pricing->costs_type == 'Month' ? 'selected' : '' }}>Monthly</option>
+                                                    <option value="Days" {{ $pricing->costs_type == 'Days' ? 'selected' : '' }}>Daily</option>
                                                 </select>
                                             </div>
-                                            @if ($errors->has('maintenance_period'))
+                                            @if ($errors->has('costs'))
                                                 <x-validation-errors>
-                                                    {{ $errors->first('maintenance_period') }}
+                                                    {{ $errors->first('costs') }}
                                                 </x-validation-errors>
                                             @endif
                                         </div>
                                     </div>
-                                                                                                       
 
+
+                                    
+                                    {{--  --}}
                                     <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="photo">Upload Image</label>
-                                            <input type="file" class="form-control" id="photo" name="photo">
-                                            @if($equipment->image == null)
-                                                <img src = "/images/defaultequipment.jpg" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
+                                        <div class="form-row">
+                                            <div class="form-group" style="margin-right: 10px;">
+                                                <label for="start_date">Start Date</label>
+                                                <input type="date" class="form-control" id="start_date" required name="start_date" value="{{ $pricing->start_date }}">
+                                                @if ($errors->has('start_date'))
+                                                    <x-validation-errors>
+                                                        {{ $errors->first('start_date') }}
+                                                    </x-validation-errors>
+                                                @endif
+                                            </div>
+                                        
 
-                                            @else
-                                            <img src="/images/equipments/{{$equipment->image}}"
-                                            style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;"/>
-                                            @endif
+                                            <div class="form-group" style="margin-left: 20px;">
+                                                <label for="end_date">End Date</label>
+                                                <input type="date" class="form-control" id="end_date"  name="end_date" value="{{ $pricing->end_date }}">
+                                                @if ($errors->has('end_date'))
+                                                    <x-validation-errors>
+                                                        {{ $errors->first('end_date') }}
+                                                    </x-validation-errors>
+                                                @endif
+                                            </div>
                                         </div>
-                                    </div>
+                                        
 
+                                   </div>
+                                    {{--  --}}
+
+                                                                                                                                         
                                 </div>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary px-3">Submit</button>

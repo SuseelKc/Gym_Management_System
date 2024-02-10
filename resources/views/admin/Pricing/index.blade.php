@@ -49,13 +49,13 @@
                                             <td>{{$pricing->start_date}}</td>
                                             <td>{{$pricing->end_date}}</td>                                     
                                             <td>
-                                                {{-- <a href="{{route('equipments.edit', $equipment->id)}}" title="Edit Equipments">
+                                                <a href="{{route('pricing.edit', $pricing->id)}}" title="Edit Package">
                                                             <i class="fas fa-edit fa-lg"></i></a>
-                                                <a type="button"  data-toggle="modal" data-target="#deleteModal"  data-equipment-id="{{$equipment->id}}"
-                                                data-equipment-name="{{$equipment->name}}"
-                                                href="#" title="Delete Equipment">
+                                                <a type="button"  data-toggle="modal" data-target="#deleteModal"  data-pricing-id="{{$pricing->id}}"
+                                                data-pricing-name="{{$pricing->name}}"
+                                                href="#" title="Delete Package">
                                                 <i class="fas fa-times-circle fa-lg" style="color: red;"></i>
-                                                </a>                                         --}}
+                                                </a>                                        
                                             </td>
 
                                         </tr>
@@ -74,20 +74,20 @@
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-    <div class="modal-header">
+            <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <input type="hidden" id="equipmentIdToDelete">
-                 <p id="equipmentNameToDelete"></p>
+                <input type="hidden" id="pricingIdToDelete">
+                 <p id="packageNameToDelete"></p>
                 <!-- ... other modal content ... -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" onclick="deleteEquipment()">Delete</button>
+                <button type="button" class="btn btn-danger" onclick="deletePricing()">Delete</button>
             </div>
     </div>
   </div>
@@ -97,21 +97,21 @@
     $(document).ready(function () {
         // Update the modal input field when the anchor tag is clicked
         $('a[data-target="#deleteModal"]').on('click', function () {
-            var equipmentId = $(this).data('equipment-id');
-            var equipmentName = $(this).data('equipment-name');
+            var pricingId = $(this).data('pricing-id');
+            var pricingName = $(this).data('pricing-name');
 
-            $('#equipmentIdToDelete').val(equipmentId);
-            $('#equipmentNameToDelete').text('Are you sure you want to delete ' + equipmentName + '?');
+            $('#pricingIdToDelete').val(pricingId);
+            $('#packageNameToDelete').text('Are you sure you want to delete ' + pricingName + ' package ?');
         });
 
         // Function to handle the delete button click
-        window.deleteEquipment = function () {
+        window.deletePricing = function () {
             // Get the ID from the input field
-            var equipmentId = $('#equipmentIdToDelete').val();
+            var pricingId = $('#pricingIdToDelete').val();
 
-            // Construct the delete route with the equipmentId
-            var deleteRoute = '{{ route("equipments.delete", ":id") }}';
-            deleteRoute = deleteRoute.replace(':id', equipmentId);
+            // Construct the delete route with the pricingId
+            var deleteRoute = '{{ route("pricing.delete", ":id") }}';
+            deleteRoute = deleteRoute.replace(':id', pricingId);
 
             // Perform the delete operation by navigating to the delete route
             window.location.href = deleteRoute;

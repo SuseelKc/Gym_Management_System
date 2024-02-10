@@ -115,9 +115,9 @@
                                                 <input type="number" class="form-control mr-2" id="maintenance_period_input" style="width: 150px;" 
                                                        name="maintenance_period" value="{{$equipment->maintenance_period}}">
                                                 <select id="maintenance_type" style="height: 30px;" name="maintenance_type" value="{{$equipment->maintenance_type}}">
-                                                    <option value="year">Year</option>
-                                                    <option value="month">Month</option>
-                                                    <option value="days">Days</option>
+                                                    <option value="year" {{ $equipment->maintenance_type == 'Year' ? 'selected' : '' }}>Year</option>
+                                                    <option value="month" {{ $equipment->maintenance_type == 'Month' ? 'selected' : '' }}>Month</option>
+                                                    <option value="days" {{ $equipment->maintenance_type == 'Days' ? 'selected' : '' }}>Days</option>
                                                 </select>
                                             </div>
                                             @if ($errors->has('maintenance_period'))

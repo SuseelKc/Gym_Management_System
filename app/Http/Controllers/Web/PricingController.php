@@ -51,6 +51,42 @@ class PricingController extends Controller
         }
     }
 
-    
+    public function edit($id){
+        try{            
+            $pricing=Pricing::FindOrFail($id);
+            $gym_id=auth()->id();
+            $gym=User::FindOrFail($gym_id);
+            return view('admin.pricing.edit',compact('pricing','gym'));          
+        }
+        catch(Exception $e){
+
+        }
+    }
+
+    public function update(Request $request,$id){
+        try{            
+            $pricing=Pricing::FindOrFail($id);
+            $pricing=$this->pricingService->update($pricing,$id,$request);
+            toast('Gym Package Updated Successfully!','success');
+            return redirect()->intended(route('pricing.index'));    
+        }
+        catch(Exception $e){
+
+        }
+    }
+
+    public function delete($id){
+        try{
+            $pricing=Pricing::FindOrFail($id);
+            $pricing=$this->pricingService->delete($id);
+            toast('Gym Package Deleted Successfully!','success');
+            return redirect()->intended(route('pricing.index'));
+
+        }
+        catch(Exception $e){
+
+        }
+
+    }
 
 }
