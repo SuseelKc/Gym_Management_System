@@ -84,14 +84,30 @@
                 </li>
                  {{--  --}}
 
+                {{-- Paymets --}}
+                <li class="nav-item">
+                    <a href="
+                   
+                    "
+                        class="nav-link {{ request()->is('payments*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-cash-register  m-1 p-1"></i>
+                        <p>
+                            Payments
+                        </p>
+                    </a>
+                </li>
+                 {{--  --}} 
+
+
+
                 {{-- shifts--}}
                 <li class="nav-item">
                     <a href="                 
                     "
-                        class="nav-link {{ request()->is('shift*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-clock  m-1 p-1"></i>
+                        class="nav-link {{ request()->is('ledger*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-book  m-1 p-1"></i>
                         <p>
-                            Shifts
+                            Payment Ledger
                         </p>
                     </a>
                 </li> 
@@ -110,19 +126,7 @@
                 </li> 
                 {{--  --}}
 
-                {{-- Paymets --}}
-                <li class="nav-item">
-                    <a href="
-                   
-                    "
-                        class="nav-link {{ request()->is('payments*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-cash-register  m-1 p-1"></i>
-                        <p>
-                            Payments
-                        </p>
-                    </a>
-                </li>
-                 {{--  --}}
+                
 
                 {{-- Reports --}}
                 <li class="nav-item">
