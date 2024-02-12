@@ -5,4 +5,4 @@ use App\Http\Controllers\Web\UserController;
 
 
 
-Route::get('/member',[UserController::class,'index'])->name('user.index');
+// Route::get('/member',[UserController::class,'index'])->name('user.index');

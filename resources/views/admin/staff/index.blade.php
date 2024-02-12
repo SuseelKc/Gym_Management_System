@@ -40,10 +40,9 @@
                                     <thead>
                                         <tr>
                                             <th>S.No</th>
-                                            <th>ID</th>
+                                            <th>ID No.</th>
                                             <th>Image</th>
                                             <th>Name</th>            
-                                            {{-- <th>Gym</th>   --}}
                                             <th>D.O.B</th>
                                             <th>Address</th>  
                                             <th>Position</th>                                                                                  
@@ -65,12 +64,10 @@
                                                     <img src = "/images/staff/{{$staff->photo}}" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
                                                 @endif
                                             </td>
-                                            <td>{{$staff->name}}</td>
-                              
-                                            {{-- <td>{{$}}</td> --}}
+                                            <td>{{$staff->name}}</td>                             
                                             <td>{{$staff->dob}}</td>
-                                            <th>{{$staff->address}}</th>
-                                            <th>{{$staff->position}}</th>
+                                            <td>{{$staff->address}}</td>
+                                            <td>{{$staff->position}}</td>
                                             <td>{{$staff->contact_no}}</td>
                                             <td>{{$staff->email}}</td>
                                             <td>

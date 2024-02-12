@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('address');
             $table->string('contact_no');
             $table->string('email')->nullable();
-            $table->string('package')->nullable();//adding as fk form pricing
             $table->integer('shifts')->default(Shifts::Morning);
             $table->timestamps();
         });

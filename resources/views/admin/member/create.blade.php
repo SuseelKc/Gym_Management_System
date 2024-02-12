@@ -121,6 +121,26 @@
                                             </div>
                                         </div>
 
+                                      
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="pricing">Package</label><br>
+                                                <select id="pricing" name="pricing">
+                                                    <option value="">Not Selected</option>
+                                                    @foreach($pricing as $packageItem)
+                                                        <option value="{{ $packageItem['id'] }}">{{ $packageItem['name'] }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('pricing'))
+                                                    <x-validation-errors>
+                                                        {{ $errors->first('pricing') }}
+                                                    </x-validation-errors>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        
+                                        
+
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="photo">Upload Image</label>

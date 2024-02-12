@@ -124,6 +124,32 @@
 
                                         <div class="col-md-6">
                                             <div class="form-group">
+                                                <label for="pricing">Package</label><br>
+                                                <select id="pricing" name="pricing" readonly>    
+                                                    @if($member->pricing_id != null)                                             
+                                                        @foreach($pricing as $packageItem)
+                                                            <option value="{{ $packageItem['id'] }}" {{ old('pricing') == $packageItem['id'] ? 'selected' : '' }}>{{ $packageItem['name'] }}</option>
+                                                        @endforeach
+                                                        <option value="">Not Selected</option>
+                                                    @else
+                                                        <option value="">Not Selected</option>
+                                                        @foreach($pricing as $packageItem)
+                                                        <option value="{{ $packageItem['id'] }}" {{ old('pricing') == $packageItem['id'] ? 'selected' : '' }}>{{ $packageItem['name'] }}</option>
+                                                        @endforeach
+                                                    @endif    
+
+                                                </select>
+                                                @if ($errors->has('pricing'))
+                                                    <x-validation-errors>
+                                                        {{ $errors->first('pricing') }}
+                                                    </x-validation-errors>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
                                                 <label for="photo">Upload Image</label>
                                                 <input type="file" class="form-control" id="photo" name="photo">
                                                 @if($member->photo == null)

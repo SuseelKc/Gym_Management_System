@@ -79,6 +79,7 @@ public function add(Member $member, Request $request)
         $member->address = $request->address;
         $member->contact_no = $request->contact_no;
         $member->email = $request->email;
+        $member->pricing_id = $request->pricing;
 
         if ($request->hasFile('photo')) {
             $gallery = $request->file('photo');
@@ -115,6 +116,8 @@ public function update(Member $member, $id, Request $request)
         $member->address = $request->address;
         $member->contact_no = $request->contact_no;
         $member->email = $request->email;
+        $member->pricing_id = $request->pricing;
+
 
         if ($request->hasFile('photo')) {
 
