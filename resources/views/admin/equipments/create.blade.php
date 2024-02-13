@@ -84,7 +84,7 @@
                                         <div class="form-group">
                                             <label for="qty">Quantity</label>
                                             <input type="decimal" class="form-control" id="qty"
-                                                placeholder="Enter Quantity Here" name="qty" value="">
+                                                placeholder="Enter Quantity Here" name="qty" value="" required>
                                             @if ($errors->has('qty'))
                                                 <x-validation-errors>
                                                     {{ $errors->first('qty') }}

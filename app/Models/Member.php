@@ -21,13 +21,17 @@ class Member extends Model
     'address',
     'contact_no',
     'email',
-    'package'   
+    'pricing_id'   
     ];
     
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-  
+    public function pricing()
+    {
+        return $this->belongsTo(Pricing::class, 'pricing_id');
+    }
+
 
 }

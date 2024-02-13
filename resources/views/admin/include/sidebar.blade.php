@@ -84,6 +84,20 @@
                 </li>
                  {{--  --}}
 
+                {{-- Ledger--}}
+                <li class="nav-item">
+                    <a href=" 
+                    {{ route('ledger.index') }}                       
+                    "
+                        class="nav-link {{ request()->is('ledger*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-book  m-1 p-1"></i>
+                        <p>
+                            Payment Ledger
+                        </p>
+                    </a>
+                </li> 
+                {{--  --}}
+
                 {{-- Paymets --}}
                 <li class="nav-item">
                     <a href="
@@ -100,18 +114,7 @@
 
 
 
-                {{-- shifts--}}
-                <li class="nav-item">
-                    <a href="                 
-                    "
-                        class="nav-link {{ request()->is('ledger*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-book  m-1 p-1"></i>
-                        <p>
-                            Payment Ledger
-                        </p>
-                    </a>
-                </li> 
-                {{--  --}}
+                
 
                  {{-- Shop --}}
                  <li class="nav-item">

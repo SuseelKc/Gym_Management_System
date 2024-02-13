@@ -81,7 +81,11 @@
 
 
                                             </td>
-                                            <td>{{$member->package}}</td>
+                                            @if(($member->pricing))
+                                                <td>{{$member->pricing->name}}</td>
+                                            @else
+                                                <td>N/A</td>
+                                            @endif
                                             <td>
                                             <a href="{{route('member.edit', $member->id)}}" title="Edit Member">
                                                         <i class="fas fa-edit fa-lg"></i></a>
