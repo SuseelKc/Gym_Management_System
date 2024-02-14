@@ -22,12 +22,12 @@
                     <div class="card">
                         <div class="ml-2 mt-5 mb-3">
                             <label>Members </label>
-                            <select name="cars" id="cars">
-                                @foreach($member as $member)
-                                    <option value="{{ $member['id'] }}">{{ $member['name'] }}</option>
+                            <select name="members" id="members">
+                                @foreach($members as $singleMember)
+                                    <option value="{{ $singleMember['id'] }}">{{ $singleMember['name'] }}</option>
                                 @endforeach
                             </select>
-                            <a href="{{ route('ledger.search', $member['id']) }}" class="btn btn-primary">Search</a>  
+                            <a href="#" id="searchLink" class="btn btn-primary"><i class='fas fa-search'></i></a>  
                         </div>
                            
                             {{-- <div class="">                             
@@ -50,32 +50,20 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @foreach ($member as $member)
+                                        @foreach ($ledger as $ledger)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{$member->serial_no}}</td>
-                                            <td>
-                                                    @if ($member->photo == null)
-                                                        <img src = "/images/defaultimage.jpg" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
-                                                    @else
-                                                        <img src = "/images/members/{{$member->photo}}" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
-                                                    @endif
-                                            </td>
-                                            <td>{{$member->name}}</td>
-                                            <td>{{$member->user->name}}</td>
-                                            <td>{{$member->email}}</td>
-                                            <td>{{$member->dob}}</td>
-                                            <td>{{$member->contact_no}}</td>
-                                            <td>
+                                            <td>{{$ledger->date}}</td>                                          
+                                            <td>{{$ledger->debit}}</td>
+                                            <td>{{$ledger->credit}}</td>
+                                            <td>{{$ledger->balance}}</td>
+                                            <td>{{$ledger->member_id}}</td>
+                                            <td>{{$ledger->gym_id}}</td>
+                                            <td></td>
                                             
-                                            </td>
-                                           
-                                            <td>
-                                                                                  
-                                            </td>
 
                                         </tr>
-                                        @endforeach     --}}
+                                        @endforeach    
                                     </tbody>
                                 </table>
                             </div>
@@ -88,3 +76,11 @@
 
 <!--  -->
 @endsection
+
+<script>
+    document.getElementById('members').addEventListener('change', function() {
+        var memberId = this.value; // Get the selected member ID
+        var searchLink = document.getElementById('searchLink');
+        searchLink.href = "http://127.0.0.1:8000/ledger#" + memberId;
+    });
+</script>

@@ -38,4 +38,21 @@ class LedgerService
         }
     }
 
+
+    public function search($id){
+        try{
+            DB::beginTransaction();
+            $user = auth()->user();
+            $user_id=$user->id;
+            $ledger= $this->ledgerRepository->getById($id);
+            DB::commit();
+            return $ledger;
+        }
+        catch(Exception $e){
+            DB::rollBack();
+            throw new Exception(Message::Failed);
+        }
+
+
+    }
 }

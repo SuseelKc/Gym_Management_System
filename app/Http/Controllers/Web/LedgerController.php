@@ -19,9 +19,21 @@ class LedgerController extends Controller
     public function index(){
         try{
             $ledger=$this->ledgerService->all(); 
-            $member= $this->memberService->all()->ToArray(); 
-            // dd($member);        
-            return view('admin.ledger.index',compact('ledger','member'));
+            $members= $this->memberService->all()->ToArray();                   
+            return view('admin.ledger.index',compact('ledger','members'));
+        }
+        catch(Exception $e){
+
+        }
+    }
+    public function search($id){
+        try{
+            
+            $ledger=$this->ledgerService->search($id);
+            // dd($id);
+            $members= $this->memberService->all()->ToArray();  
+            return view('admin.ledger.index',compact('ledger','members'));
+          
         }
         catch(Exception $e){
 
