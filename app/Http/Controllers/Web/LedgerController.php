@@ -27,8 +27,7 @@ class LedgerController extends Controller
         }
     }
     public function search($id){
-        try{
-            
+        try{           
             $ledger=$this->ledgerService->search($id);
             // dd($id);
             $members= $this->memberService->all()->ToArray();  

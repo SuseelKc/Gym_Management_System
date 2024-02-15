@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Enums\Shifts;
 use App\Models\Member;
 use Illuminate\Http\Request;
+use App\Services\LedgerService;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\File;
@@ -14,10 +15,11 @@ use App\Repositories\MemberRepository;
 
 class MemberService
 {
-    public function __construct(MemberRepository $memberRepository,UserRepository $userRepository)
+    public function __construct(MemberRepository $memberRepository,UserRepository $userRepository,LedgerService $ledgerService)
     {
         $this->memberRepository = $memberRepository;
         $this->userRepository = $userRepository;
+        $this->ledgerService= $ledgerService;
     }
 
     public function all()
@@ -89,10 +91,30 @@ public function add(Member $member, Request $request)
             $member->photo = $filename;
         }
 
+        // if package(pricing)exists
+        if( $member->pricing_id != null){
+
+            $legder= new Ledger();
+            // $legder=$this->ledgerService->add($legder,$request,$member->pricing_id);
+            $ledger->date= Carbon::now();
+            
+            $pricing=$this->pricingRepository->getById($member->pricing_id);
+            $ledger->debit=$pricing->costs;
+            $ledger->balance=$pricing->costs;
+
+            $legder->member_id=$member->id;
+            $ledger->gym_id=$user->id;
+            $ledger->save();
+
+
+
+        }
+
+        // 
         $member->save();
 
         DB::commit();
-        return $member;
+        return [$member, $ledger];
         
     } catch (Exception $e) {
         DB::rollBack();

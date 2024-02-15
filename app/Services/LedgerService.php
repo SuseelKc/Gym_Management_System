@@ -15,13 +15,15 @@ use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\File;
 use App\Repositories\LedgerRepository;
 use App\Repositories\MemberRepository;
+use App\Repositories\PricingRepository;
 use App\Repositories\EquipmentRepository;
 
 class LedgerService
 {
-    public function __construct(LedgerRepository $ledgerRepository)
+    public function __construct(LedgerRepository $ledgerRepository,PricingRepository $pricingRepository)
     {       
         $this->ledgerRepository = $ledgerRepository;
+        $this->pricingRepository = $pricingRepository;
     }
 
     public function all()
@@ -53,6 +55,33 @@ class LedgerService
             throw new Exception(Message::Failed);
         }
 
+
+    }
+    public function add(Ledger $ledger, Request $request,$id)
+    {
+        try{
+            DB::beginTransaction();
+            $user = auth()->user();
+            $ledger->date= Carbon::now();
+            
+            $pricing=$this->pricingRepository->getById($id);
+            $ledger->debit=$pricing->costs;
+            $ledger->balance=$pricing->costs;
+
+            
+
+            
+
+
+
+
+            DB::commit();
+            return $ledger;
+        }
+        catch(Exception $e){
+            DB::rollBack();
+            throw new Exception(Message::Failed);
+        }
 
     }
 }
