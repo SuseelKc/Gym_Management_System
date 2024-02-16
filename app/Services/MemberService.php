@@ -3,23 +3,29 @@
 namespace App\Services;
 
 use Exception;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Enums\Shifts;
+
+use App\Models\Ledger;
 use App\Models\Member;
+use App\Models\Pricing;
 use Illuminate\Http\Request;
 use App\Services\LedgerService;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\File;
 use App\Repositories\MemberRepository;
+use App\Repositories\PricingRepository;
 
 class MemberService
 {
-    public function __construct(MemberRepository $memberRepository,UserRepository $userRepository,LedgerService $ledgerService)
+    public function __construct(MemberRepository $memberRepository,UserRepository $userRepository,LedgerService $ledgerService,PricingRepository $pricingRepository)
     {
         $this->memberRepository = $memberRepository;
         $this->userRepository = $userRepository;
         $this->ledgerService= $ledgerService;
+        $this->pricingRepository=$pricingRepository;
     }
 
     public function all()
@@ -91,30 +97,20 @@ public function add(Member $member, Request $request)
             $member->photo = $filename;
         }
 
+        $member->save();
         // if package(pricing)exists
         if( $member->pricing_id != null){
-
-            $legder= new Ledger();
-            // $legder=$this->ledgerService->add($legder,$request,$member->pricing_id);
-            $ledger->date= Carbon::now();
-            
-            $pricing=$this->pricingRepository->getById($member->pricing_id);
-            $ledger->debit=$pricing->costs;
-            $ledger->balance=$pricing->costs;
-
-            $legder->member_id=$member->id;
-            $ledger->gym_id=$user->id;
-            $ledger->save();
-
-
-
+                   
+            $pricing = $this->pricingRepository->getById($member->pricing_id);
+            $this->ledgerService->add($member, $pricing);
+                      
         }
 
-        // 
-        $member->save();
+        //      
 
         DB::commit();
-        return [$member, $ledger];
+        return $member;
+        
         
     } catch (Exception $e) {
         DB::rollBack();

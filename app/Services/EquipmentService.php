@@ -24,7 +24,7 @@ class EquipmentService
     }
 
     public function all()
-{
+    {
     try {
         DB::beginTransaction();
         $user = auth()->user();

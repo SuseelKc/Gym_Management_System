@@ -5,7 +5,9 @@ namespace App\Services;
 use Exception;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Ledger;
 use App\Models\Member;
+use App\Models\Pricing;
 use App\Models\Equipment;
 use Illuminate\Http\Request;
 use App\Services\EquipmentService;
@@ -57,31 +59,22 @@ class LedgerService
 
 
     }
-    public function add(Ledger $ledger, Request $request,$id)
+
+    public function add(Member $member, Pricing $pricing)
     {
-        try{
-            DB::beginTransaction();
-            $user = auth()->user();
-            $ledger->date= Carbon::now();
-            
-            $pricing=$this->pricingRepository->getById($id);
-            $ledger->debit=$pricing->costs;
-            $ledger->balance=$pricing->costs;
-
-            
-
-            
-
-
-
-
-            DB::commit();
+        try {
+            $ledger = new Ledger();
+            $ledger->date = Carbon::now();
+            $ledger->debit = $pricing->costs;
+            $ledger->balance = $pricing->costs;
+            $ledger->member_id = $member->id;
+            $ledger->gym_id = auth()->id();
+            $ledger->save();
             return $ledger;
+        } catch (Exception $e) {
+            throw new Exception("Failed to add ledger entry: " . $e->getMessage());
         }
-        catch(Exception $e){
-            DB::rollBack();
-            throw new Exception(Message::Failed);
-        }
-
     }
-}
+
+ 
+}    

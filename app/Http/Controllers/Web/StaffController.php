@@ -22,7 +22,7 @@ class StaffController extends Controller
        
     }
 
-    public function index(Request $request){
+    public function index(){
         try{
            
             $staff= $this->staffService->all();
