@@ -23,6 +23,7 @@
                         <div class="ml-2 mt-5 mb-3">
                             <label>Members</label>
                             <select name="members" id="members">
+                                    <option href="" value="">Select Memeber</option>
                                 @foreach($members as $singleMember)
                                     <option value="{{ $singleMember['id'] }}">{{ $singleMember['name'] }}</option>
                                 @endforeach
@@ -83,6 +84,7 @@
                 
                 // Update the href attribute of the search button with the constructed URL
                 $('#searchBtn').attr('href', url);
+                console.log("Href updated:", $('#searchBtn').attr('href')); // Debugging line
             });
         });
     </script>
