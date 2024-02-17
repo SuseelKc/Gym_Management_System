@@ -20,17 +20,22 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="ml-2 mt-5 mb-3">
-                            <label>Members</label>
-                            <select name="members" id="members">
-                                    <option href="" value="">Select Memeber</option>
-                                @foreach($members as $singleMember)
-                                    <option value="{{ $singleMember['id'] }}">{{ $singleMember['name'] }}</option>
-                                @endforeach
-                            </select>
-                            <a href="#" class="btn btn-primary" id="searchBtn"><i class='fas fa-search'></i></a>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="ml-2 mt-3 mb-3">
+                                    <label>Members</label>
+                                    <select name="members" id="members">
+                                        <option href="" value="">Select Memeber</option>
+                                        @foreach($members as $singleMember)
+                                            <option value="{{ $singleMember['id'] }}">{{ $singleMember['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    <a href="#" class="btn btn-primary" id="searchBtn" style="padding: 4px 10px;"><i class='fas fa-search'></i></a>
+
+                                </div>
+                            </div>
+                           
                         </div>
-                        
 
                         <div class="card-body table-responsive p-2">
                             <table class="datatable table">
