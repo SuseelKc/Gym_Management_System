@@ -38,10 +38,20 @@
                                 <div class="ml-3 mt-4 mb-0 text-center">
                                     <h5>
                                         <label style="font-weight: bold; color: #007bff;">Member :</label>
-                                        <span >{{ $selectedMember->name }}</span>
+                                        <span >{{ $selectedMember->name }}</span> <span >({{ $selectedMember->serial_no }})</span>
                                     </h5>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="ml-3 mt-1 mb-3 text-center">
+                                    <a href="#"
+                                    class="btn btn-primary px-4 m-2 float-right">Payment</a>  
+                                </div>
+                            </div>
+
+
+
+
                         </div>
                         
                        

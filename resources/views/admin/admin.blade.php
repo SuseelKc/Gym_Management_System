@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+@section('title','Dashboard')   
 @include('admin.include.head')
 
     <body class="hold-transition sidebar-mini layout-fixed layout-footer-fixed">

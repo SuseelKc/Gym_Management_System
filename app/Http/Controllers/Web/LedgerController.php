@@ -33,7 +33,6 @@ class LedgerController extends Controller
             $ledger=$this->ledgerService->search($id);
             $selectedMember=$this->memberRepository->getById($id);          
             $members= $this->memberService->all()->ToArray();  
-            // dd($ledger);
             return view('admin.ledger.search',compact('ledger','members','selectedMember'));
           
         }

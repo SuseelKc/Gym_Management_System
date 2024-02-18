@@ -47,7 +47,7 @@
                                         <th>Credit</th>
                                         <th>Balance</th>
                                         <th>Member</th>
-                                        <th>Package</th>
+                                      
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -59,8 +59,8 @@
                                         <td>{{$ledger->debit}}</td>
                                         <td>{{$ledger->credit}}</td>
                                         <td>{{$ledger->balance}}</td>
-                                        <td>{{$ledger->member_id}}</td>
-                                        <td>{{$ledger->gym_id}}</td>
+                                        <td>{{$ledger->member->name}}</td>
+                                       
                                         <td></td>
                                     </tr>
                                     @endforeach
