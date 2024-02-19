@@ -116,6 +116,7 @@
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary px-3">Submit</button>
                                 </div>
+                            </div>   
                         </form>
                     </div>
                 </div>
