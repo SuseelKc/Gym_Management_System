@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <ol class="breadcrumb float-right">
-                        <li class="breadcrumb-item active">Gym Clients</li>
+                        <li class="breadcrumb-item active">Payment Ledger</li>
                     </ol>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <form method="POST" action=" 
-                        {{-- {{route('pricing.store')}} --}}
+                        {{route('ledger.storepayment',$selectedMember->id)}}
                         " enctype="multipart/form-data">
                             @csrf
                         <div class="card-body">
@@ -45,8 +45,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="amt_paid">Amount Paid</label>
-                                        <input type="number" class="form-control" id="amt_paid"
-                                            placeholder="Enter Amount Paid" name="amt_paid" value="" > 
+                                        <input type="decimal" class="form-control" id="amt_paid"
+                                            placeholder="Enter Amount Paid" name="amt_paid" value="" required> 
                                         @if ($errors->has('amt_paid'))
                                             <x-validation-errors>
                                                 {{ $errors->first('amt_paid') }}
@@ -57,7 +57,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="receipt_no">Receipt No</label>
-                                        <input type="number" class="form-control" id="receipt_no"
+                                        <input type="text" class="form-control" id="receipt_no"
                                             placeholder="Enter Record number" name="receipt_no" value="" > 
                                         @if ($errors->has('receipt_no'))
                                             <x-validation-errors>
