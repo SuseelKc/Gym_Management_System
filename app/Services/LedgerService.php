@@ -77,27 +77,58 @@ class LedgerService
         }
     }
 
-    public function addMemberPayment(Ledger $ledger,Member $selectedMember,Request $request,$recentBalance)
+    public function addMemberPayment(Member $selectedMember, Request $request, Ledger $recentBalance)
     {
         try {
-        
             DB::beginTransaction();
-            $ledger= new Ledger();
-            $ledger->date = Carbon::now();
-            $ledger->credit = $request->amt_paid;
-            $ledger->receipt_no=$request->receipt_no;
-            $ledger->remarks=$request->remarks;
-            // dd(($request->amt_paid));
-            $ledger->balance =($recentBalance->balance)-($request->amt_paid);
-            $ledger->member_id = $selectedMember->id;
-            $ledger->gym_id = auth()->id();
+            //   dd( $recentBalance); 
+            $ledger = new Ledger();
+            $ledger->date = Carbon::now();//      
+            $ledger->credit = number_format($request->amt_paid, 3, '.', '');       
+            $ledger->receipt_no = $request->receipt_no;//  
+            
+            $ledger->remarks = $request->remarks;     //         
+            $newBalance = ($recentBalance->balance) - ($request->amt_paid);//    
+            $ledger->balance = number_format($newBalance, 3, '.', '');
+            $ledger->member_id = $selectedMember->id;//         
+            $ledger->gym_id = auth()->id();//
+             
             $ledger->save();
+            
             DB::commit();
+            
             return $ledger;
         } catch (Exception $e) {
             DB::rollBack();
-            throw new Exception(Message::Failed);
+            Log::error('Error in addMemberPayment: ' . $e->getMessage());
+            return null; // Return null to indicate failure
         }
     }
+    
+
+
+    // public function addMemberPayment(Member $selectedMember,Request $request,$recentBalance)
+    // {
+    //     try {
+        
+    //         DB::beginTransaction();
+    //         $ledger= new Ledger();
+         
+    //         $ledger->date = Carbon::now();
+    //         $ledger->credit = $request->amt_paid;
+    //         $ledger->receipt_no=$request->receipt_no;
+    //         $ledger->remarks=$request->remarks;            
+    //         $ledger->balance = ($recentBalance->balance)-($request->amt_paid);
+            
+    //         $ledger->member_id = $selectedMember->id;
+    //         $ledger->gym_id = auth()->id();
+    //         $ledger->save();
+    //         DB::commit();
+    //         return $ledger;
+    //     } catch (Exception $e) {
+    //         DB::rollBack();
+    //         throw new Exception(Message::Failed);
+    //     }
+    // }
  
 }    

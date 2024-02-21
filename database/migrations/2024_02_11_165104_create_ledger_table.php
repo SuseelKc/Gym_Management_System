@@ -17,6 +17,8 @@ return new class extends Migration
             $table->decimal('debit', 10, 2)->nullable();
             $table->decimal('credit', 10, 2)->nullable();
             $table->decimal('balance', 10, 2);
+            $table->string('receipt_no')->nullable();
+            $table->string('remarks')->nullable();
             $table->foreignId('member_id')->constrained('members','id'); 
             $table->foreignId('gym_id')->constrained('users','id');
             $table->timestamps();

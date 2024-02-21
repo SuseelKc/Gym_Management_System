@@ -12,12 +12,14 @@ class Ledger extends Model
     protected $table='ledger';
 
     protected $fillable=[
-        'date',
+        'date',//
         'debit',
-        'credit',
-        'balance',
-        'member_id',
-        'gym_id'
+        'credit',//
+        'balance',//
+        'member_id',//
+        'gym_id',//
+        'receipt_no',//
+        'remarks'//
         
     ];
 

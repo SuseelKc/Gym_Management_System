@@ -143,7 +143,18 @@
                     </a>
                 </li>
                  {{--  --}}
-                
+                {{-- support --}}
+                <li class="nav-item">
+                    <a href="               
+                    "
+                        class="nav-link {{ request()->is('reports*') ? 'active' : '' }}">
+                        <i class="nav-icon 	fas fa-headphones-alt  m-1 p-1"></i>
+                        <p>
+                            Support
+                        </p>
+                    </a>
+                </li>
+                 {{--  --}}
             
             </ul>
         </nav>
