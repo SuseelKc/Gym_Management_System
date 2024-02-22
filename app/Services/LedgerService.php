@@ -106,29 +106,5 @@ class LedgerService
     }
     
 
-
-    // public function addMemberPayment(Member $selectedMember,Request $request,$recentBalance)
-    // {
-    //     try {
-        
-    //         DB::beginTransaction();
-    //         $ledger= new Ledger();
-         
-    //         $ledger->date = Carbon::now();
-    //         $ledger->credit = $request->amt_paid;
-    //         $ledger->receipt_no=$request->receipt_no;
-    //         $ledger->remarks=$request->remarks;            
-    //         $ledger->balance = ($recentBalance->balance)-($request->amt_paid);
-            
-    //         $ledger->member_id = $selectedMember->id;
-    //         $ledger->gym_id = auth()->id();
-    //         $ledger->save();
-    //         DB::commit();
-    //         return $ledger;
-    //     } catch (Exception $e) {
-    //         DB::rollBack();
-    //         throw new Exception(Message::Failed);
-    //     }
-    // }
  
 }    

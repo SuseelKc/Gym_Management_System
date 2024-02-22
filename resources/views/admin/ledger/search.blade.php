@@ -135,11 +135,11 @@
                                     <tr>
                                         <th>S.No</th>
                                         <th>Date</th>
+                                        <th>Receipt No.</th>
                                         <th>Debit</th>
                                         <th>Credit</th>
-                                        <th>Balance</th>
-                                                                          
-                                        <th>Action</th>
+                                        <th>Balance</th>                                                           
+                                        <th>Remarks</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -147,11 +147,13 @@
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$ledger->date}}</td>
+                                        <td>{{$ledger->receipt_no}}</td>
                                         <td>{{$ledger->debit}}</td>
                                         <td>{{$ledger->credit}}</td>
                                         <td>{{$ledger->balance}}</td>
+                                        <td>{{$ledger->remarks}}</td>
                                         
-                                        <td></td>
+                                        
                                     </tr>
                                     @endforeach
                                 </tbody>

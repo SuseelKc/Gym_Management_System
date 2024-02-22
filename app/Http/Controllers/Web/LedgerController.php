@@ -49,7 +49,7 @@ class LedgerController extends Controller
     public function storeMemberPayment($id, Request $request){
         try {                
             $selectedMember = $this->memberRepository->getById($id);  
-            $recentBalance = $this->ledgerService->all()->where('member_id', $id)->sortByDesc('created_at')->first();
+            $recentBalance = $this->legderRepository->getAll()->where('member_id', $id)->sortByDesc('created_at')->first();
             
             if ($recentBalance == null) {
                 toast("Member has not purchased any package!", 'warning');
@@ -63,7 +63,7 @@ class LedgerController extends Controller
             //  dd( $ledger); 
             if ($ledger) {
                 toast('Member Payment Added Successfully!', 'success');
-                return redirect()->intended(route('ledger.index'));
+                return redirect()->back();
             } else {
                 toast('Failed to add member payment.', 'error');
                 return redirect()->back();
@@ -77,26 +77,6 @@ class LedgerController extends Controller
         }
     }
     
-    // public function storeMemberPayment($id,Request $request){
-    //     try{
-                    
-    //         $selectedMember=$this->memberRepository->getById($id);  
-    //         $recentBalance=$this->ledgerService->all()->where('member_id',$id)->sortByDesc('created_at')->first();
-            
-    //         if($recentBalance == null){
-    //             toast("Member has not purchased any package!",'warning');
-    //             return redirect()->back();
-    //         }
-    //         $ledger = $this->ledgerService->addMemberPayment($selectedMember,$request,$recentBalance);
-    //         // dd($ledger);
-    //         toast('Member Payment Added Successfully!','success');
-    //         return redirect()->back();
-
-    //     }
-    //     catch(Exception $e){
-
-    //     }
-
-    // }
+   
 
 }
