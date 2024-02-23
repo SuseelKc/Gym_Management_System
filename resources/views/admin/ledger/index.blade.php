@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <ol class="breadcrumb float-right">
-                        <li class="breadcrumb-item active">Gym Clients</li>
+                        <li class="breadcrumb-item active">Payment Ledger</li>
                     </ol>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                                 <div class="ml-2 mt-3 mb-3">
                                     <label>Members</label>
                                     <select name="members" id="members">
-                                        <option href="" value="">Select Memeber</option>
+                                        <option href="{{route('ledger.index')}}" value="">Select Memeber</option>
                                         @foreach($members as $singleMember)
                                             <option value="{{ $singleMember['id'] }}">{{ $singleMember['name'] }}</option>
                                         @endforeach
@@ -43,12 +43,13 @@
                                     <tr>
                                         <th>S.No</th>
                                         <th>Date</th>
+                                        <th>Member S.No</th>
                                         <th>Debit</th>
                                         <th>Credit</th>
                                         <th>Balance</th>
-                                        <th>Member</th>
+                                        <th>Member Name</th>
                                       
-                                        <th>Action</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -56,12 +57,13 @@
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$ledger->date}}</td>
+                                        <td>{{$ledger->member->serial_no}}</td>
                                         <td>{{$ledger->debit}}</td>
                                         <td>{{$ledger->credit}}</td>
                                         <td>{{$ledger->balance}}</td>
                                         <td>{{$ledger->member->name}}</td>
                                        
-                                        <td></td>
+                                   
                                     </tr>
                                     @endforeach
                                 </tbody>

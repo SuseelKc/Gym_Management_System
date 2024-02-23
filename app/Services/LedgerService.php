@@ -48,7 +48,7 @@ class LedgerService
             DB::beginTransaction();
             $user = auth()->user();
             $user_id=$user->id;
-            $ledger= $this->ledgerRepository->getAll()->where('member_id',$id);;
+            $ledger= $this->ledgerRepository->getAll()->where('member_id',$id);
             DB::commit();
             return $ledger;
         }
@@ -81,17 +81,17 @@ class LedgerService
     {
         try {
             DB::beginTransaction();
-            //   dd( $recentBalance); 
+           
             $ledger = new Ledger();
-            $ledger->date = Carbon::now();//      
+            $ledger->date = Carbon::now();      
             $ledger->credit = number_format($request->amt_paid, 3, '.', '');       
-            $ledger->receipt_no = $request->receipt_no;//  
+            $ledger->receipt_no = $request->receipt_no;  
             
-            $ledger->remarks = $request->remarks;     //         
-            $newBalance = ($recentBalance->balance) - ($request->amt_paid);//    
+            $ledger->remarks = $request->remarks;             
+            $newBalance = ($recentBalance->balance) - ($request->amt_paid);    
             $ledger->balance = number_format($newBalance, 3, '.', '');
-            $ledger->member_id = $selectedMember->id;//         
-            $ledger->gym_id = auth()->id();//
+            $ledger->member_id = $selectedMember->id;        
+            $ledger->gym_id = auth()->id();
              
             $ledger->save();
             
@@ -105,6 +105,25 @@ class LedgerService
         }
     }
     
+    public function deleteMemberLedger($ledgerId){
+        try{
+            DB::beginTransaction();
+     
+            $ledger=$this->ledgerRepository->getById($ledgerId);
+            
+            $ledger->delete();
+          
+           
+            DB::commit();
+            return $ledger;
+        }
+        catch (Exception $e){
+            DB::rollBack();
+            Log::error('Error in deleteMemberLedger: ' . $e->getMessage());
+            return null; // Return null to indicate failure
+        }
+
+    }
 
  
 }    

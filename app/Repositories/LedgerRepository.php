@@ -15,6 +15,15 @@ class LedgerRepository
     }
     public function getWhere($query)
     {
+        
         return Ledger::where($query);
+    }
+    public function getMember($memberId){
+
+        return Ledger::where('member_id', $memberId)
+                ->where('gym_id', auth()->id())
+                ->get();
+
+                 
     }
 }

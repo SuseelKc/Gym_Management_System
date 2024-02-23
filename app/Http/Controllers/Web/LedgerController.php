@@ -55,12 +55,9 @@ class LedgerController extends Controller
                 toast("Member has not purchased any package!", 'warning');
                 return redirect()->back();
             }
-            
-            // Debugging: Dump request data to check if it's received correctly
-            // dd($request->all());
-            
+                                
             $ledger = $this->ledgerService->addMemberPayment($selectedMember, $request, $recentBalance);
-            //  dd( $ledger); 
+        
             if ($ledger) {
                 toast('Member Payment Added Successfully!', 'success');
                 return redirect()->back();
@@ -69,8 +66,7 @@ class LedgerController extends Controller
                 return redirect()->back();
             }
     
-        } catch (Exception $e) {
-            // Log any exceptions for further investigation
+        } catch (Exception $e) {           
             Log::error('Error in storeMemberPayment: ' . $e->getMessage());
             toast('Failed to add member payment. Please try again later.', 'error');
             return redirect()->back();

@@ -45,8 +45,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="amt_paid">Amount Paid</label>
-                                        <input type="decimal" class="form-control" id="amt_paid"
-                                            placeholder="Enter Amount Paid" name="amt_paid" value="" required> 
+                                        <input type="number" step="0.01" class="form-control" id="amt_paid" placeholder="Enter Amount Paid" name="amt_paid" value="" required> 
                                         @if ($errors->has('amt_paid'))
                                             <x-validation-errors>
                                                 {{ $errors->first('amt_paid') }}
@@ -54,6 +53,7 @@
                                         @endif                                 
                                     </div>
                                 </div>
+                                
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="receipt_no">Receipt No</label>
@@ -102,14 +102,14 @@
                                 <div class="ml-2 mt-3 mb-3">
                                     <label>Members</label>
                                     <select name="members" id="members">
-                                        <option href="" value="">Select Memeber</option>
+                                        <option href="{{route('ledger.index')}}" value="">Select Memeber</option>
                                         @foreach($members as $singleMember)
                                             <option value="{{ $singleMember['id'] }}" {{ old('members') == $singleMember['id'] ? 'selected' : '' }}>{{ $singleMember['name'] }}</option>
                                         @endforeach
                                     </select>
                                     <a href="#" class="btn btn-primary" id="searchBtn" style="padding: 4px 10px;"><i class='fas fa-search'></i></a>
-
                                 </div>
+                                
                             </div>
                             <div class="col-md-4">
                                 <div class="ml-3 mt-4 mb-0 text-center">
