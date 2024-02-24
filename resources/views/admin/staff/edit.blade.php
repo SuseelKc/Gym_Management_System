@@ -2,11 +2,7 @@
 @section('title','Edit Staff')
 @section('content')
 
-@if(session('message'))
-<div class="alert alert-danger">
-    {{ session('message') }}
-</div>
-@endif
+
 
 <div class="content">
     <section class="content-header">

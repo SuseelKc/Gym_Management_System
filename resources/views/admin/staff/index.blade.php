@@ -3,13 +3,6 @@
 @section('content')
 
 
-{{-- @if(session('message'))
-<div class="alert alert-success">
-    {{session('message')}}
-</div>
-@endif --}}
-@include('sweetalert::alert')
-
 
 <div class="content">
     <section class="content-header">

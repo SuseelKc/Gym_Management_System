@@ -56,7 +56,7 @@ class MemberController extends Controller
         try{
            $member= new Member();        
            $member= $this->memberService->add($member,$request);
-           toast('Member Added Successfully!','success');
+           toast('New Member Added Successfully!','success');
            return redirect()->intended(route('member.index'));
            
         }

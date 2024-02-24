@@ -1,16 +1,7 @@
 @extends('admin.admin')
 @section('title','Create Members')
 @section('content')
-    {{-- @include('validation-error-message') --}}
-    {{--Pop up error msg  --}}
-<!-- <div class="content">
-    @if(session('message'))
-        <div class="alert alert-danger">
-            {{ session('message') }}
-        </div>
-    @endif
-</div> -->
-{{--  --}}
+  
     <div class="content">
         <section class="content-header">
             <div class="container-fluid">

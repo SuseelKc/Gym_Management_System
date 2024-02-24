@@ -104,9 +104,9 @@
                    
                     "
                         class="nav-link {{ request()->is('payments*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-cash-register  m-1 p-1"></i>
+                        <i class="nav-icon 	fas fa-money-check-alt  m-1 p-1"></i>
                         <p>
-                            Payments
+                            Expenses
                         </p>
                     </a>
                 </li>
@@ -117,17 +117,7 @@
                 
 
                  {{-- Shop --}}
-                 <li class="nav-item">
-                    <a href="                  
-                    "
-                        class="nav-link {{ request()->is('shop*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-shopping-bag  m-1 p-1"></i>
-                        <p>
-                            Shop
-                        </p>
-                    </a>
-                </li> 
-                {{--  --}}
+                
 
                 
 
