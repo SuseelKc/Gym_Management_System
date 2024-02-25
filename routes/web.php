@@ -31,6 +31,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    // support 
+    Route::get('/support', function () {
+        return view('admin.support.index');
+    })->middleware(['auth', 'verified'])->name('support');
+    // 
+
+
     require __DIR__ . '/web/member.php';
     require __DIR__ . '/web/user.php';
     require __DIR__ . '/web/equipment.php';
