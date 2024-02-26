@@ -133,6 +133,22 @@
                     </a>
                 </li>
                  {{--  --}}
+                  {{-- support --}}
+                  <li class="nav-item">
+                    <a href="
+                    {{ route('support') }}          
+                    "
+                        class="nav-link {{ request()->is('reports*') ? 'active' : '' }}">
+                        <i class="nav-icon 		fas fa-blender  m-1 p-1"></i>
+                        <p>
+                            Diet Planners
+                        </p>
+                    </a>
+                </li>
+                 {{--  --}}
+
+
+
                 {{-- support --}}
                 <li class="nav-item">
                     <a href="
@@ -146,6 +162,8 @@
                     </a>
                 </li>
                  {{--  --}}
+
+                 
             
             </ul>
         </nav>
