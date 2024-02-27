@@ -15,6 +15,9 @@
                 @include('sweetalert::alert')
 
                 @yield('content')
+                {{-- Dashboard Details --}}
+                @include('admin.dashboard.dashboard')
+                {{--  --}}
             </div>
 
             {{-- footer --}}
