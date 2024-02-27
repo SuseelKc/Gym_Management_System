@@ -16,7 +16,7 @@
 
                 @yield('content')
                 {{-- Dashboard Details --}}
-                @include('admin.dashboard.dashboard')
+                {{-- @include('admin.dashboard.dashboard') --}}
                 {{--  --}}
             </div>
 

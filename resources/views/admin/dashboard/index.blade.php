@@ -1,13 +1,12 @@
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
-        <link rel="stylesheet" src="{{asset('admin/assets/css/styles.min.css')}}" />
-      </head>   
-<body>
-<div class="container-fluid mt-2">
+@extends('admin.admin')
+@section('title','Dashboard')
+@section('content')
+
+
+{{-- <html>
+    
+<body> --}}
+<div class="container-fluid pt-2 pd-2">
     <!--  Row 1 -->
     <div class="row">
       <div class="col-lg-8 d-flex align-items-strech">
@@ -281,15 +280,16 @@
   </div>
 
   {{--  --}}
-  <script src="{{asset('admin/assets/libs/jquery/dist/jquery.min.js')}}"></script>
+  {{-- <script src="{{asset('admin/assets/libs/jquery/dist/jquery.min.js')}}"></script>
   <script src="{{asset('admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{asset('admin/assets/js/sidebarmenu.js')}}"></script>
   <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
   <script src="{{asset('admin/assets/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
   <script src="{{asset('admin/assets/libs/simplebar/dist/simplebar.js')}}"></script>
-  <script src="{{asset('admin/assets/js/dashboard.js')}}"></script>
+  <script src="{{asset('admin/assets/js/dashboard.js')}}"></script> --}}
   {{--  --}}
 
-
+{{-- 
 </body>
-</html>
+</html> --}}
+@endsection
