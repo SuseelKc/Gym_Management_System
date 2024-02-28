@@ -18,12 +18,16 @@ class LedgerRepository
         
         return Ledger::where($query);
     }
-    public function getMember($memberId){
+    // public function getMember($memberId){
 
-        return Ledger::where('member_id', $memberId)
-                ->where('gym_id', auth()->id())
-                ->get();
+    //     return Ledger::where('member_id', $memberId)
+    //             ->where('gym_id', auth()->id())
+    //             ->get();
 
                  
+    // }
+    public function getMemberLedger(){
+
+        return Ledger::where('gym_id', auth()->id())->get();
     }
 }
