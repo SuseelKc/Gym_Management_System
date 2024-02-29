@@ -204,14 +204,14 @@
                     </td> --}}
                     <td class="border-bottom-0">
                       <div class="d-flex align-items-center gap-2">
-                        @if($latestRecord->balance >= 10000 )
-                            <span class="badge bg-danger rounded-3 fw-semibold">High</span>
-                        @elseif($latestRecord->balance >= 5000 && $latestRecord->balance < 10000 )
-                            <span class="badge bg-secondary rounded-3 fw-semibold">Medium</span>
-                        @else
-                            <span class="badge bg-primary rounded-3 fw-semibold">Low</span>
-                        @endif
-                    </div>
+                          @if($latestRecord->balance >= 10000 )
+                              <span class="badge bg-danger rounded-3 fw-semibold">High</span>
+                          @elseif($latestRecord->balance >= 5000 && $latestRecord->balance < 10000 )
+                              <span class="badge bg-secondary rounded-3 fw-semibold">Medium</span>
+                          @else
+                              <span class="badge bg-primary rounded-3 fw-semibold">Low</span>
+                          @endif
+                      </div>
                     </td>
                     <td class="border-bottom-0">
                       <h6 class="fw-semibold mb-0 fs-4">{{$latestRecord->balance}}</h6>

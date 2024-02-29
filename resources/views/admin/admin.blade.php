@@ -22,11 +22,12 @@
 
             {{-- footer --}}
             <footer class="main-footer">
-                <strong>Copyright &copy;<a href="#">Sushil Khatri</a></strong>
+               <strong> Copyright © 2024 Gym Manager X. All rights reserved.</a></strong>
                 <div class="float-right d-none d-sm-inline-block">
-                    {{-- <b>Version</b> 1.0 --}}
+                  
                 </div>
             </footer>
+
 
             @include('admin.include.script')
 
