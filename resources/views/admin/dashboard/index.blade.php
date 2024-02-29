@@ -10,7 +10,7 @@
     <!--  Row 1 -->
     <div class="row">
       <div class="col-lg-8 d-flex align-items-strech">
-        <div class="card w-100">
+        <div class="card w-100 shadow">
           <div class="card-body">
             <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
               <div class="mb-3 mb-sm-0">
@@ -35,7 +35,7 @@
         <div class="row">
           <div class="col-lg-12">
             <!-- Yearly Breakup -->
-            <div class="card overflow-hidden">
+            <div class="card w-100 shadow">
               <div class="card-body p-4">
                 <h5 class="card-title mb-9 fw-semibold">Yearly Breakup</h5>
                 <div class="row align-items-center">
@@ -71,7 +71,7 @@
           </div>
           <div class="col-lg-12">
             <!-- Monthly Earnings -->
-            <div class="card">
+            <div class="card w-100 shadow">
               <div class="card-body">
                 <div class="row alig n-items-start">
                   <div class="col-8">
@@ -121,7 +121,9 @@
                         <tbody>
                             @foreach ($topTransactions as $topTransaction)
                             <tr>
-                                <td>{{ $topTransaction->created_at->format('M d, Y') }}</td>
+                                <td>
+                                  {{ $topTransaction->created_at->format('M d, Y') }}  
+                                  {{ $topTransaction->created_at->format('h:i A') }}</td>
                                 <td>{{ $topTransaction->member->name }}</td>
                                 <td>{{ $topTransaction->credit }}</td>
                             </tr>
@@ -133,60 +135,51 @@
         </div>
     </div>
     
-      <div class="col-lg-7 d-flex align-items-stretch">
-        <div class="card w-100">
+    <div class="col-lg-7 d-flex align-items-stretch">
+      <div class="card w-100 shadow">
           <div class="card-body p-4">
-            <h5 class="card-title fw-semibold mb-4">Member Balance Reminder</h5>
-            <div class="table-responsive">
-              <table class="table text-nowrap mb-0 align-middle">
-                <thead class="text-dark fs-4">
-                  <tr>
-                    <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Member SNo.</h6>
-                    </th>
-                    <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Name</h6>
-                    </th>
-                    <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Priority</h6>
-                    </th>
-                    {{-- <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Priority</h6>
-                    </th> --}}
-                    <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Remaining Amount</h6>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @foreach ($latestRecords as $latestRecord)
-                  <tr>
-                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0">{{$latestRecord->member->serial_no}}</h6></td>
-                    <td class="border-bottom-0">
-                        <h6 class="fw-semibold mb-1">{{$latestRecord->member->name}}</h6>
-                    </td>              
-                    <td class="border-bottom-0">
-                      <div class="d-flex align-items-center gap-2">
-                          @if($latestRecord->balance >= 10000 )
-                              <span class="badge bg-danger rounded-3 fw-semibold">High</span>
-                          @elseif($latestRecord->balance >= 5000 && $latestRecord->balance < 10000 )
-                              <span class="badge bg-secondary rounded-3 fw-semibold">Medium</span>
-                          @else
-                              <span class="badge bg-primary rounded-3 fw-semibold">Low</span>
-                          @endif
-                      </div>
-                    </td>
-                    <td class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0 fs-4">{{$latestRecord->balance}}</h6>
-                    </td>
-                  </tr> 
-                  @endforeach                     
-                </tbody>
-              </table>
-            </div>
+              <h5 class="card-title fw-bold mb-4">Member Balance Reminder</h5>
+              <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                      <thead>
+                          <tr>
+                              <th>Member SNo.</th>
+                              <th>Name</th>
+                              <th>Priority</th>
+                              <th>Remaining Amount</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          @foreach ($latestRecords as $latestRecord)
+                          <tr>
+                              <td><h6 class="fw-bold mb-0">{{$latestRecord->member->serial_no}}</h6></td>
+                              <td>
+                                  <h6 class="fw-bold mb-1">{{$latestRecord->member->name}}</h6>
+                              </td>              
+                              <td>
+                                  <div class="d-flex align-items-center gap-2">
+                                      @if($latestRecord->balance >= 10000 )
+                                          <span class="badge bg-danger rounded-3 fw-bold">High</span>
+                                      @elseif($latestRecord->balance >= 5000 && $latestRecord->balance < 10000 )
+                                          <span class="badge bg-warning rounded-3 fw-bold">Medium</span>
+                                      @else
+                                          <span class="badge bg-info rounded-3 fw-bold">Low</span>
+                                      @endif
+                                  </div>
+                              </td>
+                              <td>
+                                  <h6 class="fw-bold mb-0 fs-4">{{$latestRecord->balance}}</h6>
+                              </td>
+                          </tr> 
+                          @endforeach                     
+                      </tbody>
+                  </table>
+              </div>
           </div>
-        </div>
       </div>
+  </div>
+  
+  
     </div>
     <div class="row">
      

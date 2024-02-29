@@ -29,7 +29,7 @@ class DashboardController extends Controller
             // 
 
             // for getting top 10 recent transaction 
-                $topTransactions= $this->ledgerRepository->getTopTransactions();
+                $topTransactions= $this->ledgerRepository->getTopTransactions()->sortByDesc('created_at');
             // 
             
             return view('admin.dashboard.index',compact('latestRecords','topTransactions'));
