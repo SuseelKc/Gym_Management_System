@@ -103,70 +103,37 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-4 d-flex align-items-stretch">
-        <div class="card w-100">
-          <div class="card-body p-4">
-            <div class="mb-4">
-              <h5 class="card-title fw-semibold">Recent Transactions</h5>
+      <div class="col-lg-5 d-flex align-items-stretch">
+        <div class="card w-100 shadow">
+            <div class="card-body p-4">
+                <div class="mb-4">
+                    <h5 class="card-title fw-bold mb-4">Recent Transactions</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($topTransactions as $topTransaction)
+                            <tr>
+                                <td>{{ $topTransaction->created_at->format('M d, Y') }}</td>
+                                <td>{{ $topTransaction->member->name }}</td>
+                                <td>{{ $topTransaction->credit }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <ul class="timeline-widget mb-0 position-relative mb-n5">
-              <li class="timeline-item d-flex position-relative overflow-hidden">
-                <div class="timeline-time text-dark flex-shrink-0 text-end">09:30</div>
-                <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                  <span class="timeline-badge border-2 border border-primary flex-shrink-0 my-8"></span>
-                  <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                </div>
-                <div class="timeline-desc fs-3 text-dark mt-n1">Payment received from John Doe of $385.90</div>
-              </li>
-              <li class="timeline-item d-flex position-relative overflow-hidden">
-                <div class="timeline-time text-dark flex-shrink-0 text-end">10:00 am</div>
-                <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                  <span class="timeline-badge border-2 border border-info flex-shrink-0 my-8"></span>
-                  <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                </div>
-                <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New sale recorded <a
-                    href="javascript:void(0)" class="text-primary d-block fw-normal">#ML-3467</a>
-                </div>
-              </li>
-              <li class="timeline-item d-flex position-relative overflow-hidden">
-                <div class="timeline-time text-dark flex-shrink-0 text-end">12:00 am</div>
-                <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                  <span class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
-                  <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                </div>
-                <div class="timeline-desc fs-3 text-dark mt-n1">Payment was made of $64.95 to Michael</div>
-              </li>
-              <li class="timeline-item d-flex position-relative overflow-hidden">
-                <div class="timeline-time text-dark flex-shrink-0 text-end">09:30 am</div>
-                <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                  <span class="timeline-badge border-2 border border-warning flex-shrink-0 my-8"></span>
-                  <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                </div>
-                <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New sale recorded <a
-                    href="javascript:void(0)" class="text-primary d-block fw-normal">#ML-3467</a>
-                </div>
-              </li>
-              <li class="timeline-item d-flex position-relative overflow-hidden">
-                <div class="timeline-time text-dark flex-shrink-0 text-end">09:30 am</div>
-                <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                  <span class="timeline-badge border-2 border border-danger flex-shrink-0 my-8"></span>
-                  <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                </div>
-                <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New arrival recorded 
-                </div>
-              </li>
-              <li class="timeline-item d-flex position-relative overflow-hidden">
-                <div class="timeline-time text-dark flex-shrink-0 text-end">12:00 am</div>
-                <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                  <span class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
-                </div>
-                <div class="timeline-desc fs-3 text-dark mt-n1">Payment Done</div>
-              </li>
-            </ul>
-          </div>
         </div>
-      </div>
-      <div class="col-lg-8 d-flex align-items-stretch">
+    </div>
+    
+      <div class="col-lg-7 d-flex align-items-stretch">
         <div class="card w-100">
           <div class="card-body p-4">
             <h5 class="card-title fw-semibold mb-4">Member Balance Reminder</h5>
@@ -197,11 +164,7 @@
                     <td class="border-bottom-0"><h6 class="fw-semibold mb-0">{{$latestRecord->member->serial_no}}</h6></td>
                     <td class="border-bottom-0">
                         <h6 class="fw-semibold mb-1">{{$latestRecord->member->name}}</h6>
-                        {{-- <span class="fw-normal">Web Designer</span>                           --}}
-                    </td>
-                    {{-- <td class="border-bottom-0">
-                      <p class="mb-0 fw-normal">{{$latestRecord->balance}}</p>
-                    </td> --}}
+                    </td>              
                     <td class="border-bottom-0">
                       <div class="d-flex align-items-center gap-2">
                           @if($latestRecord->balance >= 10000 )

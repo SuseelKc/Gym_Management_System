@@ -14,20 +14,15 @@ class LedgerRepository
         return Ledger::find($id);
     }
     public function getWhere($query)
-    {
-        
+    {    
         return Ledger::where($query);
-    }
-    // public function getMember($memberId){
-
-    //     return Ledger::where('member_id', $memberId)
-    //             ->where('gym_id', auth()->id())
-    //             ->get();
-
-                 
-    // }
+    } 
     public function getMemberLedger(){
 
         return Ledger::where('gym_id', auth()->id())->get();
+    }
+    public function getTopTransactions(){
+        return Ledger::where('gym_id', auth()->id())->whereNotNull('credit')->take(10)
+        ->get();
     }
 }
