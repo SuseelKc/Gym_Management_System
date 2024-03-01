@@ -15,66 +15,68 @@
         </div>
     </section>
 
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="ml-2 mt-3 mb-3">
-                                    <label>Members</label>
-                                    <select name="members" id="members">
-                                        <option href="{{route('ledger.index')}}" value="">Select Memeber</option>
-                                        @foreach($members as $singleMember)
-                                            <option value="{{ $singleMember['id'] }}">{{ $singleMember['name'] }}</option>
-                                        @endforeach
-                                    </select>
-                                    <a href="#" class="btn btn-primary" id="searchBtn" style="padding: 4px 10px;"><i class='fas fa-search'></i></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="ml-2 mt-3 mb-3">
+                                        <label>Members</label>
+                                        <select name="members" id="members">
+                                            <option href="{{route('ledger.index')}}" value="">Select Memeber</option>
+                                            @foreach($members as $singleMember)
+                                                <option value="{{ $singleMember['id'] }}">{{ $singleMember['name'] }}</option>
+                                            @endforeach
+                                        </select>
+                                        <a href="#" class="btn btn-primary" id="searchBtn" style="padding: 4px 10px;"><i class='fas fa-search'></i></a>
 
+                                    </div>
                                 </div>
+                            
                             </div>
-                           
-                        </div>
 
-                        <div class="card-body table-responsive p-2">
-                            <table class="datatable table">
-                                <thead>
-                                    <tr>
-                                        <th>S.No</th>
-                                        <th>Date</th>
-                                        <th>Member S.No</th>
-                                        <th>Debit</th>
-                                        <th>Credit</th>
-                                        <th>Balance</th>
-                                        <th>Member Name</th>
-                                      
+                            <div class="card-body table-responsive p-2">
+                                <table class="datatable table">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Date</th>
+                                            <th>Member S.No</th>
+                                            <th>Member Name</th>
+                                            <th>Debit</th>
+                                            <th>Credit</th>
+                                            <th>Balance</th>
+                                            
                                         
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($ledger as $ledger)
-                                    <tr>
-                                        <td>{{$loop->iteration}}</td>
-                                        <td>{{$ledger->date}}</td>
-                                        <td>{{$ledger->member->serial_no}}</td>
-                                        <td>{{$ledger->debit}}</td>
-                                        <td>{{$ledger->credit}}</td>
-                                        <td>{{$ledger->balance}}</td>
-                                        <td>{{$ledger->member->name}}</td>
-                                       
-                                   
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($ledger as $ledger)
+                                        <tr>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$ledger->date}}</td>
+                                            <td>{{$ledger->member->serial_no}}</td>
+                                            <td>{{$ledger->member->name}}</td>
+                                            <td>{{$ledger->debit}}</td>
+                                            <td>{{$ledger->credit}}</td>
+                                            <td>{{$ledger->balance}}</td>
+                                            
+                                        
+                                    
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
+        
+    </section>
 </div>
 
 <!--  -->

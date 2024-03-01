@@ -15,19 +15,15 @@
                 @include('sweetalert::alert')
 
                 @yield('content')
-                {{-- Dashboard Details --}}
-                {{-- @include('admin.dashboard.dashboard') --}}
-                {{--  --}}
+               
             </div>
 
             {{-- footer --}}
             <footer class="main-footer">
                <strong> Copyright © 2024 Gym Manager X. All rights reserved.</a></strong>
-                <div class="float-right d-none d-sm-inline-block">
-                  
-                </div>
+                
             </footer>
-
+            {{--  --}}
 
             @include('admin.include.script')
 

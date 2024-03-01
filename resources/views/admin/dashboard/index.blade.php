@@ -3,9 +3,7 @@
 @section('content')
 
 
-{{-- <html>
-    
-<body> --}}
+
 <div class="container-fluid pt-2 pd-2">
     <!--  Row 1 -->
     <div class="row">
@@ -14,7 +12,7 @@
           <div class="card-body">
             <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
               <div class="mb-3 mb-sm-0">
-                <h5 class="card-title fw-semibold">Sales Overview</h5>
+                  <h5 class="card-title fw-semibold">Sales Overview</h5>
               </div>
               <div>
                 <select class="form-select">
@@ -189,17 +187,5 @@
     
   </div>
 
-  {{--  --}}
-  {{-- <script src="{{asset('admin/assets/libs/jquery/dist/jquery.min.js')}}"></script>
-  <script src="{{asset('admin/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
-  <script src="{{asset('admin/assets/js/sidebarmenu.js')}}"></script>
-  <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
-  <script src="{{asset('admin/assets/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
-  <script src="{{asset('admin/assets/libs/simplebar/dist/simplebar.js')}}"></script>
-  <script src="{{asset('admin/assets/js/dashboard.js')}}"></script> --}}
-  {{--  --}}
 
-{{-- 
-</body>
-</html> --}}
 @endsection
