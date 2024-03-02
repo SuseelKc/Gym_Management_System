@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
+use App\Charts\MonthlySalesChart;
 use App\Http\Controllers\Controller;
 use App\Repositories\LedgerRepository;
 
@@ -32,7 +33,10 @@ class DashboardController extends Controller
                 $topTransactions= $this->ledgerRepository->getTopTransactions()->sortByDesc('created_at');
             // 
             
-            return view('admin.dashboard.index',compact('latestRecords','topTransactions'));
+            // monthly sales chart
+            $chart = new MonthlySalesChart;
+            // 
+            return view('admin.dashboard.index',compact('latestRecords','topTransactions','chart'));
         }
         catch(Exception $e){
 

@@ -24,7 +24,11 @@
               </div>
             </div>
             <div id="chart">
-               
+              <div>
+                {!! $chart->container() !!}
+            </div>
+        
+              {!! $chart->script() !!}
             </div>
           </div>
         </div>
@@ -187,5 +191,5 @@
     
   </div>
 
-
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @endsection
