@@ -8,7 +8,9 @@
 <!-- Bootstrap 4 -->
 <script src="{{ asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('admin/dist/js/adminlte.js') }}"></script>
-
+{{-- charts for dashboard --}}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{{--  --}}
 {{-- sweetalert --}}
 {{-- <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script> --}}
 {{--  --}}
