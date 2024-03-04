@@ -147,6 +147,19 @@
                 </li>
                  {{--  --}}
 
+                  {{-- support --}}
+                <li class="nav-item">
+                    <a href="
+                    {{ route('support') }}          
+                    "
+                        class="nav-link {{ request()->is('reports*') ? 'active' : '' }}">
+                        <i class="nav-icon 	fas fa-running  m-1 p-1"></i>
+                        <p>
+                            Excercise Schedules
+                        </p>
+                    </a>
+                </li>
+                 {{--  --}}
 
 
                 {{-- support --}}
