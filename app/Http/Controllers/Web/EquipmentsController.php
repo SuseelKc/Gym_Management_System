@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use Exception;
 use App\Models\User;
 use App\Models\Equipment;
 use Illuminate\Http\Request;
@@ -10,8 +11,8 @@ use App\Services\EquipmentService;
 use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
 use App\Repositories\MemberRepository;
-use App\Repositories\EquipmentRepository;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Repositories\EquipmentRepository;
 
 class EquipmentsController extends Controller
 {
