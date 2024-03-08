@@ -30,7 +30,7 @@
                     <div class="card">
                             <div class="">                             
                                 <a href="
-                                {{route('equipments.create')}}
+                                {{route('expenses.create')}}
                                 "
                                     class="btn btn-primary px-4 m-2 float-right">Add</a>  
                             </div>
@@ -39,47 +39,28 @@
                                     <thead>
                                         <tr>
                                             <th>S.No</th>
-                                            <th>ID No.</th>
                                             <th>Expenses Name</th>
-                                            <th>Costs</th>  
-                                            <th></th>                                                                                                                                                              
-                                            <th>Upcoming Maintenance</th>                                   
+                                            <th>Costs</th>                                                                                                                                                               
+                                            <th>Types</th>                                   
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @foreach ($equipment as $equipment)
+                                         @foreach ($expenses as $expenses) 
                                         <tr>
-                                            <td>{{$loop->iteration}}</td>
-                                            <td>{{$equipment->serial_no}}</td>
-                                            
-                                            <td>{{$equipment->name}}</td>
+                                            <td>{{$loop->iteration}}</td>                                                                                
+                                            <td>{{$expenses->name}}</td>
 
-                                             @if($equipment->weight)
-                                                <td>{{$equipment->weight}} KG</td>
-                                            
-                                            @else
-                                                <td></td>
-                                            
-                                            @endif
-
-                                            <td>{{$equipment->qty}}</td>
-                                            <td>{{$equipment->maintenance_period}}</td>
-                                            <th>{{$equipment->maintenance_type}}</th>
-                                            <td>{{$equipment->upcoming_date}}</td>
+                                            <td>{{$expenses->type}}</td>
+                                            <td>{{$expenses->expenses_period}}</td>
+                                           
                                          
                                             <td>
-                                                <a href="{{route('equipments.edit', $equipment->id)}}" title="Edit Equipments">
-                                                            <i class="fas fa-edit fa-lg"></i></a>
-                                                <a type="button"  data-toggle="modal" data-target="#deleteModal"  data-equipment-id="{{$equipment->id}}"
-                                                data-equipment-name="{{$equipment->name}}"
-                                                href="#" title="Delete Equipment">
-                                                <i class="fas fa-times-circle fa-lg" style="color: red;"></i>
-                                                </a>                                        
+                                                                                    
                                             </td>
 
                                         </tr>
-                                        @endforeach     --}}
+                                        @endforeach    
                                     </tbody>
                                 </table>
                             </div>

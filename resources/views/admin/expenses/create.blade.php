@@ -1,5 +1,5 @@
 @extends('admin.admin')
-@section('title','Create Equipments')
+@section('title','Create Expenses')
 @section('content')
 
 @if(session('message'))
@@ -15,7 +15,7 @@
                 <div class="col-sm-12">
                     <ol class="breadcrumb float-right">
                         <li class="breadcrumb-item">
-                            <a href="{{ route('equipments.index') }}">Equipments</a>
+                            <a href="{{ route('expenses.index') }}">Expenses</a>
                         </li> 
                         <li class="breadcrumb-item active">Add</li>
                     </ol>
@@ -29,10 +29,10 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h2 class="card-title font-weight-bold">Add Equipments</h2>
+                            <h2 class="card-title font-weight-bold">Add Expenses</h2>
                         </div>
                         <form method="POST" action=" 
-                        {{route('equipments.store')}}
+                        {{-- {{route('expenses.store')}} --}}
                         " enctype="multipart/form-data">
                             @csrf
                             
@@ -82,12 +82,12 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="qty">Quantity</label>
+                                            <label for="rate">Quantity</label>
                                             <input type="decimal" class="form-control" id="qty"
-                                                placeholder="Enter Quantity Here" name="qty" value="" required>
-                                            @if ($errors->has('qty'))
+                                                placeholder="Enter Quantity Here" name="rate" value="" required>
+                                            @if ($errors->has('rate'))
                                                 <x-validation-errors>
-                                                    {{ $errors->first('qty') }}
+                                                    {{ $errors->first('rate') }}
                                                 </x-validation-errors>
                                             @endif
                                         </div>
@@ -96,31 +96,26 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="maintenance_period">Maintenance Period (Gap)</label>
+                                            <label for="expense_period">Expenses Period (Gap)</label>
                                             <div class="d-flex align-items-center">
-                                                <input type="number" class="form-control mr-2" id="maintenance_period_input" style="width: 150px;"
-                                                       name="maintenance_period" value="">
+                                                <input type="number" class="form-control mr-2" id="expense_period_input" style="width: 150px;"
+                                                       name="expense_period" value="">
                                                 <select id="maintenance_type" style="height: 30px;" name="maintenance_type">
                                                     <option value="year">Year</option>
                                                     <option value="month">Month</option>
                                                     <option value="days">Days</option>
                                                 </select>
                                             </div>
-                                            @if ($errors->has('maintenance_period'))
+                                            @if ($errors->has('expense_period'))
                                                 <x-validation-errors>
-                                                    {{ $errors->first('maintenance_period') }}
+                                                    {{ $errors->first('expense_period') }}
                                                 </x-validation-errors>
                                             @endif
                                         </div>
                                     </div>
                                                                                                        
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="photo">Upload Image</label>
-                                            <input type="file" class="form-control" id="photo" name="photo" >
-                                        </div>
-                                    </div>
+                                  
 
                                 </div>
                                 <div class="card-footer">
