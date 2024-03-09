@@ -13,7 +13,9 @@ class Expenses extends Model
     protected $fillable=[
         'name',
         'type',        
-        'expenses_period',
-        'gym_id'
+        'costs',
+        'gym_id',
+        'start_date',
+        'end_date'
     ];
 }

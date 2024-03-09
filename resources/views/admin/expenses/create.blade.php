@@ -43,7 +43,7 @@
                                         <div class="form-group">
                                             <label for="Name">Name</label>
                                             <input type="text" class="form-control" id="name"
-                                                placeholder="Enter Name Here" name="name" >
+                                                placeholder="Enter Expenses Name Here" name="name" >
                                             @if ($errors->has('name'))
                                                 <x-validation-errors>
                                                     {{ $errors->first('name') }}
@@ -67,43 +67,30 @@
                                     <!--  -->
 
 
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="weight">Weight(KG)</label>
-                                            <input type="number" class="form-control" id="weight"
-                                             placeholder="Enter Weight Here" name="weight"  step="any">
-                                            @if ($errors->has('weight'))
+                                            <label for="costs">Costs</label>
+                                            <input type="number" class="form-control" id="costs"
+                                             placeholder="Enter costs Here" name="costs"  step="any">
+                                            @if ($errors->has('costs'))
                                                 <x-validation-errors>
-                                                    {{ $errors->first('weight') }}
+                                                    {{ $errors->first('costs') }}
                                                 </x-validation-errors>
                                             @endif
                                         </div>
-                                    </div>
+                                    </div> --}}
+                   
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="rate">Quantity</label>
-                                            <input type="decimal" class="form-control" id="qty"
-                                                placeholder="Enter Quantity Here" name="rate" value="" required>
-                                            @if ($errors->has('rate'))
-                                                <x-validation-errors>
-                                                    {{ $errors->first('rate') }}
-                                                </x-validation-errors>
-                                            @endif
-                                        </div>
-                                    </div>
-                                
-
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="expense_period">Expenses Period (Gap)</label>
+                                            <label for="costs">Costs</label>
                                             <div class="d-flex align-items-center">
-                                                <input type="number" class="form-control mr-2" id="expense_period_input" style="width: 150px;"
-                                                       name="expense_period" value="">
-                                                <select id="maintenance_type" style="height: 30px;" name="maintenance_type">
-                                                    <option value="year">Year</option>
-                                                    <option value="month">Month</option>
-                                                    <option value="days">Days</option>
+                                                <input type="number" class="form-control mr-2" id="costs" style="width: 150px;"
+                                                       name="costs" value="">
+                                                <select id="type" style="height: 30px;" name="type">
+                                                    <option value="year">Yearly</option>
+                                                    <option value="month">Monthly</option>
+                                                    <option value="days">Daily</option>
                                                 </select>
                                             </div>
                                             @if ($errors->has('expense_period'))
@@ -115,6 +102,41 @@
                                     </div>
                                                                                                        
 
+                                    <div class="col-md-6">
+
+                                        <div class="form-check">
+                                            <input type="checkbox" id="add_date_checkbox" class="form-check-input" />
+                                            <label>Add Date</label>
+                                        </div>
+                                        <div class="form-row" id="date_fields" 
+                                        style="display: none;"
+                                        >
+                                        <div class="row">
+                                            <div class="form-group" style="margin-right: 10px;">
+                                                <label for="start_date">Start Date</label>
+                                                <input type="date" class="form-control" id="start_date" required name="start_date" value="{{ date('Y-m-d') }}">
+                                                @if ($errors->has('start_date'))
+                                                    <x-validation-errors>
+                                                        {{ $errors->first('start_date') }}
+                                                    </x-validation-errors>
+                                                @endif
+                                            </div>
+                                        
+
+                                            <div class="form-group"  style="margin-right: 10px;">
+                                                <label for="end_date">End Date</label>
+                                                <input type="date" class="form-control" id="end_date"  name="end_date" value="">
+                                                @if ($errors->has('end_date'))
+                                                    <x-validation-errors>
+                                                        {{ $errors->first('end_date') }}
+                                                    </x-validation-errors>
+                                                @endif
+                                            </div>
+                                        </div>   
+                                        </div>
+                                        
+
+                                   </div>
                                   
 
                                 </div>
@@ -128,5 +150,21 @@
         </div>
     </section>
 </div>
+<script>
+    // Get the checkbox element
+    const addDateCheckbox = document.getElementById('add_date_checkbox');
+    // Get the date fields container
+    const dateFieldsContainer = document.getElementById('date_fields');
 
+    // Add event listener to checkbox
+    addDateCheckbox.addEventListener('change', function() {
+        // If checkbox is checked, display the date fields; otherwise, hide them
+        if (this.checked) {
+            dateFieldsContainer.style.display = 'block';
+        } else {
+            dateFieldsContainer.style.display = 'none';
+        }
+    });
+</script>
 @endsection
+
