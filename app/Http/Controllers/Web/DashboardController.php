@@ -30,7 +30,9 @@ class DashboardController extends Controller
             // 
 
             // for getting top 10 recent transaction 
-                $topTransactions= $this->ledgerRepository->getTopTransactions()->sortByDesc('created_at');
+                $topTransactions= $this->ledgerRepository->getTopTransactions();
+                // ->sortByDesc('created_at');
+                
             // 
             
             // monthly sales chart

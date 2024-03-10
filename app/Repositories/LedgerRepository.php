@@ -23,6 +23,6 @@ class LedgerRepository
     }
     public function getTopTransactions(){
         return Ledger::where('gym_id', auth()->id())->whereNotNull('credit')->take(10)
-        ->get();
+        ->latest()->get();
     }
 }
