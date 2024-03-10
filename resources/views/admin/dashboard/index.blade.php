@@ -190,7 +190,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($latestRecords as $latestRecord)
+                                @foreach ($latestRecords->sortByDesc('balance') as $latestRecord)
                                 <tr>
                                     <td><h6 class="fw-bold mb-0">{{$latestRecord->member->serial_no}}</h6></td>
                                     <td>
