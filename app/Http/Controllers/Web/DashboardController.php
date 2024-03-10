@@ -17,7 +17,7 @@ class DashboardController extends Controller
         
     }
 
-
+    
     public function index(){     
         try{
             // for knowing remaining balance of the member query     
