@@ -102,40 +102,7 @@
           </div>
 
 {{--  --}}
-<div class="col-lg-12">
-  <!-- Yearly Breakup -->
-  <div class="card w-100 shadow" style="border-radius: 15px; border: 1px solid #ccc;">
-      <div class="card-body p-4">
-          <h5 class="card-title mb-4 fw-semibold" style="color: #333;">Number of Members</h5>
-          <div class="row align-items-center">
-              <div class="col-md-8">
-                  <h4 class="fw-semibold mb-3">$36,358</h4>
-                  <div class="d-flex align-items-center mb-3">
-                      <span class="me-1 rounded-circle bg-light-success round-20 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; border-radius: 50%; background-color: #d4edda;">
-                          <i class="ti ti-arrow-up-left text-success"></i>
-                      </span>
-                      <p class="text-dark me-1 fs-3 mb-0" style="color: #343a40;">+9%</p>
-                      <p class="fs-3 mb-0" style="color: #343a40;">from last year</p>
-                  </div>
-                  <div class="d-flex align-items-center">
-                      <div class="me-4">
-                          <span class="round-8 bg-primary rounded-circle me-2 d-inline-block" style="width: 16px; height: 16px; border-radius: 50%; background-color: #007bff;"></span>
-                          <span class="fs-2" style="color: #343a40;">2023</span>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-md-4">
-                  <div class="d-flex justify-content-center">
-                      <div id="breakup"></div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>
-
-
-          {{-- <div class="col-lg-12">
+          <div class="col-lg-12">
             <!-- Yearly Breakup -->
               <div class="card w-100 shadow">
                 <div class="card-body p-4">
@@ -169,7 +136,7 @@
                   </div>
                 </div>
               </div>
-          </div> --}}
+          </div>
 {{--  --}}
 
         </div>

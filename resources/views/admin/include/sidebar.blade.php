@@ -103,7 +103,7 @@
                     <a href="
                     {{ route('expenses.index') }}        
                     "
-                        class="nav-link {{ request()->is('payments*') ? 'active' : '' }}">
+                        class="nav-link {{ request()->is('expenses*') ? 'active' : '' }}">
                         <i class="nav-icon 	fas fa-money-check-alt  m-1 p-1"></i>
                         <p>
                             Expenses
