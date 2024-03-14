@@ -169,6 +169,8 @@
     // Get the date fields container
     const type = document.getElementById('type');
     const addDate = document.getElementById('add_date');
+     // Get the checkbox element
+    const DateCheckbox = document.getElementById('add_date_checkbox');
 
    
 
@@ -179,6 +181,7 @@
             type.style.display = 'none';
             dateFieldsContainer.style.display = 'none';
             addDate.style.display = 'none';
+            DateCheckbox.checked = false;
 
         } else {
             type.style.display = 'block';
