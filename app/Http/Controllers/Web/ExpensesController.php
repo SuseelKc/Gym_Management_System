@@ -38,5 +38,14 @@ class ExpensesController extends Controller
         }
 
     }
+    public function store(Request $request){
+        try{          
+            dd("Here");
+        }
+        catch(Exception $e){
+
+        }
+
+    }
 
 }

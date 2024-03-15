@@ -32,7 +32,7 @@
                             <h2 class="card-title font-weight-bold">Add Expenses</h2>
                         </div>
                         <form method="POST" action=" 
-                        {{-- {{route('expenses.store')}} --}}
+                        {{route('expenses.store')}}
                         " enctype="multipart/form-data">
                             @csrf
                             
@@ -43,7 +43,7 @@
                                         <div class="form-group">
                                             <label for="Name">Name</label>
                                             <input type="text" class="form-control" id="name"
-                                                placeholder="Enter Expenses Name Here" name="name" >
+                                                placeholder="Enter Expenses Name Here" name="name" required >
                                             @if ($errors->has('name'))
                                                 <x-validation-errors>
                                                     {{ $errors->first('name') }}
@@ -79,7 +79,7 @@
 
                                             <div class="d-flex align-items-center">
                                                 <input type="number" class="form-control mr-2" id="costs" style="width: 150px;"
-                                                       name="costs" value="">
+                                                       name="costs" value="" required>
                                                     <select id="type" style="height: 30px; display: block;" name="type" >
                                                         <option value="null" selected>Select Type</option>
                                                         <option value="year">Yearly</option>
@@ -109,7 +109,7 @@
                                         <div class="row" style="margin-left: 2px;">
                                             <div class="form-group" style="margin-right: 10px;">
                                                 <label for="start_date">Start Date</label>
-                                                <input type="date" class="form-control" id="start_date" required name="start_date" >
+                                                <input type="date" class="form-control" id="start_date" required name="start_date"  value="{{ date('Y-m-d') }}">
                                                 @if ($errors->has('start_date'))
                                                     <x-validation-errors>
                                                         {{ $errors->first('start_date') }}
