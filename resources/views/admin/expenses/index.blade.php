@@ -41,7 +41,8 @@
                                             <th>S.No</th>
                                             <th>Expenses Name</th>
                                             <th>Costs</th>                                                                                                                                                               
-                                            <th>Types</th>                                   
+                                            <th>Type</th> 
+                                            <th>Start Date</th>                                   
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -50,9 +51,10 @@
                                         <tr>
                                             <td>{{$loop->iteration}}</td>                                                                                
                                             <td>{{$expenses->name}}</td>
-
+                                            <td>{{$expenses->costs}}</td>
                                             <td>{{$expenses->type}}</td>
-                                            <td>{{$expenses->expenses_period}}</td>
+                                            <td>{{$expenses->start_date}}</td>
+                                            <td></td>
                                            
                                          
                                             <td>
