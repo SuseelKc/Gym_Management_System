@@ -39,7 +39,9 @@ class ExpensesController extends Controller
 
     }
     public function store(Request $request){
-        try{          
+        try{    
+            
+            dd($request->all());
             dd("Here");
         }
         catch(Exception $e){

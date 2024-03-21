@@ -85,6 +85,7 @@
                                                         <option value="year">Yearly</option>
                                                         <option value="month">Monthly</option>
                                                         <option value="days">Daily</option>
+                                                        <option  hidden value="today">Today</option>
                                                     </select>
                                                     
                                             </div>
@@ -109,7 +110,7 @@
                                         <div class="row" style="margin-left: 2px;">
                                             <div class="form-group" style="margin-right: 10px;">
                                                 <label for="start_date">Start Date</label>
-                                                <input type="date" class="form-control" id="start_date" required name="start_date"  value="{{ date('Y-m-d') }}">
+                                                <input type="date" class="form-control" id="start_date"  name="start_date"  >
                                                 @if ($errors->has('start_date'))
                                                     <x-validation-errors>
                                                         {{ $errors->first('start_date') }}
@@ -150,6 +151,14 @@
     const addDateCheckbox = document.getElementById('add_date_checkbox');
     // Get the date fields container
     const dateFieldsContainer = document.getElementById('date_fields');
+    // Get the checkbox element
+    const today = document.getElementById('today');
+    // Get the date fields container
+    const typeSelect = document.getElementById('type');
+    const addDate = document.getElementById('add_date');
+     // Get the checkbox element
+    const DateCheckbox = document.getElementById('add_date_checkbox');
+    const todayOptionValue = 'today';
 
     // Add event listener to checkbox
     addDateCheckbox.addEventListener('change', function() {
@@ -161,33 +170,23 @@
         }
     });
 
-</script>
-
-<script>
-    // Get the checkbox element
-    const today = document.getElementById('today');
-    // Get the date fields container
-    const type = document.getElementById('type');
-    const addDate = document.getElementById('add_date');
-     // Get the checkbox element
-    const DateCheckbox = document.getElementById('add_date_checkbox');
-
-   
-
-    // Add event listener to checkbox
     today.addEventListener('change', function() {
         // If checkbox is checked, display the date fields; otherwise, hide them
         if (this.checked) {
-            type.style.display = 'none';
+            typeSelect.style.display = 'none';
             dateFieldsContainer.style.display = 'none';
             addDate.style.display = 'none';
             DateCheckbox.checked = false;
+            typeSelect.value = todayOptionValue;
 
         } else {
-            type.style.display = 'block';
+            typeSelect.style.display = 'block';
             addDate.style.display = 'block';
+            typeSelect.value = 'null';
         }
     });
+
 </script>
+
 @endsection
 
