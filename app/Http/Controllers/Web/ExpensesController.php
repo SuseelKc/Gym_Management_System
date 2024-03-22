@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use Exception;
 use App\Models\User;
+use App\Models\Expenses;
 use Illuminate\Http\Request;
 use App\Services\ExpensesService;
 use App\Http\Controllers\Controller;
@@ -41,8 +42,12 @@ class ExpensesController extends Controller
     public function store(Request $request){
         try{    
             
-            dd($request->all());
-            dd("Here");
+            $expenses = new Expenses();
+            $expenses = $this->expensesService->add($expenses,$request);
+            toast('Expenses Added Successfully!','success');
+
+            return redirect()->intended(route('expenses.index'));
+
         }
         catch(Exception $e){
 
