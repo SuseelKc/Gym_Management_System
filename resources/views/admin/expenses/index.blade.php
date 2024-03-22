@@ -43,6 +43,7 @@
                                             <th>Costs</th>                                                                                                                                                               
                                             <th>Type</th> 
                                             <th>Start Date</th>                                   
+                                            <th>End Date</th> 
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -54,12 +55,11 @@
                                             <td>{{$expenses->costs}}</td>
                                             <td>{{$expenses->type}}</td>
                                             <td>{{$expenses->start_date}}</td>
+                                            <td>{{$expenses->end_date}}</td>
                                             <td></td>
                                            
                                          
-                                            <td>
-                                                                                    
-                                            </td>
+                                          
 
                                         </tr>
                                         @endforeach    

@@ -41,7 +41,11 @@ class ExpensesController extends Controller
     }
     public function store(Request $request){
         try{    
-            
+            if($request->type == null){
+                toast('Please select the type of expenses!','error');
+                return redirect()->back();
+            }
+
             $expenses = new Expenses();
             $expenses = $this->expensesService->add($expenses,$request);
             toast('Expenses Added Successfully!','success');

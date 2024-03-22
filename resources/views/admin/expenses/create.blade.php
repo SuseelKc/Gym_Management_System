@@ -81,7 +81,7 @@
                                                 <input type="number" class="form-control mr-2" id="costs" style="width: 150px;"
                                                        name="costs" value="" required>
                                                     <select id="type" style="height: 30px; display: block;" name="type" >
-                                                        <option value="null" selected>Select Type</option>
+                                                        <option value="" selected>Select Type</option>
                                                         <option value="year">Yearly</option>
                                                         <option value="month">Monthly</option>
                                                         <option value="days">Daily</option>
