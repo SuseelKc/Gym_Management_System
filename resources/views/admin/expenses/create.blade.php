@@ -2,11 +2,6 @@
 @section('title','Create Expenses')
 @section('content')
 
-@if(session('message'))
-<div class="alert alert-danger">
-    {{ session('message') }}
-</div>
-@endif
 
 <div class="content">
     <section class="content-header">
@@ -86,8 +81,7 @@
                                                         <option value="month">Monthly</option>
                                                         <option value="days">Daily</option>
                                                         <option  hidden value="today">Today</option>
-                                                    </select>
-                                                    
+                                                    </select>                                                   
                                             </div>
                                             @if ($errors->has('expense_period'))
                                                 <x-validation-errors>
@@ -104,31 +98,29 @@
                                             <input type="checkbox" id="add_date_checkbox" class="form-check-input" />
                                             <label>Add Date</label>
                                         </div>
-                                        <div class="form-row" id="date_fields" 
-                                        style="display: none;"
-                                        >
-                                        <div class="row" style="margin-left: 2px;">
-                                            <div class="form-group" style="margin-right: 10px;">
-                                                <label for="start_date">Start Date</label>
-                                                <input type="date" class="form-control" id="start_date"  name="start_date"  >
-                                                @if ($errors->has('start_date'))
-                                                    <x-validation-errors>
-                                                        {{ $errors->first('start_date') }}
-                                                    </x-validation-errors>
-                                                @endif
-                                            </div>
-                                        
+                                        <div class="form-row" id="date_fields" style="display: none;">
+                                            <div class="row" style="margin-left: 2px;">
+                                                <div class="form-group" style="margin-right: 10px;">
+                                                    <label for="start_date">Start Date</label>
+                                                    <input type="date" class="form-control" id="start_date"  name="start_date"  >
+                                                    @if ($errors->has('start_date'))
+                                                        <x-validation-errors>
+                                                            {{ $errors->first('start_date') }}
+                                                        </x-validation-errors>
+                                                    @endif
+                                                </div>
+                                            
 
-                                            <div class="form-group"  style="margin-right: 10px;">
-                                                <label for="end_date">End Date</label>
-                                                <input type="date" class="form-control" id="end_date"  name="end_date" value="">
-                                                @if ($errors->has('end_date'))
-                                                    <x-validation-errors>
-                                                        {{ $errors->first('end_date') }}
-                                                    </x-validation-errors>
-                                                @endif
-                                            </div>
-                                        </div>   
+                                                <div class="form-group"  style="margin-right: 10px;">
+                                                    <label for="end_date">End Date</label>
+                                                    <input type="date" class="form-control" id="end_date"  name="end_date" value="">
+                                                    @if ($errors->has('end_date'))
+                                                        <x-validation-errors>
+                                                            {{ $errors->first('end_date') }}
+                                                        </x-validation-errors>
+                                                    @endif
+                                                </div>
+                                            </div>   
                                         </div>
                                         
 
@@ -139,6 +131,7 @@
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary px-3">Submit</button>
                                 </div>
+                            </div>    
                         </form>
                     </div>
                 </div>
