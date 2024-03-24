@@ -12,7 +12,7 @@
                         <li class="breadcrumb-item">
                             <a href="{{ route('expenses.index') }}">Expenses</a>
                         </li> 
-                        <li class="breadcrumb-item active">Add</li>
+                        <li class="breadcrumb-item active">Edit</li>
                     </ol>
                 </div>
             </div>
@@ -24,7 +24,7 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h2 class="card-title font-weight-bold">Add Expenses</h2>
+                            <h2 class="card-title font-weight-bold">Edit Expenses</h2>
                         </div>
                         <form method="POST" action=" 
                         {{route('expenses.store')}}
@@ -38,7 +38,7 @@
                                         <div class="form-group">
                                             <label for="Name">Name</label>
                                             <input type="text" class="form-control" id="name"
-                                                placeholder="Enter Expenses Name Here" name="name" required >
+                                                placeholder="Enter Expenses Name Here" name="name" value="{{$expenses->name}}" required >
                                             @if ($errors->has('name'))
                                                 <x-validation-errors>
                                                     {{ $errors->first('name') }}
@@ -73,14 +73,14 @@
                                             </div>
 
                                             <div class="d-flex align-items-center">
-                                                <input type="number" class="form-control mr-2" id="costs" style="width: 150px;"
+                                                <input type="number" class="form-control mr-2" id="costs" style="width: 150px;" value="{{$expenses->name}}"
                                                        name="costs" value="" required>
                                                     <select id="type" style="height: 30px; display: block;" name="type" >
                                                         <option value="" selected>Select Type</option>
-                                                        <option value="year">Yearly</option>
-                                                        <option value="month">Monthly</option>
-                                                        <option value="days">Daily</option>
-                                                        <option  hidden value="today">Today</option>
+                                                        <option value="year" {{ $expenses->type == 'Yearly' ? 'selected' : '' }} >Yearly</option>
+                                                        <option value="month"{{ $expenses->type == 'Monthly' ? 'selected' : '' }} >Monthly</option>
+                                                        <option value="days" {{ $expenses->type == 'Daily' ? 'selected' : '' }}>Daily</option>
+                                                        <option  hidden value="today" {{ $expenses->type == 'Today' ? 'selected' : '' }} >Today</option>
                                                     </select>                                                   
                                             </div>
                                             @if ($errors->has('expense_period'))

@@ -57,15 +57,15 @@
                                             <td>{{$expenses->start_date}}</td>
                                             <td>{{$expenses->end_date}}</td>
                                             <td>
-                                            <a 
-                                            {{-- href="{{route('expenses.edit', $expenses->id)}}"  --}}
-                                                title="Edit Expenses">
-                                            <i class="fas fa-edit fa-lg"></i></a>
-                                            <a type="button"  data-toggle="modal" data-target="#deleteModal"  data-expenses-id="{{$expenses->id}}"
-                                            data-expenses-name="{{$expenses->name}}"
-                                            href="#" title="Delete Expenses">
-                                            <i class="fas fa-times-circle fa-lg" style="color: red;"></i>
-                                            </a>     
+                                                <a 
+                                                href="{{route('expenses.edit', $expenses->id)}}" 
+                                                    title="Edit Expenses">
+                                                <i class="fas fa-edit fa-lg"></i></a>
+                                                <a type="button"  data-toggle="modal" data-target="#deleteModal"  data-expenses-id="{{$expenses->id}}"
+                                                data-expenses-name="{{$expenses->name}}"
+                                                href="#" title="Delete Expenses">
+                                                <i class="fas fa-times-circle fa-lg" style="color: red;"></i>
+                                                </a>     
 
                                             </td>
                                            

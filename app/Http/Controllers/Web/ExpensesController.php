@@ -59,4 +59,18 @@ class ExpensesController extends Controller
 
     }
 
+    public function edit($id){
+        try{    
+           
+            $expenses=Expenses::FindOrFail($id);
+            $expenses = $this->expensesService->all(); 
+            return view('admin.expenses.edit',compact('expenses'));  
+
+        }
+        catch(Exception $e){
+
+        }
+
+    }
+
 }

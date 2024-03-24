@@ -29,7 +29,7 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h2 class="card-title font-weight-bold">Add Equipments</h2>
+                            <h2 class="card-title font-weight-bold">Edit Equipments</h2>
                         </div>
                         <form method="POST" action=" 
                         {{route('equipments.update',$equipment->id)}}
