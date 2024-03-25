@@ -60,12 +60,12 @@ class ExpensesController extends Controller
     }
 
     public function edit($id){
-        try{    
-           
+        try{              
             $expenses=Expenses::FindOrFail($id);
-            $expenses = $this->expensesService->all(); 
-            return view('admin.expenses.edit',compact('expenses'));  
-
+            // $expenses = $this->expensesService->all(); 
+            $gym_id=auth()->id();
+            $gym=User::FindOrFail($gym_id);
+            return view('admin.expenses.edit',compact('expenses','gym'));  
         }
         catch(Exception $e){
 

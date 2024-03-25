@@ -68,19 +68,23 @@
                                             <label for="costs">Costs</label>
 
                                             <div class="form-check">
+                                                @if(($expenses->type)=='today')
+                                                <input type="checkbox" id="today" class="form-check-input" checked />
+                                                @else
                                                 <input type="checkbox" id="today" class="form-check-input" />
+                                                @endif
                                                 <label>Today Only</label>
                                             </div>
 
                                             <div class="d-flex align-items-center">
-                                                <input type="number" class="form-control mr-2" id="costs" style="width: 150px;" value="{{$expenses->name}}"
+                                                <input type="number" class="form-control mr-2" id="costs" style="width: 150px;" value="{{$expenses->costs}}"
                                                        name="costs" value="" required>
                                                     <select id="type" style="height: 30px; display: block;" name="type" >
                                                         <option value="" selected>Select Type</option>
-                                                        <option value="year" {{ $expenses->type == 'Yearly' ? 'selected' : '' }} >Yearly</option>
-                                                        <option value="month"{{ $expenses->type == 'Monthly' ? 'selected' : '' }} >Monthly</option>
-                                                        <option value="days" {{ $expenses->type == 'Daily' ? 'selected' : '' }}>Daily</option>
-                                                        <option  hidden value="today" {{ $expenses->type == 'Today' ? 'selected' : '' }} >Today</option>
+                                                        <option value="year" {{ $expenses->type == 'year' ? 'selected' : '' }} >Yearly</option>
+                                                        <option value="month"{{ $expenses->type == 'month' ? 'selected' : '' }} >Monthly</option>
+                                                        <option value="days" {{ $expenses->type == 'days' ? 'selected' : '' }}>Daily</option>
+                                                        <option  hidden value="today" {{ $expenses->type == 'today' ? 'selected' : '' }} >Today</option>
                                                     </select>                                                   
                                             </div>
                                             @if ($errors->has('expense_period'))
@@ -102,7 +106,7 @@
                                             <div class="row" style="margin-left: 2px;">
                                                 <div class="form-group" style="margin-right: 10px;">
                                                     <label for="start_date">Start Date</label>
-                                                    <input type="date" class="form-control" id="start_date"  name="start_date"  >
+                                                    <input type="date" class="form-control" id="start_date"  name="start_date" value="{{$expenses->start_date}}" >
                                                     @if ($errors->has('start_date'))
                                                         <x-validation-errors>
                                                             {{ $errors->first('start_date') }}
@@ -113,7 +117,7 @@
 
                                                 <div class="form-group"  style="margin-right: 10px;">
                                                     <label for="end_date">End Date</label>
-                                                    <input type="date" class="form-control" id="end_date"  name="end_date" value="">
+                                                    <input type="date" class="form-control" id="end_date"  name="end_date" value="{{$expenses->end_date}}">
                                                     @if ($errors->has('end_date'))
                                                         <x-validation-errors>
                                                             {{ $errors->first('end_date') }}
