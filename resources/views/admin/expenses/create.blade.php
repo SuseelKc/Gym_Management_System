@@ -69,7 +69,7 @@
 
                                             <div class="form-check">
                                                 <input type="checkbox" id="today" class="form-check-input" />
-                                                <label>Today Only</label>
+                                                <label>One-Time Expenses</label>
                                             </div>
 
                                             <div class="d-flex align-items-center">
@@ -102,7 +102,7 @@
                                             <div class="row" style="margin-left: 2px;">
                                                 <div class="form-group" style="margin-right: 10px;">
                                                     <label for="start_date">Start Date</label>
-                                                    <input type="date" class="form-control" id="start_date"  name="start_date"  >
+                                                    <input type="date" class="form-control" id="start_date"  name="start_date" value="{{ date('Y-m-d') }}" >
                                                     @if ($errors->has('start_date'))
                                                         <x-validation-errors>
                                                             {{ $errors->first('start_date') }}
@@ -111,7 +111,7 @@
                                                 </div>
                                             
 
-                                                <div class="form-group"  style="margin-right: 10px;">
+                                                {{-- <div class="form-group"  style="margin-right: 10px;">
                                                     <label for="end_date">End Date</label>
                                                     <input type="date" class="form-control" id="end_date"  name="end_date" value="">
                                                     @if ($errors->has('end_date'))
@@ -119,7 +119,7 @@
                                                             {{ $errors->first('end_date') }}
                                                         </x-validation-errors>
                                                     @endif
-                                                </div>
+                                                </div> --}}
                                             </div>   
                                         </div>
                                         

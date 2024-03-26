@@ -53,7 +53,17 @@
                                             <td>{{$loop->iteration}}</td>                                                                                
                                             <td>{{$expenses->name}}</td>
                                             <td>{{$expenses->costs}}</td>
-                                            <td>{{$expenses->type}}</td>
+                                            <td>
+                                                @if($expenses->type == 'year')
+                                                Yealy
+                                                @elseif($expenses->type == 'month')
+                                                Monthly
+                                                @elseif($expenses->type == 'days')
+                                                Daily
+                                                @else
+                                                One Time Expenses
+                                                @endif
+                                            </td>
                                             <td>{{$expenses->start_date}}</td>
                                             <td>{{$expenses->end_date}}</td>
                                             <td>

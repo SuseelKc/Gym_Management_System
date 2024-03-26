@@ -64,6 +64,29 @@ class ExpensesService
         }
     }
 
+    public function update(Expenses $expenses,$id,Request $request){
+        try{
+            DB::begintransaction();
+            $user=auth()->user();
+            $gym=User::FindorFail($user->id);
+            $expenses->name=$request->name;
+            $expenses->type=$request->type;
+            $expenses->costs=$request->costs;
+            $expenses->start_date=$request->start_date;
+            $expenses->end_date=$request->end_date;
+            $expenses->gym_id=$user->id;
+
+
+            $expenses->update();
+
+            DB::commit();
+            return $expenses;
+        }
+        catch(Exception $e){
+            DB::rollBack();
+            throw new Exception(Message::Failed);
+            }
+    }
    
 
     

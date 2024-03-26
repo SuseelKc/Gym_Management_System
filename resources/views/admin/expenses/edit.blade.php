@@ -27,10 +27,11 @@
                             <h2 class="card-title font-weight-bold">Edit Expenses</h2>
                         </div>
                         <form method="POST" action=" 
-                        {{route('expenses.store')}}
+                        {{route('expenses.update',$expenses->id)}}
                         " enctype="multipart/form-data">
                             @csrf
-                            
+                            @method('PATCH')
+
                             <div class="card-body">
                                 <div class="row">
                                     <!-- name -->
@@ -73,7 +74,7 @@
                                                 @else
                                                 <input type="checkbox" id="today" class="form-check-input" />
                                                 @endif
-                                                <label>Today Only</label>
+                                                <label>One-Time Expenses</label>
                                             </div>
 
                                             <div class="d-flex align-items-center">
@@ -84,7 +85,7 @@
                                                         <option value="year" {{ $expenses->type == 'year' ? 'selected' : '' }} >Yearly</option>
                                                         <option value="month"{{ $expenses->type == 'month' ? 'selected' : '' }} >Monthly</option>
                                                         <option value="days" {{ $expenses->type == 'days' ? 'selected' : '' }}>Daily</option>
-                                                        <option  hidden value="today" {{ $expenses->type == 'today' ? 'selected' : '' }} >Today</option>
+                                                        <option hidden value="today" {{ $expenses->type == 'today' ? 'selected' : '' }} >Today</option>
                                                     </select>                                                   
                                             </div>
                                             @if ($errors->has('expense_period'))
@@ -115,7 +116,7 @@
                                                 </div>
                                             
 
-                                                <div class="form-group"  style="margin-right: 10px;">
+                                                {{-- <div class="form-group"  style="margin-right: 10px;">
                                                     <label for="end_date">End Date</label>
                                                     <input type="date" class="form-control" id="end_date"  name="end_date" value="{{$expenses->end_date}}">
                                                     @if ($errors->has('end_date'))
@@ -123,7 +124,7 @@
                                                             {{ $errors->first('end_date') }}
                                                         </x-validation-errors>
                                                     @endif
-                                                </div>
+                                                </div> --}}
                                             </div>   
                                         </div>
                                         

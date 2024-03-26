@@ -73,4 +73,17 @@ class ExpensesController extends Controller
 
     }
 
+    public function update(Request $request,$id){
+        try{
+            $expenses= Expenses::FindOrFail($id);
+            $expenses=$this->expensesService->update($expenses,$id,$request);
+            toast('Expenses Updated Successfully!','success');
+            return redirect()->intended(route('expenses.index'));
+
+        }
+        catch(Exception $e){
+
+        }
+    }
+
 }
