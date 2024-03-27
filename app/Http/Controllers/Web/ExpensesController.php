@@ -86,4 +86,18 @@ class ExpensesController extends Controller
         }
     }
 
+    public function delete($id){
+        try{
+            $expenses= Expenses::FindOrFail($id);
+            $expenses=$this->expensesService->delete($id);
+            toast('Expenses Deleted Successfully!','success');
+            return redirect()->intended(route('expenses.index'));
+
+        }
+        catch(Exception $e){
+
+        }
+
+    }
+
 }

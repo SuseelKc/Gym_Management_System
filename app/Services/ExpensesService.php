@@ -87,6 +87,21 @@ class ExpensesService
             throw new Exception(Message::Failed);
             }
     }
+
+    public function delete($id){
+        try{
+            DB::beginTransaction();
+            $expenses=$this->expensesRepository->getById($id);
+            $expenses->delete();
+            DB::commit();
+            return $expenses;
+
+        }
+        catch(Exception $e){
+
+        }
+        
+    }
    
 
     

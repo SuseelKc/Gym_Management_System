@@ -134,7 +134,7 @@
             var expensesId = $('#expensesIdToDelete').val();
 
             // Construct the delete route with the expensesId
-            var deleteRoute = '{{ route("equipments.delete", ":id") }}';
+            var deleteRoute = '{{ route("expenses.delete", ":id") }}';
             deleteRoute = deleteRoute.replace(':id', expensesId);
 
             // Perform the delete operation by navigating to the delete route
