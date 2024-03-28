@@ -48,7 +48,7 @@ class LedgerService
             DB::beginTransaction();
             $user = auth()->user();
             $user_id=$user->id;
-            $ledger= $this->ledgerRepository->getAll()->where('member_id',$id);
+            $ledger= $this->ledgerRepository->getAll()->where('gym_id',$user_id)->where('member_id',$id);
             DB::commit();
             return $ledger;
         }

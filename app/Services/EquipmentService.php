@@ -178,9 +178,7 @@ class EquipmentService
                 $equipment->maintenance_period= null; 
                 $equipment->upcoming_date= null; 
             }    
-            
-          
-
+                     
             if($request->maintenance_period){
 
                 if ($request->maintenance_type === 'year') {
