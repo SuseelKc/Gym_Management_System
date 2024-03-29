@@ -116,20 +116,23 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="pricing">Package</label><br>
-                                                <select id="pricing" name="pricing" readonly>    
-                                                    @if($member->pricing_id != null)                                             
-                                                        @foreach($pricing as $packageItem)
-                                                            <option value="{{ $packageItem['id'] }}" {{ old('pricing') == $packageItem['id'] ? 'selected' : '' }}>{{ $packageItem['name'] }}</option>
-                                                        @endforeach
-                                                        <option value="">Not Selected</option>
-                                                    @else
-                                                        <option value="">Not Selected</option>
-                                                        @foreach($pricing as $packageItem)
-                                                        <option value="{{ $packageItem['id'] }}" {{ old('pricing') == $packageItem['id'] ? 'selected' : '' }}>{{ $packageItem['name'] }}</option>
-                                                        @endforeach
-                                                    @endif    
-
+                                                @if($member->pricing_id != null) 
+                                                <select id="pricing_display" disabled>
+                                                    @foreach($pricing as $packageItem)
+                                                        <option value="{{ $packageItem['id'] }}" {{ $member->pricing_id == $packageItem['id'] ? 'selected' : '' }}>{{ $packageItem['name'] }}</option>
+                                                    @endforeach                                                      
                                                 </select>
+                                                <!-- Hidden input to store the selected value -->
+                                                <input type="hidden" name="pricing" value="{{ $member->pricing_id }}">
+                                                
+                                                @else
+                                                <select id="pricing" name="pricing" >
+                                                    <option value="" {{ old('pricing') == "" ? 'selected' : '' }}>Select Package</option>                                                                                                   
+                                                    @foreach($pricing as $packageItem)
+                                                        <option value="{{ $packageItem['id'] }}" {{ old('pricing') == $packageItem['id'] ? 'selected' : '' }}>{{ $packageItem['name'] }}</option>
+                                                    @endforeach                                                      
+                                                </select>
+                                                @endif
                                                 @if ($errors->has('pricing'))
                                                     <x-validation-errors>
                                                         {{ $errors->first('pricing') }}

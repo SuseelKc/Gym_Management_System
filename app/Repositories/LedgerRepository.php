@@ -25,9 +25,9 @@ class LedgerRepository
         return Ledger::where('gym_id', auth()->id())->whereNotNull('credit')->take(10)
         ->latest()->get();
     }
-   public function getMember($id){
+   public function getMember($memberId){
 
-        return Ledger::where('gym_id', auth()->id())->where('member_id', $id)->get();
+        return Ledger::where('gym_id', auth()->id())->where('member_id', $memberId)->get();
 
     }
 }
