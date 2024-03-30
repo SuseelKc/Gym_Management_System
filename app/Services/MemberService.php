@@ -152,6 +152,15 @@ public function update(Member $member, $id, Request $request)
             $member->photo = $filename;
         }
 
+        // when member's package/pricing is choosen(ledger creation)
+        if( $member->pricing_id != null){
+                   
+            $pricing = $this->pricingRepository->getById($member->pricing_id);
+            $this->ledgerService->add($member, $pricing);
+                      
+        }
+        //      
+
         $member->update();
 
         DB::commit();
