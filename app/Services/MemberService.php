@@ -15,17 +15,20 @@ use App\Services\LedgerService;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\File;
+use App\Repositories\LedgerRepository;
 use App\Repositories\MemberRepository;
 use App\Repositories\PricingRepository;
 
 class MemberService
 {
-    public function __construct(MemberRepository $memberRepository,UserRepository $userRepository,LedgerService $ledgerService,PricingRepository $pricingRepository)
+    public function __construct(MemberRepository $memberRepository,UserRepository $userRepository,LedgerService $ledgerService,PricingRepository $pricingRepository,
+    LedgerRepository $ledgerRepository)
     {
         $this->memberRepository = $memberRepository;
         $this->userRepository = $userRepository;
         $this->ledgerService= $ledgerService;
         $this->pricingRepository=$pricingRepository;
+        $this->ledgerRepository=$ledgerRepository;
     }
 
     public function all()
@@ -153,13 +156,15 @@ public function update(Member $member, $id, Request $request)
         }
 
         // when member's package/pricing is choosen(ledger creation)
-        if( $member->pricing_id != null){
-                   
+        $memberLedger=$this->ledgerRepository->getMember($id);
+
+        if( $member->pricing_id != null && $memberLedger->isEmpty()){
+        
             $pricing = $this->pricingRepository->getById($member->pricing_id);
             $this->ledgerService->add($member, $pricing);
-                      
+                     
         }
-        //      
+
 
         $member->update();
 
