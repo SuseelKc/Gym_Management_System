@@ -130,4 +130,7 @@ class MemberController extends Controller
         }
     }
 
+    public function monthlyMembership(){
+
+    }
 }
