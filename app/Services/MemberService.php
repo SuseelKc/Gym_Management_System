@@ -100,8 +100,11 @@ public function add(Member $member, Request $request)
         }
 
         $pricing = $this->pricingRepository->getById($member->pricing_id);
-        $member->pricing_type=$pricing->costs_type;
-        $member->pricing_date=Carbon::now();
+        if( $pricing){ 
+            $member->pricing_type=$pricing->costs_type;
+            $member->pricing_date=Carbon::now();
+        }
+       
         $member->save();
         // if package(pricing)exists
         if( $member->pricing_id != null){
@@ -162,6 +165,8 @@ public function update(Member $member, $id, Request $request)
         if( $member->pricing_id != null && $memberLedger->isEmpty()){
         
             $pricing = $this->pricingRepository->getById($member->pricing_id);
+            $member->pricing_type=$pricing->costs_type;
+            $member->pricing_date=Carbon::now();
             $this->ledgerService->add($member, $pricing);
                      
         }
