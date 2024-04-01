@@ -16,8 +16,8 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->run(function(){
             $controller = new MemberController(); 
-            $controller->monthlyMembership();
-        })->monthly();
+            $controller->autorenew();
+        })->monthly()->startingOn(now()->startOfMonth());
     }
 
     /**

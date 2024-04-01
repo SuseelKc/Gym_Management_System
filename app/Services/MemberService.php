@@ -6,7 +6,6 @@ use Exception;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Enums\Shifts;
-
 use App\Models\Ledger;
 use App\Models\Member;
 use App\Models\Pricing;
@@ -100,13 +99,15 @@ public function add(Member $member, Request $request)
             $member->photo = $filename;
         }
 
+        $pricing = $this->pricingRepository->getById($member->pricing_id);
+        $member->pricing_type=$pricing->costs_type;
+        $member->pricing_date=Carbon::now();
         $member->save();
         // if package(pricing)exists
         if( $member->pricing_id != null){
-                   
-            $pricing = $this->pricingRepository->getById($member->pricing_id);
-            $this->ledgerService->add($member, $pricing);
                       
+            $this->ledgerService->add($member, $pricing);
+                //   
         }
 
         //      

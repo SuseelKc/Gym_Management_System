@@ -130,7 +130,29 @@ class MemberController extends Controller
         }
     }
 
-    public function monthlyMembership(){
+    public function autorenew(){
+        try{
+           $members = $this->memberService->all()->groupBy('pricing_id');
 
+           foreach($members as $member){
+            $pricingId=$member->pricing_id;
+            $pricing=$this->pricingService->getById($id);
+            $pricingType=$pricing->costs_type;
+            if($pricingType=="Year"){
+                
+            }
+            elseif($pricingType=="Month"){
+                
+            }
+            else{
+
+            }
+            
+           }
+
+        }
+        catch(Exception $e){
+
+        }
     }
 }

@@ -21,7 +21,9 @@ class Member extends Model
     'address',
     'contact_no',
     'email',
-    'pricing_id'   
+    'pricing_id',
+    'pricing_type',
+    'pricing_date'
     ];
     
     public function user()
