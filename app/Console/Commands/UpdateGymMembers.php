@@ -34,7 +34,7 @@ class UpdateGymMembers extends Command
                     break;
                 case 'Days':
                     $expiryDate->addDay();
-                    break;
+                    break;   
                 default:
                     // Handle other types if needed
                     break;
@@ -46,6 +46,7 @@ class UpdateGymMembers extends Command
                 $membership->update([
                     'pricing_type' => null,
                     'pricing_date' => null,
+                    'pricing_id'=>null
                 ]);
             }
         }

@@ -160,9 +160,9 @@ public function update(Member $member, $id, Request $request)
         }
 
         // when member's package/pricing is choosen(ledger creation)
-        $memberLedger=$this->ledgerRepository->getMember($id);
+       
 
-        if( $member->pricing_id != null && $memberLedger->isEmpty()){
+        if( $member->pricing_id != null){
         
             $pricing = $this->pricingRepository->getById($member->pricing_id);
             $member->pricing_type=$pricing->costs_type;
