@@ -14,10 +14,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->run(function(){
-            $controller = new MemberController(); 
-            $controller->autorenew();
-        })->monthly()->startingOn(now()->startOfMonth());
+        $schedule->command('gym:check-memberships')->daily();
     }
 
     /**
