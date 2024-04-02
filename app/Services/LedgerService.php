@@ -69,6 +69,7 @@ class LedgerService
             $ledger->debit = $pricing->costs;
             $ledger->balance = $pricing->costs;
             $ledger->member_id = $member->id;
+            $ledger->remarks="Package Purchased/Renewed :{$pricing->name}";
             $ledger->gym_id = auth()->id();
             $ledger->save();
             return $ledger;
