@@ -12,3 +12,4 @@ Route::get('/members/edit/{id}',[MemberController::class,'edit'])->name('member.
 Route::patch('/members/update/{id}',[MemberController::class,'update'])->name('member.update');
 Route::get('/members/{id}',[MemberController::class,'delete'])->name('member.delete');
 Route::get('/members/toggle/{id}',[MemberController::class,'toggle'])->name('member.toggle');
+Route::get('/renew-membership',[MemberController::class,'renwewmembership'])->name('member.renewal');

@@ -39,6 +39,17 @@
                         </p>
                     </a>
                 </li>  
+
+                {{--renew members  --}}
+                <li class="nav-item">
+                    <a href="{{ route('member.renewal') }} "
+                        class="nav-link {{ request()->is('renew*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-user-clock  m-1 p-1"></i>
+                        <p>
+                            Renew Membership
+                        </p>
+                    </a>
+                </li>  
                 
                 {{-- equipments/assets --}}
                 <li class="nav-item">

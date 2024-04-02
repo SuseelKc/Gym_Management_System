@@ -130,26 +130,10 @@ class MemberController extends Controller
         }
     }
 
-    public function autorenew(){
+    public function renwewmembership(){
         try{
-           $members = $this->memberService->all()->groupBy('pricing_id');
-
-           foreach($members as $member){
-            $pricingId=$member->pricing_id;
-            $pricing=$this->pricingService->getById($id);
-            $pricingType=$pricing->costs_type;
-            if($pricingType=="Year"){
-                
-            }
-            elseif($pricingType=="Month"){
-                
-            }
-            else{
-
-            }
-            
-           }
-
+            $member=$this->memberService->all()->where('pricing_id',null)->where('pricing_type',null)->where('pricing_date',null);   
+            return view('admin.member.renew',compact('member')); 
         }
         catch(Exception $e){
 
