@@ -2,6 +2,21 @@
 @section('title','Report')
 @section('content')
 
+<style>
+    .card {
+        transition: all 0.3s ease-in-out; /* Add smooth transition effect */
+    }
+    
+    .card:hover {
+        background-color: #f0f0f0; /* Change to your desired hover background color */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow effect on hover */
+        transform: translateY(-4px); /* Lift the card slightly on hover */
+    }
+    .title-head {
+        color: #000; /* Black color */
+        font-weight: bold;
+    }
+</style>
 <div class="container-fluid pt-2 pd-2">
     
     <div class="row">
@@ -31,36 +46,34 @@
         {{--  --}}
         {{-- Top Selling Package --}}
         <div class="col-lg-3 d-flex align-items-stretch">
-            <div class="card w-100 shadow">
+            <a href="{{ route('member.index') }}" class="card w-100 shadow">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Total Members </h5>
-                        <h6 class="mb-0" style="font-weight: bold;">{{$totalMembers}}</h6>
+                        <h6 class="mb-0 title-head">Total Members</h6>
+                        <h5 class="mb-0 title-head" >{{$totalMembers}}</h5>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div>
                             <i class="fas fa-users mr-2 text-primary"></i>
                             @if($latestTotalMembers > $previousTotalMembers)
                                 <i class="fas fa-arrow-up text-success mr-2"></i>
-                            
                             @else
                                 <i class="fas fa-arrow-down text-danger"></i>
-                            
                             @endif
-                            
                         </div>
                         <div>
                             <span class="text-primary">{{$percentageChange}} %</span>
                             @if($latestTotalMembers > $previousTotalMembers)
-                            <span class="text-success ml-3">Increase</span>
+                                <span class="text-success ml-3">Increase</span>
                             @else
-                            <span class="text-danger ml-3">Decrease</span>
+                                <span class="text-danger ml-3">Decrease</span>
                             @endif
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
+        
         {{--  --}}
     </div>
     
