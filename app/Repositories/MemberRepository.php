@@ -17,4 +17,9 @@ class MemberRepository
     {
         return Member::where($query);
     }
+    public function groupByPricing($id){
+        return Member::where('pricing_id',$id)
+        ->where('user_id',auth()->id())
+        ->count();
+    }
 }

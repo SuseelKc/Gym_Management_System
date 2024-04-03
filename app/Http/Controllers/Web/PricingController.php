@@ -8,18 +8,25 @@ use App\Models\Pricing;
 use Illuminate\Http\Request;
 use App\Services\PricingService;
 use App\Http\Controllers\Controller;
+use App\Repositories\MemberRepository;
 
 class PricingController extends Controller
 {
-    public function __construct(PricingService $pricingService){
+    public function __construct(PricingService $pricingService,MemberRepository $memberRepository){
         $this->pricingService =$pricingService;
-
+        $this->memberRepository=$memberRepository;
     }
 
     public function index(){
         try{
             $pricing=$this->pricingService->all();
-            return view('admin.pricing.index',compact('pricing'));
+           
+            $pricings=$pricing;
+            foreach($pricings as $pricings){
+                $memeberEnrolledPackage[]=$this->memberRepository->groupByPricing($pricings->id);
+            }
+            // dd($memeberEnrolledPackage);
+            return view('admin.pricing.index',compact('pricing','memeberEnrolledPackage'));
         }
         catch(Exception $e){
 

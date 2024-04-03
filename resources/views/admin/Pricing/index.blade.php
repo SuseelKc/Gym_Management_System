@@ -35,7 +35,8 @@
                                             <th>Costs</th>
                                             <th>Costs Type</th>                                                                                  
                                             <th>Start Date</th>                                            
-                                            <th>End Date</th>                          
+                                            <th>End Date</th>   
+                                            <th>Members Enrollments</th>                          
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -47,7 +48,8 @@
                                             <td>{{$pricing->costs}}</td>                                         
                                             <td>{{$pricing->costs_type}}</td>
                                             <td>{{$pricing->start_date}}</td>
-                                            <td>{{$pricing->end_date}}</td>                                     
+                                            <td>{{$pricing->end_date}}</td>   
+                                            <td>{{$memeberEnrolledPackage[($loop->iteration)-1]}} Memebers</td>                                  
                                             <td>
                                                 <a href="{{route('pricing.edit', $pricing->id)}}" title="Edit Package">
                                                             <i class="fas fa-edit fa-lg"></i></a>
