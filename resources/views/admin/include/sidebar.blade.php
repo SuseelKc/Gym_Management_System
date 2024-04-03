@@ -134,9 +134,10 @@
 
                 {{-- Reports --}}
                 <li class="nav-item">
-                    <a href="               
+                    <a href=" 
+                    {{ route('report.index') }}                
                     "
-                        class="nav-link {{ request()->is('reports*') ? 'active' : '' }}">
+                        class="nav-link {{ request()->is('report*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-chart-bar  m-1 p-1"></i>
                         <p>
                             Reports

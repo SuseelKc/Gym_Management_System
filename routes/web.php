@@ -44,7 +44,8 @@ Route::middleware('auth')->group(function () {
     require __DIR__ . '/web/pricing.php';
     require __DIR__ . '/web/ledger.php';
     require __DIR__ . '/web/expenses.php';
-    
+    require __DIR__ . '/web/report.php';
+
     foreach (glob(__DIR__ . '/web/*.php') as $filename) {
         require $filename;
     }

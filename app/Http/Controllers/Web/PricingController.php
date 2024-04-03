@@ -25,7 +25,7 @@ class PricingController extends Controller
             foreach($pricings as $pricings){
                 $memeberEnrolledPackage[]=$this->memberRepository->groupByPricing($pricings->id);
             }
-            // dd($memeberEnrolledPackage);
+           
             return view('admin.pricing.index',compact('pricing','memeberEnrolledPackage'));
         }
         catch(Exception $e){
