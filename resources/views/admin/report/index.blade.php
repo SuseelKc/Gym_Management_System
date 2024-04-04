@@ -4,16 +4,16 @@
 
 <style>
     .card {
-        transition: all 0.3s ease-in-out; /* Add smooth transition effect */
+        transition: all 0.2s ease-in-out; /* Add smooth transition effect */
     }
     
     .card:hover {
         background-color: #f0f0f0; /* Change to your desired hover background color */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow effect on hover */
+        box-shadow: 0 4px 8px rgba(43, 42, 42, 0.1); /* Add a shadow effect on hover */
         transform: translateY(-4px); /* Lift the card slightly on hover */
     }
     .title-head {
-        color: #000; /* Black color */
+        color: #000000; /* Black color */
         font-weight: bold;
     }
 </style>
@@ -78,7 +78,7 @@
 
         {{-- equipments --}}
         <div class="col-lg-3 d-flex align-items-stretch">
-            <a href="{{ route('member.index') }}" class="card w-100 shadow">
+            <a href="{{ route('equipments.index') }}" class="card w-100 shadow">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <h6 class="mb-0 title-head">Total Equipments</h6>
@@ -110,29 +110,35 @@
             </a>
         </div>
         {{--  --}}
-         {{-- equipments --}}
+         {{-- Account recivables --}}
          <div class="col-lg-3 d-flex align-items-stretch">
-            <a href="{{ route('member.index') }}" class="card w-100 shadow">
+            <a href="{{ route('ledger.index') }}" class="card w-100 shadow">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h6 class="mb-0 title-head">Account Receivables</h6>
-                        <h5 class="mb-0 title-head" >RS {{$totalMembers}}</h5>
+                        <h6 class="mb-0 title-head">Accounts Receivable</h6>
+                        @if($totalDebit>$totalCredit)
+                            <h5 class="mb-0 title-head" >RS {{$totalDebit-$totalCredit}}</h5>
+                        @else
+                            <h5 class="mb-0 title-head" >RS 0</h5>
+                        @endif    
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div>
                             <i class="fas fa-hand-holding-usd mr-2 text-primary"></i>
-                            @if($latestTotalMembers > $previousTotalMembers)
-                                <i class="fas fa-arrow-up text-success mr-2"></i>
+                            @if($AcReceivableChange>0)
+                                <i class="fas fa-arrow-up text-danger mr-2"></i>
                             @else
-                                <i class="fas fa-arrow-down text-danger"></i>
+                                <i class="fas fa-arrow-success text-danger"></i>
                             @endif
                         </div>
                         <div>
-                            <span class="text-primary">{{$percentageChange}} %</span>
-                            @if($latestTotalMembers > $previousTotalMembers)
-                                <span class="text-success ml-3">Increase</span>
+                            <span class="text-primary">{{$AcReceivableChange}} %</span>
+                            @if($AcReceivableChange>0)
+                                <span class="text-danger ml-3">Increase</span>
+                            @elseif($AcReceivableChange==0)
+                                <span class="text-secondary ml-3">No Changes</span>
                             @else
-                                <span class="text-danger ml-3">Decrease</span>
+                                <span class="text-success ml-3">Decrease</span>
                             @endif
                         </div>
                     </div>

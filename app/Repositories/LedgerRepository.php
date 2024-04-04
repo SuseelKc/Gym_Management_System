@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 
+use Carbon\Carbon;
 use App\Models\Ledger;
 
 class LedgerRepository
@@ -29,5 +30,25 @@ class LedgerRepository
 
         return Ledger::where('gym_id', auth()->id())->where('member_id', $memberId)->get();
 
+    }
+   
+    public function previousDebitMonths(){
+        $programInceptionDate = Carbon::create(1900, 1, 1); // January 1, 1900
+        $previousMonthStart = $programInceptionDate->startOfMonth();
+        $previousMonthEnd= Carbon::now()->subMonth()->endOfMonth();
+        
+        return Ledger::where('gym_id',auth()->id())
+        ->whereBetween('created_at',[$previousMonthStart,$previousMonthEnd])
+        ->whereNotNull('debit')->sum('debit');
+    }
+   
+    public function previousCreditMonths(){
+        $programInceptionDate = Carbon::create(1900, 1, 1); // January 1, 1900
+        $previousMonthStart = $programInceptionDate->startOfMonth();
+        $previousMonthEnd= Carbon::now()->subMonth()->endOfMonth();
+        
+        return Ledger::where('gym_id',auth()->id())
+        ->whereBetween('created_at',[$previousMonthStart,$previousMonthEnd])
+        ->whereNotNull('credit')->sum('credit');
     }
 }
