@@ -75,6 +75,72 @@
         </div>
         
         {{--  --}}
+
+        {{-- equipments --}}
+        <div class="col-lg-3 d-flex align-items-stretch">
+            <a href="{{ route('member.index') }}" class="card w-100 shadow">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0 title-head">Total Equipments</h6>
+                        <h5 class="mb-0 title-head" >{{$totalEquipments}}</h5>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div>
+                            <i class="fas fa-dumbbell mr-2 text-primary"></i>
+                            @if($latestTotalEquipments > $previousTotalEquipments)
+                                <i class="fas fa-arrow-up text-success mr-2"></i>
+                            @elseif($latestTotalEquipments == $previousTotalEquipments)   
+
+                            @else
+                                <i class="fas fa-arrow-down text-danger"></i>
+                            @endif
+                        </div>
+                        <div>
+                            <span class="text-primary">{{$latestTotalEquipments-$previousTotalEquipments}} Equipments</span>
+                            @if($latestTotalEquipments > $previousTotalEquipments)
+                                <span class="text-success ml-3">Added</span>
+                            @elseif($latestTotalEquipments == $previousTotalEquipments)       
+                                <span class="text-secondary ml-3">No Changes</span>
+                            @else
+                                <span class="text-danger ml-3">Decrease</span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {{--  --}}
+         {{-- equipments --}}
+         <div class="col-lg-3 d-flex align-items-stretch">
+            <a href="{{ route('member.index') }}" class="card w-100 shadow">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0 title-head">Account Receivables</h6>
+                        <h5 class="mb-0 title-head" >RS {{$totalMembers}}</h5>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div>
+                            <i class="fas fa-hand-holding-usd mr-2 text-primary"></i>
+                            @if($latestTotalMembers > $previousTotalMembers)
+                                <i class="fas fa-arrow-up text-success mr-2"></i>
+                            @else
+                                <i class="fas fa-arrow-down text-danger"></i>
+                            @endif
+                        </div>
+                        <div>
+                            <span class="text-primary">{{$percentageChange}} %</span>
+                            @if($latestTotalMembers > $previousTotalMembers)
+                                <span class="text-success ml-3">Increase</span>
+                            @else
+                                <span class="text-danger ml-3">Decrease</span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {{--  --}}
+
     </div>
     
      
