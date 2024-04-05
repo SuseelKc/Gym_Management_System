@@ -27,19 +27,20 @@ class MemberRepository
         return Member::where('user_id',auth()->id())->count();
     }
 
-    public function latestCountMembers()
-    {
-        $currentMonthStart = Carbon::now()->startOfMonth();
-        $currentMonthEnd = Carbon::now()->endOfMonth();
+    // public function latestCountMembers()
+    // {
+    //     $currentMonthStart = Carbon::now()->startOfMonth();
+    //     $currentMonthEnd = Carbon::now()->endOfMonth();
         
-        return Member::where('user_id', auth()->id())
-                     ->whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])
-                     ->count();
-    }
+    //     return Member::where('user_id', auth()->id())
+    //                  ->whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])
+    //                  ->count();
+    // }
     
     public function previousCountMembers()
     {
-        $previousMonthStart = Carbon::now()->subMonth()->startOfMonth();
+        $programInceptionDate = Carbon::create(1900, 1, 1); // January 1, 1900
+        $previousMonthStart = $programInceptionDate->startOfMonth();
         $previousMonthEnd = Carbon::now()->subMonth()->endOfMonth();
 
         return Member::where('user_id', auth()->id())

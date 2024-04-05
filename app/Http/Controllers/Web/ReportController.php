@@ -25,21 +25,14 @@ class ReportController extends Controller
     public function index(){
     //members indicators 
     $totalMembers= $this->memberRepository->countMembers();
-    $latestTotalMembers=$this->memberRepository->latestcountMembers();
+    $latestTotalMembers=$this->memberRepository->countMembers();
     $previousTotalMembers=$this->memberRepository->previouscountMembers();
 
-    // calculating percentage change for previous memeber and latest mths members
-    if ($previousTotalMembers != 0) {
-        $percentageChange = (($latestTotalMembers - $previousTotalMembers) / $previousTotalMembers) * 100;
-    } else {
-        // Handling division by zero
-        $percentageChange = 0;
-    }
-
+   
     //  
     // Equipment indicators
     $totalEquipments=$this->equipmentRepository->countEquipments();
-    $latestTotalEquipments=$this->equipmentRepository->latestCountEquipments();
+    $latestTotalEquipments=$this->equipmentRepository->countEquipments();
     $previousTotalEquipments=$this->equipmentRepository->previousCountEquipments();
    
     // account receivables calculations
@@ -48,7 +41,7 @@ class ReportController extends Controller
 
     $previousDebit = $this->ledgerRepository->previousDebitMonths(); 
     $previousCredit = $this->ledgerRepository->previousCreditMonths();
-    // 
+    
     // calculating previous and latest mths ac recivable
     $totalAcReceivable=$totalDebit-$totalCredit; //positive or negative receivable balance
     $previousAcReceivable=$previousDebit-$previousCredit; //positive or negative receivable balance
@@ -58,7 +51,7 @@ class ReportController extends Controller
     $AcReceivableChange = round($AcReceivableChange, 2); 
 
     // 
-     return view('admin.report.index',compact('totalMembers','latestTotalMembers','previousTotalMembers','percentageChange','totalEquipments','latestTotalEquipments','previousTotalEquipments'
+     return view('admin.report.index',compact('totalMembers','latestTotalMembers','previousTotalMembers','totalEquipments','latestTotalEquipments','previousTotalEquipments'
     ,'totalDebit','totalCredit','AcReceivableChange'));
     }
 }
