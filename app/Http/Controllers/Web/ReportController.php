@@ -28,7 +28,6 @@ class ReportController extends Controller
     $latestTotalMembers=$this->memberRepository->countMembers();
     $previousTotalMembers=$this->memberRepository->previouscountMembers();
 
-   
     //  
     // Equipment indicators
     $totalEquipments=$this->equipmentRepository->countEquipments();

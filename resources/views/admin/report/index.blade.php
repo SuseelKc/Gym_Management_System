@@ -155,29 +155,86 @@
     
      
 </div>
-<div class="row">
-    <div class="col-lg-12 d-flex align-items-stretch">
-        <div class="card w-100 shadow">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Net Income</h5>
-                    <h6 class="mb-0">RS. 1234</h6>
+
+<div class="container-fluid pt-3 pd-2">
+    <div class="row">
+        <div class="col-lg-12 d-flex align-items-stretch">
+            <div class="card w-100 shadow">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <h5 class="mb-0 title-head">Income Statement</h5>
+                        </div>
+                        <div class="col-6 d-flex justify-content-end align-items-center">
+                            <button class="btn btn-primary mr-3">PDF</button>
+                            <select class="form-control">
+                                <option value="Year">Yearly</option>
+                                <option value="Month">Monthly</option>                        
+                            </select>
+                           
+                        </div>
+                    </div>
+                    <hr>
+                    {{-- TOTAL REVENUE CALCULATION --}}
+                    <div class="row">
+                        <div class="col-6">
+                            <h6 class="section-title">Total Revenue</h6>
+                        </div>
+                        <div class="col-6 text-right">
+                            <p style="font-size: 16px;">123</p>
+                        </div>
+                    </div>
+                    {{--  --}}
+                    {{-- Expenses part --}}
+                    <div class="row">
+                        <div class="col-6">
+                            <h6 class="section-title">Expenses</h6>
+                        </div>
+                       
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <h6 class="section-title">Salaries</h6>
+                        </div>
+                        <div class="col-6 text-right">
+                            <p style="font-size: 16px;">123</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <h6 class="section-title">Rent</h6>
+                        </div>
+                        <div class="col-6 text-right">
+                            <p style="font-size: 16px;">123</p>
+                        </div>
+                    </div>
+
+                   {{--  --}}
+                   <div class="row">
+                    <div class="col-6">
+                        <h6 class="section-title">Total Expenses</h6>
+                    </div>
+                    <div class="col-6 text-right">
+                        <p style="font-size: 16px;">1353</p>
+                    </div>
                 </div>
-                <div class="d-flex justify-content-between align-items-center mt-3">
-                    <div>
-                        <i class="fas fa-money-bill mr-2 text-primary"></i>
-                        <i class="fas fa-arrow-up text-success mr-2"></i>
-                        <i class="fas fa-arrow-down text-danger"></i>
+                <hr>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <h6 class="section-title">Net Income</h6>
                     </div>
-                    <div>
-                        <span class="text-primary">Income</span>
-                        <span class="text-success ml-3">Increase</span>
-                        <span class="text-danger ml-3">Decrease</span>
+                    <div class="col-6 text-right">
+                        <p style="font-size: 16px;">12315</p>
                     </div>
+                </div>
+                    
                 </div>
             </div>
-        </div>
-    </div>
-</div>    
+        </div>   
+    </div>   
+</div>
+
+
+
 {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-MSXz5EmNhSC6/LW8ibFHNjNznbTIaQlNfWRqT2e2OrBFqm/2idZLc2sxi7/AtYs0++cDbzWwnjRMo7UCeLMtyw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
 @endsection
