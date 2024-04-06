@@ -16,10 +16,18 @@
         color: #000000; /* Black color */
         font-weight: bold;
     }
+
+    @media print {
+        #pdfButton,#timePeriod  {
+                display: none; /* Hide all elements by default */
+            }
+            
+        }
+        
 </style>
 <div class="container-fluid pt-2 pd-2">
     
-    <div class="row">
+    <div class="row indicators">
         {{-- Net Income --}}
         <div class="col-lg-3 d-flex align-items-stretch">
             <div class="card w-100 shadow">
@@ -158,55 +166,80 @@
 
 <div class="container-fluid pt-3 pd-2">
     <div class="row">
-        <div class="col-lg-6 d-flex align-items-stretch">
-             <div class="card w-100 shadow">
+        <div id="incomeStatement" class="col-lg-6 d-flex align-items-stretch">
+            <div class="card w-100 shadow">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="title-head mb-0">Income Statement</h5>
                         <div class="col-6 d-flex justify-content-end align-items-center">
-                            <button class="btn btn-primary mr-3">PDF</button>
+                            <button id="pdfButton" class="btn btn-primary mr-3">PDF</button>
+
                             <select class="form-control" id="timePeriod">
                                 <option value="All">All</option>
                                 <option value="Year">This Year</option>
                                 <option value="Month">This Month</option>                        
                             </select>
                             &nbsp;
-                            <a href="#" class="btn btn-primary" id="searchBtn" style="padding: 4px 10px;"><i class='fas fa-search'></i></a>
                         </div>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h6 class="title-head mb-0">Total Revenue</h6>
-                        <h6 style="font-size: 16px;" id="totalRevenue" >{{ $totalRevenue}}</h6>
+                        <h6 style="font-size: 16px;" id="totalRevenue">{{ $totalRevenue }}</h6>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h6 class="section-title mb-0">Expenses</h6>
                     </div>
                     <div id="expenses">
-                    @foreach($expenses as $expense)
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h6 class="section-title mb-0"> {{$expense->name}}</h6>
-                        <h6 style="font-size: 16px;">{{$expense->costs}}</h6>
+                        @foreach($expenses as $expense)
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="section-title mb-0">{{ $expense->name }}</h6>
+                            <h6 style="font-size: 16px;">{{ $expense->costs }}</h6>
+                        </div>
+                        @endforeach
                     </div>
-                   
-                    @endforeach
-                </div>
-                 
                     <hr>
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h6 class="title-head mb-0">Total Expenses</h6>
-                        <h6 style="font-size: 16px;" id="totalExpenses">{{$totalExpenses}}</h6>
+                        <h6 style="font-size: 16px;" id="totalExpenses">{{ $totalExpenses }}</h6>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between align-items-center">
                         <h6 class="title-head mb-0">Net Income</h6>
-                        <h6 style="font-size: 16px;" id="NetIncome">{{ $NetIncome}}</h6>
+                        <h6 style="font-size: 16px;" id="NetIncome">{{ $NetIncome }}</h6>
                     </div>
                 </div>
             </div>
         </div>
+
+        {{--  --}}
+         <div class="col-lg-6 d-flex align-items-stretch">
+
+            <div class="col" >
+
+                <div class="card w-100 shadow">
+                    <div class="card-body">
+                    </div>
+                </div> 
+                
+                <div class="card w-100 shadow">
+                    <div class="card-body">
+                    </div>
+                </div>  
+
+            </div>
+
+        </div>  
+        
+        {{--  --}}
+
+
     </div>
 </div>
+
+
+
+
 <script>
     document.getElementById('timePeriod').addEventListener('change', function() {
         var selectedPeriod = this.value;
@@ -268,6 +301,20 @@
         }
     });
 </script>
+
+{{-- pdf --}}
+<script>
+  // Function to print the income statement
+  function printIncomeStatement() {
+        window.print(); // Open the print dialog
+    }
+
+    // Attach click event listener to the print button
+    document.getElementById('pdfButton').addEventListener('click', function() {
+        printIncomeStatement(); // Call the print function when the button is clicked
+    });
+</script>
+
 
 
 
