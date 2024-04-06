@@ -33,8 +33,8 @@
             <div class="card w-100 shadow">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Net Income</h5>
-                        <h6 class="mb-0">RS. 1234</h6>
+                        <h6 class="mb-0 title-head">Net Income</h6>
+                        <h5 class="mb-0 title-head">{{$NetIncome}}</h5>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div>
@@ -164,13 +164,13 @@
      
 </div>
 
-<div class="container-fluid pt-3 pd-2">
+<div class="container-fluid pt-2 pd-2">
     <div class="row">
         <div id="incomeStatement" class="col-lg-6 d-flex align-items-stretch">
             <div class="card w-100 shadow">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="title-head mb-0">Income Statement</h5>
+                        <h6 class="title-head mb-0">Income Statement</h6>
                         <div class="col-6 d-flex justify-content-end align-items-center">
                             <button id="pdfButton" class="btn btn-primary mr-3">PDF</button>
 
@@ -219,13 +219,61 @@
 
                 <div class="card w-100 shadow">
                     <div class="card-body">
+                        <h6 class="title-head mb-3">Cash Outflows Per Month</h6>
+                      
+                        <div class="table-responsive">
+                            <table class="table table-striped align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>For</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   
+                                    @foreach($cashOutflows as $cashInflow)
+                                    <tr>
+                                        <td>{{$cashInflow->start_date}}</td>
+                                        <td>{{$cashInflow->name}}</td>
+                                        <td>{{$cashInflow->costs}}</td>
+                                    </tr>
+                                    @endforeach
+                                    
+                                 
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div> 
+                </div>
+                
                 
                 <div class="card w-100 shadow">
                     <div class="card-body">
+                        <h6 class="title-head mb-3">Cash Inflows Per Month</h6>
+                      
+                        <div class="table-responsive">
+                            <table class="table table-striped align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>For</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($cashInflows as $cashInflow)
+                                    <tr>
+                                        <td>{{$cashInflow->date}}</td>
+                                        <td>{{$cashInflow->remarks}}</td>
+                                        <td>{{$cashInflow->credit}}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>  
+                </div> 
 
             </div>
 

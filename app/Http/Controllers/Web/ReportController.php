@@ -75,11 +75,21 @@ class ReportController extends Controller
     $totalExpensesYear=$this->expensesRepository->latestYearExpensesSum(); // this month expenses total
     $NetIncomeYear=$totalRevenueYear - $totalExpensesYear;  
     // dd($NetIncomeYear);
+    
+    //cash outflows
+    $cashOutflows=$this->expensesService->all()
+    ->whereBetween('start_date',[Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
     // 
+    //cash inflows
+    $cashInflows=$this->ledgerService->all()
+    ->whereBetween('date',[Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->whereNotNull('credit');    
+    // 
+
 
      return view('admin.report.index',compact('totalMembers','latestTotalMembers','previousTotalMembers','totalEquipments','latestTotalEquipments','previousTotalEquipments'
     ,'totalDebit','totalCredit','AcReceivableChange','totalRevenue','expenses','totalExpenses','NetIncome',
     'totalRevenueMth','expensesMth','totalExpensesMth','NetIncomeMth',
-    'totalRevenueYear','expensesYear','totalExpensesYear','NetIncomeYear'));
+    'totalRevenueYear','expensesYear','totalExpensesYear','NetIncomeYear',
+    'cashOutflows','cashInflows'));
     }
 }
