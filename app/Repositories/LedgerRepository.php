@@ -62,6 +62,14 @@ class LedgerRepository
         ->whereNotNull('credit')->sum('credit');
 
     }
+    public function latestYearCreditSum(){
+        $latestYearStart = Carbon::now()->startOfYear();
+        $latestYearEnd = Carbon::now()->endOfYear();
+
+        return Ledger::where('gym_id',auth()->id())
+        ->whereBetween('created_at',[$latestYearStart,$latestYearEnd])
+        ->whereNotNull('credit')->sum('credit');
+    }
 
 
 }

@@ -28,4 +28,14 @@ class ExpensesRepository
         ->whereBetween('start_date',[$latestMonthStart,$latestMonthEnd])
         ->sum('costs');
     }
+    public function latestYearExpensesSum(){
+
+        $latestYearStart = Carbon::now()->startOfYear();
+        $latestYearEnd = Carbon::now()->endOfYear();
+
+        return Expenses::where('gym_id',auth()->id())
+        ->whereBetween('start_date',[$latestYearStart,$latestYearEnd])
+        ->sum('costs');
+
+    }
 }

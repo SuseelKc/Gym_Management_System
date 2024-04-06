@@ -165,7 +165,7 @@
                         <h5 class="title-head mb-0">Income Statement</h5>
                         <div class="col-6 d-flex justify-content-end align-items-center">
                             <button class="btn btn-primary mr-3">PDF</button>
-                            <select class="form-control">
+                            <select class="form-control" id="timePeriod">
                                 <option value="All">All</option>
                                 <option value="Year">This Year</option>
                                 <option value="Month">This Month</option>                        
@@ -177,34 +177,97 @@
                     <hr>
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h6 class="title-head mb-0">Total Revenue</h6>
-                        <h6 style="font-size: 16px;">{{ $totalRevenue}}</h6>
+                        <h6 style="font-size: 16px;" id="totalRevenue" >{{ $totalRevenue}}</h6>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h6 class="section-title mb-0">Expenses</h6>
                     </div>
+                    <div id="expenses">
                     @foreach($expenses as $expense)
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h6 class="section-title mb-0"> {{$expense->name}}</h6>
                         <h6 style="font-size: 16px;">{{$expense->costs}}</h6>
                     </div>
+                   
                     @endforeach
+                </div>
                  
                     <hr>
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h6 class="title-head mb-0">Total Expenses</h6>
-                        <h6 style="font-size: 16px;">{{$totalExpenses}}</h6>
+                        <h6 style="font-size: 16px;" id="totalExpenses">{{$totalExpenses}}</h6>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between align-items-center">
                         <h6 class="title-head mb-0">Net Income</h6>
-                        <h6 style="font-size: 16px;">{{ $NetIncome}}</h6>
+                        <h6 style="font-size: 16px;" id="NetIncome">{{ $NetIncome}}</h6>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    document.getElementById('timePeriod').addEventListener('change', function() {
+        var selectedPeriod = this.value;
+        if (selectedPeriod === 'Month') {
+            // Display monthly revenue
+            document.getElementById('totalRevenue').innerText = '{{ $totalRevenueMth }}';
+            document.getElementById('totalExpenses').innerText = '{{ $totalExpensesMth }}';
+            document.getElementById('NetIncome').innerText = '{{ $NetIncomeMth }}';
 
+            // Replace expenses HTML with new data of monthly
+            document.getElementById('expenses').innerHTML = '';
+            @foreach($expensesMth as $expense)
+                var expenseDiv = document.createElement('div');
+                expenseDiv.className = 'd-flex justify-content-between align-items-center mb-3';
+                expenseDiv.innerHTML = `
+                    <h6 class="section-title mb-0">{{ $expense->name }}</h6>
+                    <h6 style="font-size: 16px;">{{ $expense->costs }}</h6>
+                `;
+                document.getElementById('expenses').appendChild(expenseDiv);
+            @endforeach
+        } 
+        else if(selectedPeriod === 'Year'){
+            document.getElementById('totalRevenue').innerText = '{{ $totalRevenueYear }}';
+            document.getElementById('totalExpenses').innerText = '{{ $totalExpensesYear }}';
+            document.getElementById('NetIncome').innerText = '{{ $NetIncomeYear }}';
+
+            // if year is selected
+            document.getElementById('expenses').innerHTML = '';
+            @foreach($expensesYear as $expense)
+                var expenseDiv = document.createElement('div');
+                expenseDiv.className = 'd-flex justify-content-between align-items-center mb-3';
+                expenseDiv.innerHTML = `
+                    <h6 class="section-title mb-0">{{ $expense->name }}</h6>
+                    <h6 style="font-size: 16px;">{{ $expense->costs }}</h6>
+                `;
+                document.getElementById('expenses').appendChild(expenseDiv);
+            @endforeach
+            
+        }
+        
+        else {
+             // Display monthly revenue
+            document.getElementById('totalRevenue').innerText = '{{ $totalRevenue }}';
+            document.getElementById('totalExpenses').innerText = '{{ $totalExpenses }}';
+            document.getElementById('NetIncome').innerText = '{{ $NetIncome }}';
+
+
+            // If not 'Month', reset expenses to default
+            document.getElementById('expenses').innerHTML = '';
+            @foreach($expenses as $expense)
+                var expenseDiv = document.createElement('div');
+                expenseDiv.className = 'd-flex justify-content-between align-items-center mb-3';
+                expenseDiv.innerHTML = `
+                    <h6 class="section-title mb-0">{{ $expense->name }}</h6>
+                    <h6 style="font-size: 16px;">{{ $expense->costs }}</h6>
+                `;
+                document.getElementById('expenses').appendChild(expenseDiv);
+            @endforeach
+        }
+    });
+</script>
 
 
 
