@@ -132,7 +132,7 @@
                             @if($AcReceivableChange>0)
                                 <i class="fas fa-arrow-up text-danger mr-2"></i>
                             @else
-                                <i class="fas fa-arrow-success text-danger"></i>
+                                <i class="fas fa-arrow-down-success text-danger"></i>
                             @endif
                         </div>
                         <div>
@@ -158,83 +158,54 @@
 
 <div class="container-fluid pt-3 pd-2">
     <div class="row">
-        <div class="col-lg-12 d-flex align-items-stretch">
-            <div class="card w-100 shadow">
+        <div class="col-lg-6 d-flex align-items-stretch">
+             <div class="card w-100 shadow">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-6">
-                            <h5 class="mb-0 title-head">Income Statement</h5>
-                        </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="title-head mb-0">Income Statement</h5>
                         <div class="col-6 d-flex justify-content-end align-items-center">
                             <button class="btn btn-primary mr-3">PDF</button>
                             <select class="form-control">
-                                <option value="Year">Yearly</option>
-                                <option value="Month">Monthly</option>                        
+                                <option value="All">All</option>
+                                <option value="Year">This Year</option>
+                                <option value="Month">This Month</option>                        
                             </select>
-                           
+                            &nbsp;
+                            <a href="#" class="btn btn-primary" id="searchBtn" style="padding: 4px 10px;"><i class='fas fa-search'></i></a>
                         </div>
                     </div>
                     <hr>
-                    {{-- TOTAL REVENUE CALCULATION --}}
-                    <div class="row">
-                        <div class="col-6">
-                            <h6 class="section-title">Total Revenue</h6>
-                        </div>
-                        <div class="col-6 text-right">
-                            <p style="font-size: 16px;">123</p>
-                        </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="title-head mb-0">Total Revenue</h6>
+                        <h6 style="font-size: 16px;">{{ $totalRevenue}}</h6>
                     </div>
-                    {{--  --}}
-                    {{-- Expenses part --}}
-                    <div class="row">
-                        <div class="col-6">
-                            <h6 class="section-title">Expenses</h6>
-                        </div>
-                       
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="section-title mb-0">Expenses</h6>
                     </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <h6 class="section-title">Salaries</h6>
-                        </div>
-                        <div class="col-6 text-right">
-                            <p style="font-size: 16px;">123</p>
-                        </div>
+                    @foreach($expenses as $expense)
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="section-title mb-0"> {{$expense->name}}</h6>
+                        <h6 style="font-size: 16px;">{{$expense->costs}}</h6>
                     </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <h6 class="section-title">Rent</h6>
-                        </div>
-                        <div class="col-6 text-right">
-                            <p style="font-size: 16px;">123</p>
-                        </div>
+                    @endforeach
+                 
+                    <hr>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="title-head mb-0">Total Expenses</h6>
+                        <h6 style="font-size: 16px;">{{$totalExpenses}}</h6>
                     </div>
-
-                   {{--  --}}
-                   <div class="row">
-                    <div class="col-6">
-                        <h6 class="section-title">Total Expenses</h6>
+                    <hr>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="title-head mb-0">Net Income</h6>
+                        <h6 style="font-size: 16px;">{{ $NetIncome}}</h6>
                     </div>
-                    <div class="col-6 text-right">
-                        <p style="font-size: 16px;">1353</p>
-                    </div>
-                </div>
-                <hr>
-                <div class="row mb-3">
-                    <div class="col-6">
-                        <h6 class="section-title">Net Income</h6>
-                    </div>
-                    <div class="col-6 text-right">
-                        <p style="font-size: 16px;">12315</p>
-                    </div>
-                </div>
-                    
                 </div>
             </div>
-        </div>   
-    </div>   
+        </div>
+    </div>
 </div>
 
 
 
-{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-MSXz5EmNhSC6/LW8ibFHNjNznbTIaQlNfWRqT2e2OrBFqm/2idZLc2sxi7/AtYs0++cDbzWwnjRMo7UCeLMtyw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
+
 @endsection

@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 
+use Carbon\Carbon;
 use App\Models\Expenses;
 use App\Repositories\ExpensesRepository;
 
@@ -17,5 +18,14 @@ class ExpensesRepository
     public function getWhere($query)
     {
         return Expenses::where($query);
+    }
+    public function latestMonthExpensesSum(){
+
+        $latestMonthStart = Carbon::now()->startOfMonth();
+        $latestMonthEnd = Carbon::now()->endOfMonth();
+
+        return Expenses::where('gym_id',auth()->id())
+        ->whereBetween('start_date',[$latestMonthStart,$latestMonthEnd])
+        ->sum('costs');
     }
 }

@@ -2,24 +2,29 @@
 
 namespace App\Http\Controllers\Web;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\LedgerService;
 use App\Services\PricingService;
+use App\Services\ExpensesService;
 use App\Http\Controllers\Controller;
 use App\Repositories\LedgerRepository;
 use App\Repositories\MemberRepository;
+use App\Repositories\ExpensesRepository;
 use App\Repositories\EquipmentRepository;
 
 class ReportController extends Controller
 {
     //      
     public function __construct(PricingService $pricingService,MemberRepository $memberRepository,EquipmentRepository $equipmentRepository,LedgerService $ledgerService,
-    LedgerRepository $ledgerRepository){
+    LedgerRepository $ledgerRepository,ExpensesService $expensesService,ExpensesRepository $expensesRepository){
         $this->pricingService =$pricingService;
         $this->memberRepository=$memberRepository;
         $this->equipmentRepository=$equipmentRepository;
         $this->ledgerService=$ledgerService;
         $this->ledgerRepository= $ledgerRepository;
+        $this->expensesService=$expensesService;
+        $this->expensesRepository=$expensesRepository;
     }
 
     public function index(){
@@ -49,8 +54,26 @@ class ReportController extends Controller
     $AcReceivableChange=(($totalAcReceivable - $previousAcReceivable) / $previousAcReceivable)*100;
     $AcReceivableChange = round($AcReceivableChange, 2); 
 
+    //Overall
+    $totalRevenue=$this->ledgerService->all()->whereNotNull('credit')->sum('credit');  
+    $expenses=$this->expensesService->all();
+    $totalExpenses=$this->expensesService->all()->sum('costs');
+    $NetIncome=$totalRevenue - $totalExpenses;   
     // 
+
+    // this month 
+    $totalRevenueMth=$this->ledgerRepository->latestMonthCreditSum();  // this month revenue income 
+    $expensesMth=$this->expensesService->all()
+    ->whereBetween('start_date',[Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]); // this month expenses 
+    $totalExpensesMth=$this->expensesRepository->latestMonthExpensesSum(); // this month expenses total
+    
+    $NetIncomeMth=$totalRevenueMth - $totalExpensesMth; 
+    // dd($NetIncomeMth);
+    // 
+
+
+
      return view('admin.report.index',compact('totalMembers','latestTotalMembers','previousTotalMembers','totalEquipments','latestTotalEquipments','previousTotalEquipments'
-    ,'totalDebit','totalCredit','AcReceivableChange'));
+    ,'totalDebit','totalCredit','AcReceivableChange','totalRevenue','expenses','totalExpenses','NetIncome'));
     }
 }

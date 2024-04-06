@@ -51,4 +51,17 @@ class LedgerRepository
         ->whereBetween('created_at',[$previousMonthStart,$previousMonthEnd])
         ->whereNotNull('credit')->sum('credit');
     }
+
+    public function latestMonthCreditSum(){
+
+        $latestMonthStart = Carbon::now()->startOfMonth();
+        $latestMonthEnd = Carbon::now()->endOfMonth();
+
+        return Ledger::where('gym_id',auth()->id())
+        ->whereBetween('created_at',[$latestMonthStart,$latestMonthEnd])
+        ->whereNotNull('credit')->sum('credit');
+
+    }
+
+
 }
