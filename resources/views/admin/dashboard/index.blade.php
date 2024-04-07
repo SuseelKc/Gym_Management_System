@@ -3,7 +3,7 @@
 @section('content')
 
 
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div class="container-fluid pt-2 pd-2">
     <!--  Row 1 -->
     <div class="row">
@@ -69,77 +69,61 @@
               </div>
             </div>
           </div>
-          {{--  --}}
-          <div class="col-lg-12">
-            <!-- Monthly Earnings -->
-              <div class="card w-100 shadow">
-                <div class="card-body">
-                  <div class="row alig n-items-start">
-                    <div class="col-8">
-                      <h5 class="card-title mb-9 fw-semibold"> Monthly Earnings </h5>
-                      <h4 class="fw-semibold mb-3">$6,820</h4>
-                      <div class="d-flex align-items-center pb-1">
-                        <span
-                          class="me-2 rounded-circle bg-light-danger round-20 d-flex align-items-center justify-content-center">
-                          <i class="ti ti-arrow-down-right text-danger"></i>
-                        </span>
-                        <p class="text-dark me-1 fs-3 mb-0">+9%</p>
-                        <p class="fs-3 mb-0">last year</p>
-                      </div>
-                    </div>
-                    <div class="col-4">
-                      <div class="d-flex justify-content-end">
-                        <div
-                          class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
-                          <i class="ti ti-currency-dollar fs-6"></i>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div id="earning"></div>
-              </div>
-          </div>
+        
 
 {{--  --}}
-          <div class="col-lg-12">
-            <!-- Yearly Breakup -->
-              <div class="card w-100 shadow">
-                <div class="card-body p-4">
-                  <h5 class="card-title mb-9 fw-semibold">Number of Members</h5>
-                  <div class="row align-items-center">
-                    <div class="col-8">
-                      <h4 class="fw-semibold mb-3">$36,358</h4>
-                      <div class="d-flex align-items-center mb-3">
-                        <span
-                          class="me-1 rounded-circle bg-light-success round-20 d-flex align-items-center justify-content-center">
-                          <i class="ti ti-arrow-up-left text-success"></i>
-                        </span>
-                        <p class="text-dark me-1 fs-3 mb-0">+9%</p>
-                        <p class="fs-3 mb-0">last year</p>
-                      </div>
-                      <div class="d-flex align-items-center">
+        <div class="col-lg-12">
+          <!-- Yearly Breakup -->
+          <div class="card w-100 shadow">
+              <div class="card-body p-4">
+                  {{-- <h5 class="card-title mb-9 fw-semibold">Memebership Expired Members</h5> --}}
+                  <div class="mb-4">    
+                  <h5 class="card-title mb-9 fw-semibold">Renew Members</h5>
+                  &nbsp;
+                  </div>
+                    
+                              <div class="table-responsive">
+                                  <table class="table table-striped">
+                                      <thead>
+                                          <tr>
+                                              <th>Serial.No.</th>
+                                              <th>Name</th>
+                                              <th>Shifts</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          @foreach ($expiredMemberships as $expiredMembership)
+                                          <tr>
+                                              <td>{{ $expiredMembership->serial_no }}</td>
+                                              <td>{{ $expiredMembership->name }}</td>
+                                              <td>
+                                                  @if($expiredMembership->shifts ==0)
+                                                  Morning
+                                                  @elseif($expiredMembership->shifts==1)
+                                                  Day
+                                                  @else
+                                                  Evening
+                                                  @endif
+                                              </td>
+                                          </tr>
+                                          @endforeach
+                                      </tbody>
+                                  </table>
+                              </div>
+
+                              {{-- <div style="width: 80%; margin: auto;">
+                                <canvas id="pieChart"></canvas>
+                            </div> --}}
                         
-                        <div class="me-4">
-                          <span class="round-8 bg-primary rounded-circle me-2 d-inline-block"></span>
-                          <span class="fs-2">2023</span>
-                        </div>
-
                       
-                      </div>
-                    </div>
-                    <div class="col-4">
-                      <div class="d-flex justify-content-center">
-                        <div id="breakup"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                 
               </div>
           </div>
+        </div>
+
 {{--  --}}
 
-        </div>
+      </div>
       </div>
     </div>
         <div class="row">
@@ -229,5 +213,32 @@
     
   </div>
 
+  <script>
+    var ctx = document.getElementById('pieChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: @json($data['labels']),
+            datasets: [{
+                data: @json($data['data']),
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(153, 102, 255, 0.7)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+    });
+</script>
  
 @endsection

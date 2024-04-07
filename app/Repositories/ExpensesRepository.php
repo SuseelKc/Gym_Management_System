@@ -38,4 +38,13 @@ class ExpensesRepository
         ->sum('costs');
 
     }
+    public function expensesUptoPreviousMth(){
+        $programInceptionDate = Carbon::create(1900, 1, 1); // January 1, 1900
+        $previousMonthStart = $programInceptionDate->startOfMonth();
+        $previousMonthEnd = Carbon::now()->subMonth()->endOfMonth();
+
+        return Expenses::where('gym_id',auth()->id())
+        ->whereBetween('start_date',[$previousMonthStart,$previousMonthEnd])
+        ->sum('costs');
+    }
 }

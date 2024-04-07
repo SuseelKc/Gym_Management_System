@@ -3,18 +3,20 @@
 namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
+use App\Services\MemberService;
 use App\Charts\MonthlySalesChart;
 use App\Http\Controllers\Controller;
 use App\Repositories\LedgerRepository;
 
+
 class DashboardController extends Controller
 {
     //
-    public function __construct(LedgerRepository $ledgerRepository)
+    public function __construct(LedgerRepository $ledgerRepository,MemberService $memberService)
     {
        
         $this->ledgerRepository = $ledgerRepository;
-        
+        $this->memberService= $memberService;
     }
 
     
@@ -38,7 +40,27 @@ class DashboardController extends Controller
             // monthly sales chart
             $chart = new MonthlySalesChart;
             // 
-            return view('admin.dashboard.index',compact('latestRecords','topTransactions','chart'));
+
+            // display expired membership names
+            $expiredMemberships=$this->memberService->all()->whereNull('pricing_id');
+            $totalMemberships=$this->memberService->all();
+          
+            // dd($expiredMemberships);
+            // 
+
+            // pie chart
+            $data = [
+                'labels' => ['Total Member', 'Expired Member'],
+                'data' => [
+                    $totalMemberships,
+                    $expiredMemberships
+                ]
+            ];
+            // 
+            
+
+
+            return view('admin.dashboard.index',compact('latestRecords','topTransactions','chart','expiredMemberships','data'));
         }
         catch(Exception $e){
 

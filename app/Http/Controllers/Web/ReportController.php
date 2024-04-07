@@ -51,14 +51,21 @@ class ReportController extends Controller
     $previousAcReceivable=$previousDebit-$previousCredit; //positive or negative receivable balance
     // dd($totalAcReceivable);
 
+    if($previousAcReceivable!=0){
     $AcReceivableChange=(($totalAcReceivable - $previousAcReceivable) / $previousAcReceivable)*100;
     $AcReceivableChange = round($AcReceivableChange, 2); 
+    }
+    $AcReceivableChange= 0;
 
     //Overall
     $totalRevenue=$this->ledgerService->all()->whereNotNull('credit')->sum('credit');  
     $expenses=$this->expensesService->all();
     $totalExpenses=$this->expensesService->all()->sum('costs');
     $NetIncome=$totalRevenue - $totalExpenses;   
+    $totalRevenueUptoPreviousMth= $previousCredit;//all upto previous month revenue 
+    $totalExpensesUptoPreviousMth=$this->expensesRepository->expensesUptoPreviousMth(); // all upto previous month expenses
+    $NetIncomeUptoPreviousMth= $totalRevenueUptoPreviousMth-$totalExpensesUptoPreviousMth;
+    $NetIncomeChange=$NetIncome-$NetIncomeUptoPreviousMth;
     // 
 
     // this month 
@@ -89,7 +96,7 @@ class ReportController extends Controller
      return view('admin.report.index',compact('totalMembers','latestTotalMembers','previousTotalMembers','totalEquipments','latestTotalEquipments','previousTotalEquipments'
     ,'totalDebit','totalCredit','AcReceivableChange','totalRevenue','expenses','totalExpenses','NetIncome',
     'totalRevenueMth','expensesMth','totalExpensesMth','NetIncomeMth',
-    'totalRevenueYear','expensesYear','totalExpensesYear','NetIncomeYear',
-    'cashOutflows','cashInflows'));
+    'totalRevenueYear','expensesYear','totalExpensesYear','NetIncomeYear','NetIncomeUptoPreviousMth',
+    'cashOutflows','cashInflows','NetIncomeChange'));
     }
 }

@@ -34,18 +34,27 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <h6 class="mb-0 title-head">Net Income</h6>
-                        <h5 class="mb-0 title-head">{{$NetIncome}}</h5>
+                        <h5 class="mb-0 title-head">RS {{$NetIncome}}</h5>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div>
                             <i class="fas fa-money-bill mr-2 text-primary"></i>
+                            @if($NetIncome>$NetIncomeUptoPreviousMth)
                             <i class="fas fa-arrow-up text-success mr-2"></i>
+                            @elseif($NetIncome == $NetIncomeUptoPreviousMth)
+                            @else
                             <i class="fas fa-arrow-down text-danger"></i>
+                            @endif
                         </div>
                         <div>
-                            <span class="text-primary">Income</span>
+                            <span class="text-primary">{{$NetIncomeChange}}</span>
+                            @if($NetIncome>$NetIncomeUptoPreviousMth)
                             <span class="text-success ml-3">Increase</span>
+                            @elseif($NetIncome == $NetIncomeUptoPreviousMth)
+                            No Changes
+                            @else
                             <span class="text-danger ml-3">Decrease</span>
+                            @endif
                         </div>
                     </div>
                 </div>
