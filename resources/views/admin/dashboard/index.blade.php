@@ -78,45 +78,14 @@
               <div class="card-body p-4">
                   {{-- <h5 class="card-title mb-9 fw-semibold">Memebership Expired Members</h5> --}}
                   <div class="mb-4">    
-                  <h5 class="card-title mb-9 fw-semibold">Renew Members</h5>
-                  &nbsp;
+                  <h5 class="card-title mb-9 fw-semibold">Members Overall</h5>
+                  
                   </div>
                     
-                              <div class="table-responsive">
-                                  <table class="table table-striped">
-                                      <thead>
-                                          <tr>
-                                              <th>Serial.No.</th>
-                                              <th>Name</th>
-                                              <th>Shifts</th>
-                                          </tr>
-                                      </thead>
-                                      <tbody>
-                                          @foreach ($expiredMemberships as $expiredMembership)
-                                          <tr>
-                                              <td>{{ $expiredMembership->serial_no }}</td>
-                                              <td>{{ $expiredMembership->name }}</td>
-                                              <td>
-                                                  @if($expiredMembership->shifts ==0)
-                                                  Morning
-                                                  @elseif($expiredMembership->shifts==1)
-                                                  Day
-                                                  @else
-                                                  Evening
-                                                  @endif
-                                              </td>
-                                          </tr>
-                                          @endforeach
-                                      </tbody>
-                                  </table>
-                              </div>
-
-                              {{-- <div style="width: 80%; margin: auto;">
+                              <div style="width: 80%; margin: auto;">
                                 <canvas id="pieChart"></canvas>
-                            </div> --}}
-                        
-                      
-                 
+                            </div>
+                                        
               </div>
           </div>
         </div>
@@ -222,23 +191,58 @@
             datasets: [{
                 data: @json($data['data']),
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.7)',
-                    'rgba(54, 162, 235, 0.7)',
-                    'rgba(255, 206, 86, 0.7)',
-                    'rgba(75, 192, 192, 0.7)',
-                    'rgba(153, 102, 255, 0.7)',
+                    'rgba(54, 162, 235, 0.9)',// Expired Member
+                    'rgba(255, 99, 132, 0.9)' // Total Member
+                     
+                    // Add more colors if needed
                 ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                ],
-                borderWidth: 1
+                hoverOffset: 9, // Offset when hovering over slices
+                borderWidth: 0 // Remove border around slices
             }]
         },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom', // Position of the legend
+                    labels: {
+                        boxWidth: 15, // Width of the colored boxes
+                        usePointStyle: true, // Use point style for legend icons
+                        font: {
+                            size: 14 // Font size of legend labels
+                        }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)', // Background color of tooltips
+                    titleColor: '#fff', // Font color of tooltip titles
+                    bodyColor: '#fff', // Font color of tooltip body text
+                    titleFont: {
+                        size: 16, // Font size of tooltip titles
+                        weight: 'bold' // Font weight of tooltip titles
+                    },
+                    bodyFont: {
+                        size: 14 // Font size of tooltip body text
+                    },
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ': ' + context.formattedValue; // Custom tooltip label
+                        }
+                    }
+                }
+            },
+            animation: {
+                animateRotate: true, // Enable rotation animation
+                animateScale: true // Enable scaling animation
+            },
+            elements: {
+                arc: {
+                    borderColor: '#fff', // Border color of arcs
+                    borderWidth: 2 // Border width of arcs
+                }
+            }
+        }
     });
 </script>
- 
 @endsection

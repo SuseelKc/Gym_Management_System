@@ -52,8 +52,8 @@ class DashboardController extends Controller
             $data = [
                 'labels' => ['Total Member', 'Expired Member'],
                 'data' => [
-                    $totalMemberships,
-                    $expiredMemberships
+                    $totalMemberships->count(),
+                    $expiredMemberships->count()
                 ]
             ];
             // 
