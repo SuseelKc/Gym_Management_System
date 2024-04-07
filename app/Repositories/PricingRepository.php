@@ -17,4 +17,10 @@ class PricingRepository
     {
         return Pricing::where($query);
     }
+
+    // query that fetches all the pricing with mmebers count 
+    public function allWithCountMembers(){
+        return Pricing::withCount('members')->where('gym_id',auth()->id())->get();
+
+    }
 }

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Member;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pricing extends Model
 {
@@ -18,4 +19,9 @@ class Pricing extends Model
         'end_date',
         'gym_id'
     ];
+
+    public function members()
+    {
+        return $this->hasMany(Member::class, 'pricing_id');
+    }
 }
