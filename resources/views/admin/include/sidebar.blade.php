@@ -18,7 +18,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- ... (your existing menu items) ... -->
-                
+                @if(auth()->user()->UserRole==1)
                 <li class="nav-item">
                     <a href="{{ route('dashboard') }}"
                         class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
@@ -29,6 +29,7 @@
                     </a>
                 </li>
 
+                
                 {{--members  --}}
                 <li class="nav-item">
                     <a href="{{ route('member.index') }} "
@@ -123,14 +124,7 @@
                 </li>
                  {{--  --}} 
 
-
-
-                
-
-                 {{-- Shop --}}
-                
-
-                
+               
 
                 {{-- Reports --}}
                 <li class="nav-item">
@@ -144,52 +138,25 @@
                         </p>
                     </a>
                 </li>
+               
+            @endif
+
+            @if(auth()->user()->UserRole==0)
                  {{--  --}}
-                  {{-- support --}}
-                  {{-- <li class="nav-item">
-                    <a href="
-                    {{ route('support') }}          
+                 <li class="nav-item">
+                    <a href=" 
+                    {{ route('systemadmindashboard') }}                
                     "
-                        class="nav-link {{ request()->is('reports*') ? 'active' : '' }}">
-                        <i class="nav-icon 		fas fa-blender  m-1 p-1"></i>
+                        class="nav-link {{ request()->is('systemadmindashboard*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-home m-1 p-1"></i>
                         <p>
-                            Diet Planners
+                            Dashboard
                         </p>
                     </a>
-                </li> --}}
+                </li>
+               
                  {{--  --}}
-
-                {{-- support --}}
-                {{-- <li class="nav-item">
-                    <a href="
-                    {{ route('support') }}          
-                    "
-                        class="nav-link {{ request()->is('reports*') ? 'active' : '' }}">
-                        <i class="nav-icon 	fas fa-running  m-1 p-1"></i>
-                        <p>
-                            Excercise Schedules
-                        </p>
-                    </a>
-                </li> --}}
-                {{--  --}}
-
-
-                {{-- support --}}
-                {{-- <li class="nav-item">
-                    <a href="
-                    {{ route('support') }}          
-                    "
-                        class="nav-link {{ request()->is('reports*') ? 'active' : '' }}">
-                        <i class="nav-icon 	fas fa-headphones-alt  m-1 p-1"></i>
-                        <p>
-                            Support
-                        </p>
-                    </a>
-                </li> --}}
-                {{--  --}}
-
-                 
-            
+            @endif
             </ul>
         </nav>
     </div>

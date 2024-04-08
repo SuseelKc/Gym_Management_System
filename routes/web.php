@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\DashboardController;
+use App\Http\Controllers\SystemAdmin\SystemAdminDashBoardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/systemadmindashboard', [SystemAdminDashBoardController::class, 'index'])->middleware(['auth', 'verified'])->name('systemadmindashboard');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -45,6 +47,10 @@ Route::middleware('auth')->group(function () {
     require __DIR__ . '/web/ledger.php';
     require __DIR__ . '/web/expenses.php';
     require __DIR__ . '/web/report.php';
+
+    // for systemadmin
+    require __DIR__ . '/systemadmin/gym.php';
+    // 
 
     foreach (glob(__DIR__ . '/web/*.php') as $filename) {
         require $filename;
