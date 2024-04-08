@@ -146,7 +146,7 @@
                 </li>
                  {{--  --}}
                   {{-- support --}}
-                  <li class="nav-item">
+                  {{-- <li class="nav-item">
                     <a href="
                     {{ route('support') }}          
                     "
@@ -156,11 +156,11 @@
                             Diet Planners
                         </p>
                     </a>
-                </li>
+                </li> --}}
                  {{--  --}}
 
                 {{-- support --}}
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="
                     {{ route('support') }}          
                     "
@@ -170,12 +170,12 @@
                             Excercise Schedules
                         </p>
                     </a>
-                </li>
+                </li> --}}
                 {{--  --}}
 
 
                 {{-- support --}}
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="
                     {{ route('support') }}          
                     "
@@ -185,7 +185,7 @@
                             Support
                         </p>
                     </a>
-                </li>
+                </li> --}}
                 {{--  --}}
 
                  
