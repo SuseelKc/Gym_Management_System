@@ -30,9 +30,9 @@ Route::middleware('auth','verified', 'role:' . UserRole::SystemAdmin)->group(fun
     // for systemadmin
     require __DIR__ . '/systemadmin/gym.php';
     // 
-    foreach (glob(__DIR__ . '/systemadmin/*.php') as $filename) {
-        require $filename;
-    }
+    // foreach (glob(__DIR__ . '/systemadmin/*.php') as $filename) {
+    //     require $filename;
+    // }
 });  
 
 
@@ -52,9 +52,9 @@ Route::middleware('auth','verified', 'role:' . UserRole::GymAdmin)->group(functi
 
     
 
-    foreach (glob(__DIR__ . '/web/*.php') as $filename) {
-        require $filename;
-    }
+    // foreach (glob(__DIR__ . '/web/*.php') as $filename) {
+    //     require $filename;
+    // }
 
 });
 
