@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserRole;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\DashboardController;
@@ -20,25 +21,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/systemadmindashboard', [SystemAdminDashBoardController::class, 'index'])->middleware(['auth', 'verified'])->name('systemadmindashboard');
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+// for userrole is systemadmin
+Route::middleware('auth','verified', 'role:' . UserRole::SystemAdmin)->group(function () {
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/systemadmindashboard', [SystemAdminDashBoardController::class, 'index'])->name('systemadmindashboard');
 
-    // support 
-    Route::get('/support', function () {
-        return view('admin.support.index');
-    })->middleware(['auth', 'verified'])->name('support');
+    // for systemadmin
+    require __DIR__ . '/systemadmin/gym.php';
     // 
+    foreach (glob(__DIR__ . '/systemadmin/*.php') as $filename) {
+        require $filename;
+    }
+});  
 
 
+// for userrole is Gymadmin
+Route::middleware('auth','verified', 'role:' . UserRole::GymAdmin)->group(function () {
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+   
     require __DIR__ . '/web/member.php';
     require __DIR__ . '/web/user.php';
     require __DIR__ . '/web/equipment.php';
@@ -48,15 +50,23 @@ Route::middleware('auth')->group(function () {
     require __DIR__ . '/web/expenses.php';
     require __DIR__ . '/web/report.php';
 
-    // for systemadmin
-    require __DIR__ . '/systemadmin/gym.php';
-    // 
+    
 
     foreach (glob(__DIR__ . '/web/*.php') as $filename) {
         require $filename;
     }
 
+});
+
+// for all authenticated users
+Route::middleware('auth','verified')->group(function () {
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 });
+
+
 
 require __DIR__.'/auth.php';
