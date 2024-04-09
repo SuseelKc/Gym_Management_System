@@ -47,4 +47,8 @@ class MemberRepository
                     ->whereBetween('created_at', [$previousMonthStart, $previousMonthEnd])
                     ->count();
     }
+
+    public function gymMembers($gymId){
+        return Member::all()->where('user_id',$gymId);
+    }
 }

@@ -32,4 +32,8 @@ class EquipmentRepository
         ->whereBetween('created_at',[$previousMonthStart,$previousMonthEnd])
         ->count();
     }
+
+    public function gymEquipment($gymId){
+        return Equipment::all()->where('gym_id',$gymId);
+    }
 }

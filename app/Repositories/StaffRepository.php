@@ -18,4 +18,7 @@ class StaffRepository
     {
         return Staff::where($query);
     }
+    public function gymStaff($gymId){
+        return Staff::all()->where('gym_id',$gymId);
+    }
 }

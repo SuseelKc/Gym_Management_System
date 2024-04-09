@@ -2,23 +2,39 @@
 
 namespace App\Http\Controllers\SystemAdmin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Services\UserService;
+use App\Http\Controllers\Controller;
+use App\Repositories\UserRepository;
 
 class GymController extends Controller
 {
     //
-    public function __contsruct(){
-
+    public function __construct(UserRepository $userRepository,UserService $userService)
+    {
+        $this->userRepository = $userRepository;
+        $this->userService=$userService;
     }
+
 
     public function index(){
         try{
-            
-            return view('systemadmin.gym.index');
+            $gyms=$this->userRepository->getGymAdmin();         
+            return view('systemadmin.gym.index',compact('gyms'));
         }
         catch(Exception $e){
 
+
+        }
+    }
+
+    public function delete($id){
+        try{
+            $gym=$this->userService->deleteGymAdmin($id);
+            toast('Gym Deleted Successfully!','success');
+            return redirect()->intended(route('gym.index')); 
+        }
+        catch(Exception $e){
 
         }
     }

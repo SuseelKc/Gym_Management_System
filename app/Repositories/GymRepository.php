@@ -1,10 +1,11 @@
 <?php
 namespace App\Repositories;
 
+use Carbon\Carbon;
 use App\Models\User;
-use App\Enums\UserRole;
 
-class UserRepository
+
+class GymRepository
 {
     public function getAll()
     {
@@ -14,12 +15,9 @@ class UserRepository
     {
         return User::find($id);
     }
-    public function getWhere()
+    public function getWhere($query)
     {
         return User::where($query);
     }
-    public function getGymAdmin(){
-        return User::all()->where('UserRole',UserRole::GymAdmin);
-    }
-
+   
 }

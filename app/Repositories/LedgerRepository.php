@@ -70,6 +70,9 @@ class LedgerRepository
         ->whereBetween('created_at',[$latestYearStart,$latestYearEnd])
         ->whereNotNull('credit')->sum('credit');
     }
+    public function gymLedger($gymId){
 
+        return Ledger::all()->where('gym_id',$gymId);
+    }
 
 }

@@ -23,4 +23,8 @@ class PricingRepository
         return Pricing::withCount('members')->where('gym_id',auth()->id())->get();
 
     }
+    public function gymPricings($gymID){
+        return Pricing::all()->where('gym_id',$gymID);
+
+    }
 }

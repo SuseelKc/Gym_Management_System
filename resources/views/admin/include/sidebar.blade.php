@@ -157,6 +157,23 @@
                
                  {{--  --}}
             @endif
+            @if(auth()->user()->UserRole==0)
+            {{--  --}}
+            <li class="nav-item">
+               <a href=" 
+               {{ route('gym.index') }}                
+               "
+                   class="nav-link {{ request()->is('gym*') ? 'active' : '' }}">
+                   <i class="nav-icon fas fa-hospital-alt m-1 p-1"></i>
+                   <p>
+                       Gym
+                   </p>
+               </a>
+           </li>
+          
+            {{--  --}}
+            @endif    
+
             </ul>
         </nav>
     </div>

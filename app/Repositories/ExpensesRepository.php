@@ -47,4 +47,7 @@ class ExpensesRepository
         ->whereBetween('start_date',[$previousMonthStart,$previousMonthEnd])
         ->sum('costs');
     }
+    public function gymExpenses($gymId){
+        return Expenses::all()->where('gym_id',$gymId);
+    }
 }
