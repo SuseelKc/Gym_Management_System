@@ -111,7 +111,7 @@
                                                 </div>
                                             
 
-                                                {{-- <div class="form-group"  style="margin-right: 10px;">
+                                                <div class="form-group"  style="margin-right: 10px;">
                                                     <label for="end_date">End Date</label>
                                                     <input type="date" class="form-control" id="end_date"  name="end_date" value="">
                                                     @if ($errors->has('end_date'))
@@ -119,7 +119,7 @@
                                                             {{ $errors->first('end_date') }}
                                                         </x-validation-errors>
                                                     @endif
-                                                </div> --}}
+                                                </div>
                                             </div>   
                                         </div>
                                         
