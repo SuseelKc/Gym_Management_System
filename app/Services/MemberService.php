@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Enums\Shifts;
 use App\Models\Ledger;
 use App\Models\Member;
+use App\Enums\UserRole;
 use App\Models\Pricing;
 use Illuminate\Http\Request;
 use App\Services\LedgerService;
@@ -286,6 +287,29 @@ public function updateGymMember(Member $member, $id, Request $request)
             DB::rollback();
             throw new Exception(Message::Failed);
         }
+
+    }
+
+    public function createMemberAccount($member){
+        try{
+            DB::beginTransaction();
+            $user = new User();
+            // dd($member);
+            $user->name=$member->name;
+            $user->email=$member->email;
+            $user->password=bcrypt('12345678');
+            $user->UserRole=UserRole::GymMember;
+            $user->member_id=$member->id;
+            $user->save();
+            DB::commit();
+            return $user;
+
+        }
+        catch (Exception $e) {
+            DB::rollback();
+            throw new Exception(Message::Failed);
+        }
+
 
     }
     

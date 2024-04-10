@@ -22,6 +22,23 @@ Route::get('/', function () {
 });
 
 
+// for userrole is gymmember
+Route::middleware('auth','verified', 'role:' . UserRole::GymMember)->group(function () {
+
+    // Route::get('/memberprofile', [MemberProfileController::class, 'index'])->name('memberprofile');
+
+    // for gymmember
+    require __DIR__ . '/gymmember/memberprofile.php';
+
+    // 
+    // foreach (glob(__DIR__ . '/gymmember/*.php') as $filename) {
+    //     require $filename;
+    // }
+});  
+
+
+
+
 // for userrole is systemadmin
 Route::middleware('auth','verified', 'role:' . UserRole::SystemAdmin)->group(function () {
 

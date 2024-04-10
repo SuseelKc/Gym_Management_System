@@ -139,4 +139,16 @@ class MemberController extends Controller
 
         }
     }
+
+    public function createAccount($id){
+        try{
+            $member= $this->memberRepository->getById($id);
+            $member=$this->memberService->createMemberAccount($member);
+            toast('Member Account Created Successfully!','success');
+            return redirect()->intended(route('member.index'));
+        }
+        catch(Exception $e){
+
+        }
+    }
 }

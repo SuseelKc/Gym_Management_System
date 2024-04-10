@@ -38,7 +38,7 @@ class AuthenticatedSessionController extends Controller
         } elseif ($user->UserRole === \App\Enums\UserRole::GymAdmin) {
             return redirect()->route('dashboard');
         } elseif ($user->UserRole === UserRole::GymMember) {
-            return redirect()->route('memberdashboard');
+            return redirect()->route('memberprofile');
         } else {
             return redirect()->intended(RouteServiceProvider::HOME);
         }

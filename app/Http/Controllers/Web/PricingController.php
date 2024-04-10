@@ -90,7 +90,8 @@ class PricingController extends Controller
 
         }
         catch(Exception $e){
-
+            toast('Cannnot be performed! ','error');
+            return redirect()->back();
         }
 
     }

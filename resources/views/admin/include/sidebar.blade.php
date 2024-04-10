@@ -185,7 +185,22 @@
             </li>
 
             {{--  --}}
-            @endif    
+            @endif  
+            
+            @if(auth()->user()->UserRole==2)
+            <li class="nav-item">
+                <a href=" 
+                {{ route('memberprofile') }}                
+                "
+                    class="nav-link {{ request()->is('memberprofile*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-user-circle m-1 p-1"></i>
+                    <p>
+                       My Profile
+                    </p>
+                </a>
+            </li>
+
+            @endif
 
             </ul>
         </nav>

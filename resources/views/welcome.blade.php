@@ -111,6 +111,8 @@
                                 <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
                                 @elseif(auth()->user()->UserRole ==0)
                                 <li><a href="{{ url('/systemadmindashboard') }}">Dashboard</a></li>
+                                @elseif(auth()->user()->UserRole ==2)
+                                <li><a href="{{ url('/memberprofile') }}">Dashboard</a></li>
                                 @endif
                             @else
                                 <li><a href="{{ route('login') }}">Log in</a></li>
