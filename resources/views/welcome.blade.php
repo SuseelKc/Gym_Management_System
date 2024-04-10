@@ -107,7 +107,11 @@
                     @if (Route::has('login'))
                         <div>
                             @auth
+                                @if(auth()->user()->UserRole ==1)
                                 <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                                @elseif(auth()->user()->UserRole ==0)
+                                <li><a href="{{ url('/systemadmindashboard') }}">Dashboard</a></li>
+                                @endif
                             @else
                                 <li><a href="{{ route('login') }}">Log in</a></li>
                 

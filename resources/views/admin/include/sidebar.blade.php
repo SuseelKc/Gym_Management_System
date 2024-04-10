@@ -172,6 +172,19 @@
            </li>
           
             {{--  --}}
+            <li class="nav-item">
+                <a href=" 
+                {{ route('membersgym.index') }}                
+                "
+                    class="nav-link {{ request()->is('membersgym*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-users m-1 p-1"></i>
+                    <p>
+                        Gym Members
+                    </p>
+                </a>
+            </li>
+
+            {{--  --}}
             @endif    
 
             </ul>

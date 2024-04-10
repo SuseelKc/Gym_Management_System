@@ -185,6 +185,64 @@ public function update(Member $member, $id, Request $request)
         return redirect()->back()->with('error', 'An error occurred while saving the member information.');
     }
 }
+// when updated by system admin
+public function updateGymMember(Member $member, $id, Request $request)
+{
+    try {
+        DB::beginTransaction();
+
+        // $user = auth()->user();
+   
+        // $member->user_id = $user->id;
+        $member->name = $request->name;
+        $member->dob = $request->dob;      
+        $member->address = $request->address;
+        $member->contact_no = $request->contact_no;
+        $member->email = $request->email;
+        $member->pricing_id = $request->pricing;
+
+
+        if ($request->hasFile('photo')) {
+
+            $path='images/members/'.$member->photo;
+            if(File::exists($path)){
+                   File::delete($path);
+            }
+
+
+            $gallery = $request->file('photo');
+            $extension = $gallery->getClientOriginalExtension();
+            $filename = $gallery->getClientOriginalName() . '.' . $extension;
+            $gallery->move('./images/members/', $filename);
+            $member->photo = $filename;
+        }
+
+        // when member's package/pricing is choosen(ledger creation)
+       
+
+        if( $member->pricing_id != null){
+        
+            $pricing = $this->pricingRepository->getById($member->pricing_id);
+            $member->pricing_type=$pricing->costs_type;
+            $member->pricing_date=Carbon::now();
+            $this->ledgerService->addGymMember($member, $pricing);
+                     
+        }
+
+
+        $member->update();
+
+        DB::commit();
+        return $member;
+        
+    } catch (Exception $e) {
+        DB::rollBack();
+        // Log the error message
+        Log::info('Error during member save: ' . $e->getMessage());
+        // Display a generic error message to the user
+        return redirect()->back()->with('error', 'An error occurred while saving the member information.');
+    }
+}
 
     public function delete($id){
         try{

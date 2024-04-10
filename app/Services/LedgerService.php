@@ -78,6 +78,25 @@ class LedgerService
         }
     }
 
+    // when updated by system admin
+    public function addGymMember(Member $member, Pricing $pricing)
+    {
+        try {
+            
+            $ledger = new Ledger();
+            $ledger->date = Carbon::now();
+            $ledger->debit = $pricing->costs;
+            $ledger->balance = $pricing->costs;
+            $ledger->member_id = $member->id;
+            $ledger->remarks="Package Purchased/Renewed :{$pricing->name}";
+            $ledger->gym_id = $member->user_id;
+            $ledger->save();
+            return $ledger;
+        } catch (Exception $e) {
+            throw new Exception("Failed to add ledger entry: " . $e->getMessage());
+        }
+    }
+// 
     public function addMemberPayment(Member $selectedMember, Request $request, Ledger $recentBalance)
     {
         try {

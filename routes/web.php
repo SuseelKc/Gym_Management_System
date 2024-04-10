@@ -29,6 +29,7 @@ Route::middleware('auth','verified', 'role:' . UserRole::SystemAdmin)->group(fun
 
     // for systemadmin
     require __DIR__ . '/systemadmin/gym.php';
+    require __DIR__ . '/systemadmin/gymmember.php';
     // 
     // foreach (glob(__DIR__ . '/systemadmin/*.php') as $filename) {
     //     require $filename;

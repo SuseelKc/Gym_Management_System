@@ -75,4 +75,9 @@ class LedgerRepository
         return Ledger::all()->where('gym_id',$gymId);
     }
 
+    // for systemadmin
+    public function getByMemberId($memberId)
+    {
+        return Ledger::all()->where('member_id',$memberId);
+    }
 }
