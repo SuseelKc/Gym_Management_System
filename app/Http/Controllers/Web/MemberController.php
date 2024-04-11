@@ -6,6 +6,7 @@ use Exception;
 use App\Models\User;
 use App\Models\Member;
 use Illuminate\Http\Request;
+use App\Services\UserService;
 use App\Services\LedgerService;
 use App\Services\MemberService;
 use App\Services\PricingService;
@@ -17,7 +18,8 @@ use App\Repositories\MemberRepository;
 class MemberController extends Controller
 {
     //
-    public function __construct(MemberService $memberService,MemberRepository $memberRepository,PricingService $pricingService,UserRepository $userRepository,LedgerService $ledgerService,LedgerRepository $ledgerRepository)
+    public function __construct(MemberService $memberService,MemberRepository $memberRepository,PricingService $pricingService,UserRepository $userRepository,
+    LedgerService $ledgerService,LedgerRepository $ledgerRepository,UserService $userService)
     {
         $this->memberService = $memberService;
         $this->memberRepository = $memberRepository;
@@ -25,6 +27,7 @@ class MemberController extends Controller
         $this->userRepository = $userRepository;
         $this->pricingService =$pricingService;
         $this->ledgerService =$ledgerService;
+        $this->userService =$userService;
     }
 
     public function index(Request $request){
@@ -110,7 +113,12 @@ class MemberController extends Controller
                 toast('Member & Other Details Deleted Successfully!','success');
                 return redirect()->intended(route('member.index'));  
             }
-
+            $user=$this->userRepository->getGymMember($id);
+            if(!$user->isEmpty()){
+               
+                // $user->member_id= null;
+                $user=$this->userService->deleteGymMember($user);
+            }
             $member=$this->memberService->delete($id);
             toast('Member Deleted Successfully!','success');
             return redirect()->intended(route('member.index'));    

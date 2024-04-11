@@ -146,6 +146,26 @@ class UserService
 
 }
 
+// delete only gymmemebers as users 
+public function deleteGymMember($user){
+    try{
+        DB::beginTransaction();
+        foreach ($user as $user){
+              
+        $user->delete();
+        }
+        DB::commit();
+        return $user;
+
+    }
+    catch (Exception $e) {
+        DB::rollback();
+        throw new Exception(Message::Failed);
+    }
+
+
+}
+
 
     
     
