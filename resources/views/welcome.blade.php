@@ -136,9 +136,10 @@
                 Simplify your gym operations with Gym Manager X, where efficiency and excellence unite.</div>
 
                 <div style="height: 50px"></div>
-
+                @if(auth()->user())
+                @else
                 <a href="{{ route('login') }}"><button href="{{ route('login') }}">Member Login</button> </a> 
-            
+                @endif
         </div>      
     </body>
 </html>

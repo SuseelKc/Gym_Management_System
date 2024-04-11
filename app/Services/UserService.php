@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use Exception;
+use App\Models\User;
 use App\Models\Member;
+use Illuminate\Http\Request;
 use App\Services\UserService;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\UserRepository;
@@ -123,7 +125,26 @@ class UserService
 
   }
 
+  public function updateUser(User $user,Request $request){
+    try{
+        DB::beginTransaction();
+      
+        // dd($user);
+        $user->name=$request->name;
+       
+      
+        $user->save();
+        DB::commit();
+        return $user;
 
+    }
+    catch (Exception $e) {
+        DB::rollback();
+        throw new Exception(Message::Failed);
+    }
+
+
+}
 
 
     

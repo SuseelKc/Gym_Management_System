@@ -195,7 +195,18 @@
                     class="nav-link {{ request()->is('memberprofile*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-user-circle m-1 p-1"></i>
                     <p>
-                       My Profile
+                       Profile
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href=" 
+                {{-- {{ route('#') }}                 --}}
+                "
+                    class="nav-link {{ request()->is('account*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-money-check-alt m-1 p-1"></i>
+                    <p>
+                       Account
                     </p>
                 </a>
             </li>

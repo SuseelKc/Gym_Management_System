@@ -1,5 +1,5 @@
 @extends('admin.admin')
-@section('title','Dashboard')
+@section('title','Gym Admins')
 @section('content')
 <div class="content">
     <section class="content-header">

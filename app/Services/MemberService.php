@@ -312,5 +312,27 @@ public function updateGymMember(Member $member, $id, Request $request)
 
 
     }
+
+    
+    public function updateMember(Member $member,Request $request){
+        try{
+            DB::beginTransaction();
+          
+            // dd($member);
+            $member->name=$request->name;
+            $member->dob=$request->dob;
+            $member->address=$request->address;
+            $member->save();
+            DB::commit();
+            return $member;
+
+        }
+        catch (Exception $e) {
+            DB::rollback();
+            throw new Exception(Message::Failed);
+        }
+
+
+    }
     
 }
