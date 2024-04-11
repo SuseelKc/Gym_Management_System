@@ -22,4 +22,7 @@ class UserRepository
         return User::all()->where('UserRole',UserRole::GymAdmin);
     }
 
+    public function getGymMember($gymMemberId){
+        return User::where('member_id', $gymMemberId)->get();
+    }
 }

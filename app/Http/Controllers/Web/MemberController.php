@@ -69,7 +69,9 @@ class MemberController extends Controller
         try{            
             $member=Member::FindOrFail($id);
             $pricing = $this->pricingService->all(); 
-            return view('admin.member.edit',compact('member','pricing'));          
+            $user=$this->userRepository->getGymMember($id);
+            // dd($user);
+            return view('admin.member.edit',compact('member','pricing','user'));          
         }
         catch(Exception $e){
 

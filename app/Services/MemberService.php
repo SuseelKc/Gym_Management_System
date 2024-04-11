@@ -15,6 +15,7 @@ use App\Services\LedgerService;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 use App\Repositories\LedgerRepository;
 use App\Repositories\MemberRepository;
 use App\Repositories\PricingRepository;
@@ -300,6 +301,11 @@ public function updateGymMember(Member $member, $id, Request $request)
             $user->password=bcrypt('12345678');
             $user->UserRole=UserRole::GymMember;
             $user->member_id=$member->id;
+            $message = "Your account has been created successfully! Thanks for using GymManagerX.";
+            Mail::raw($message, function ($message) use ($user) {
+                $message->to($user->email)
+                        ->subject('Account Creation Confirmation');
+            });
             $user->save();
             DB::commit();
             return $user;
