@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\SystemAdmin;
 
 use Illuminate\Http\Request;
+use App\Services\UserService;
 use App\Services\LedgerService;
 use App\Services\MemberService;
 use App\Http\Controllers\Controller;
+use App\Repositories\UserRepository;
 use App\Repositories\LedgerRepository;
 use App\Repositories\MemberRepository;
 use App\Repositories\PricingRepository;
@@ -15,13 +17,16 @@ class GymMemberController extends Controller
     //
     public function __construct(MemberRepository $memberRepository,PricingRepository $pricingRepository,
     MemberService $memberService,LedgerRepository $ledgerRepository,
-    LedgerService $ledgerService)
+    LedgerService $ledgerService,UserRepository $userRepository,
+    UserService $userService)
     {
        $this->memberRepository=$memberRepository;
        $this->pricingRepository=$pricingRepository;
        $this->memberService=$memberService;
        $this->ledgerRepository=$ledgerRepository;
        $this->ledgerService=$ledgerService;
+       $this->userRepository=$userRepository;
+       $this->userService=$userService;
       
     }
 
@@ -79,11 +84,26 @@ class GymMemberController extends Controller
               
                 $ledger=$this->ledgerService->deleteMemberLedger($ledgerId);
                 }
+                // 
+                $user=$this->userRepository->getGymMember($id);
+                if(!$user->isEmpty()){
+                   
+                    // $user->member_id= null;
+                    $user=$this->userService->deleteGymMember($user);
+                }
+                // 
                 $member=$this->memberService->delete($id);
                 toast('Member & Other Details Deleted Successfully!','success');
                 return redirect()->intended(route('member.index'));  
             }
-
+            // 
+            $user=$this->userRepository->getGymMember($id);
+            if(!$user->isEmpty()){
+               
+                // $user->member_id= null;
+                $user=$this->userService->deleteGymMember($user);
+            }
+            // 
             $member=$this->memberService->delete($id);
             toast('Member Deleted Successfully!','success');
             return redirect()->intended(route('membersgym.index')); 

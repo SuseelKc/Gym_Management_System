@@ -109,16 +109,26 @@ class MemberController extends Controller
               
                 $ledger=$this->ledgerService->deleteMemberLedger($ledgerId);
                 }
+                // 
+                $user=$this->userRepository->getGymMember($id);
+                if(!$user->isEmpty()){
+                   
+                    // $user->member_id= null;
+                    $user=$this->userService->deleteGymMember($user);
+                }
+                // 
                 $member=$this->memberService->delete($id);
                 toast('Member & Other Details Deleted Successfully!','success');
                 return redirect()->intended(route('member.index'));  
             }
+            // 
             $user=$this->userRepository->getGymMember($id);
             if(!$user->isEmpty()){
                
                 // $user->member_id= null;
                 $user=$this->userService->deleteGymMember($user);
             }
+            // 
             $member=$this->memberService->delete($id);
             toast('Member Deleted Successfully!','success');
             return redirect()->intended(route('member.index'));    
