@@ -201,7 +201,7 @@
             </li>
             <li class="nav-item">
                 <a href=" 
-                {{-- {{ route('#') }}                 --}}
+                {{ route('account') }}                
                 "
                     class="nav-link {{ request()->is('account*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-money-check-alt m-1 p-1"></i>

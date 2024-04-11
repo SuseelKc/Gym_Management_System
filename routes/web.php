@@ -29,6 +29,7 @@ Route::middleware('auth','verified', 'role:' . UserRole::GymMember)->group(funct
 
     // for gymmember
     require __DIR__ . '/gymmember/memberprofile.php';
+    require __DIR__ . '/gymmember/account.php';
 
     // 
     // foreach (glob(__DIR__ . '/gymmember/*.php') as $filename) {
