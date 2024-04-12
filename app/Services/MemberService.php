@@ -143,7 +143,7 @@ public function update(Member $member, $id, Request $request)
         $member->address = $request->address;
         $member->contact_no = $request->contact_no;
         $member->email = $request->email;
-        $member->pricing_id = $request->pricing;
+        
 
 
         if ($request->hasFile('photo')) {
@@ -162,11 +162,14 @@ public function update(Member $member, $id, Request $request)
         }
 
         // when member's package/pricing is choosen(ledger creation)
-       
 
-        if( $member->pricing_id != null){
+        // if pricing_id is null and ledger does not exists 
         
-            $pricing = $this->pricingRepository->getById($member->pricing_id);
+     
+        if( $member->pricing_id == null){
+          
+            $pricing = $this->pricingRepository->getById($request->pricing);
+            $member->pricing_id = $request->pricing; 
             $member->pricing_type=$pricing->costs_type;
             $member->pricing_date=Carbon::now();
             $this->ledgerService->add($member, $pricing);
