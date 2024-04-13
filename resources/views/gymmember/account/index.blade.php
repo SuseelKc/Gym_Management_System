@@ -1,7 +1,9 @@
 @extends('admin.admin')
 @section('title','My Account')
 @section('content')
-
+{{--  --}}
+<script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
+{{--  --}}
 <div class="content">
     <section class="content-header">
         <div class="container-fluid">
@@ -22,7 +24,8 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex justify-content-end">
-                                    <a href="#" class="btn btn-primary px-4 m-2">Make Payment</a>  
+                                    {{-- <button id="payment-button">Pay with Khalti</button> --}}
+                                    <a href="#" class="btn btn-primary px-4 m-2"  id="payment-button">Make Payment</a>  
                                 </div>
                             </div>
 
@@ -71,4 +74,90 @@
         
     </section>
 </div>
+{{--  --}}
+<script>
+    var config = {
+        // replace the publicKey with yours
+        "publicKey": "test_public_key_850bbcc5a5074adb8c92a79e5bf21dc8",
+        "productIdentity": "1234567890",
+        "productName": "Dragon",
+        "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
+        "paymentPreference": [
+            "KHALTI",
+            // "EBANKING",
+            // "MOBILE_BANKING",
+            // "CONNECT_IPS",
+            // "SCT",
+            ],
+        "eventHandler": {
+            onSuccess (payload) {
+                // hit merchant api for initiating verfication
+
+
+                $.ajax({
+                    type:'POST',
+                    url: "{{ route('ajax.khalti.verify_order')}}",
+                    data:{
+                        token : payload.token,
+                        amount :payload.amount,
+                        "_token": "{{ csrf_token()}}'"
+                    },
+                    success :function(res){
+                        $.ajax({
+                            type:'POST',
+                            url:"{{route('khalti.storePayment')}}"
+                            data:{
+                                response :res,
+                                "_token": "{{ csrf_token()}}'"
+                            }
+                        });
+                        console.log(res);
+                    }
+                });
+
+                console.log(payload);
+                // if(payload.idx){
+                //     $.ajaxSetup({
+                //     headers: {
+                //         'X-CSRF-TOKEN': '{{csrf_token()}}'
+                //     }
+                // });
+
+                // $.ajax({
+                //     method: 'post',
+                //     url: "{{route('ajax.khalti.verify_order')}}",
+                //     data: payload,
+                //     success: function(response){
+                //         if(response.success ==1){
+                //             window.location = response.redirecto;
+                //         }
+                //         else{
+                //             checkout.hide();
+                //         }
+                //     },
+                //         error:function(data){
+                //             console.log('Error:',data);
+                //         }
+                    
+                // });
+
+                // }
+            },
+            onError (error) {
+                console.log(error);
+            },
+            onClose () {
+                console.log('widget is closing');
+            }
+        }
+    };
+
+    var checkout = new KhaltiCheckout(config);
+    var btn = document.getElementById("payment-button");
+    btn.onclick = function () {
+        // minimum transaction amount must be 10, i.e 1000 in paisa.
+        checkout.show({amount: 1000});
+    }
+</script>
+{{--  --}}
 @endsection

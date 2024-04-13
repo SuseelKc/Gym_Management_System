@@ -162,9 +162,7 @@ public function update(Member $member, $id, Request $request)
         }
 
         // when member's package/pricing is choosen(ledger creation)
-
-        // if pricing_id is null and ledger does not exists 
-        
+   
      
         if( $member->pricing_id == null){
           
