@@ -53,9 +53,8 @@ class EquipmentService
             }
         }
 
-        // The rest of your code
-        // $result = $this->equipmentRepository->getAll()->where('gym_id', $user_id);
-
+        // 
+      
         DB::commit();
         return $this->equipmentRepository->getAll()->where('gym_id', $user_id);
     } catch (Exception $e) {

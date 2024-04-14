@@ -7,16 +7,18 @@ use App\Services\MemberService;
 use App\Charts\MonthlySalesChart;
 use App\Http\Controllers\Controller;
 use App\Repositories\LedgerRepository;
+use App\Repositories\EquipmentRepository;
 
 
 class DashboardController extends Controller
 {
     //
-    public function __construct(LedgerRepository $ledgerRepository,MemberService $memberService)
+    public function __construct(LedgerRepository $ledgerRepository,MemberService $memberService,EquipmentRepository $equipmentRepository)
     {
        
         $this->ledgerRepository = $ledgerRepository;
         $this->memberService= $memberService;
+        $this->equipmentRepository=$equipmentRepository;
     }
 
     
@@ -57,10 +59,15 @@ class DashboardController extends Controller
                 ]
             ];
             // 
+
+            // upcoming maintenence date
+            $comingMainteneceDate= $this->equipmentRepository->upcomingEquipmentMaintenenceDate();
+            // 
+            //
             
 
 
-            return view('admin.dashboard.index',compact('latestRecords','topTransactions','chart','expiredMemberships','data'));
+            return view('admin.dashboard.index',compact('latestRecords','topTransactions','chart','expiredMemberships','data','comingMainteneceDate'));
         }
         catch(Exception $e){
 

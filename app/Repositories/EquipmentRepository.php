@@ -36,4 +36,21 @@ class EquipmentRepository
     public function gymEquipment($gymId){
         return Equipment::all()->where('gym_id',$gymId);
     }
+
+    public function upcomingEquipmentMaintenenceDate(){
+
+        $currentDate = Carbon::now();
+
+        // Calculate one month from the current date upcoming date
+        $oneMonthLater = $currentDate->copy()->addMonth();
+
+         // Retrieve equipment with upcoming maintenance within one month and sort by upcoming_date
+        return Equipment::whereBetween('upcoming_date', [$currentDate, $oneMonthLater])
+        ->orderBy('upcoming_date')
+        ->get();
+        
+        
+
+    }
+
 }
