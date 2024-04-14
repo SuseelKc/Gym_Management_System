@@ -21,6 +21,7 @@ class MonthlySalesChart extends Chart
         ->groupBy(DB::raw('MONTH(created_at)'))
         ->get();
 
+        // dd($sales->toArray());
         // Extracting total debit values from $sales collection
         $totalDebits = $sales->pluck('total_debit')->toArray();
        // Define an array to map numeric month values to their names
