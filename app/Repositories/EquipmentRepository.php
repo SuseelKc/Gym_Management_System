@@ -45,7 +45,7 @@ class EquipmentRepository
         $oneMonthLater = $currentDate->copy()->addMonth();
 
          // Retrieve equipment with upcoming maintenance within one month and sort by upcoming_date
-        return Equipment::whereBetween('upcoming_date', [$currentDate, $oneMonthLater])
+        return Equipment::where('gym_id',auth()->id())->whereBetween('upcoming_date', [$currentDate, $oneMonthLater])
         ->orderBy('upcoming_date')
         ->get();
         
