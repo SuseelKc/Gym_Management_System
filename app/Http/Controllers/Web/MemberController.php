@@ -57,6 +57,20 @@ class MemberController extends Controller
 
     public function store(Request $request){
         try{
+            $gymId=auth()->id();      
+            $oldMembers=$this->memberRepository->gymMembers($gymId);
+            // dd($request->all());
+            foreach($oldMembers as $oldMember){
+                if(($request->email)==($oldMember->email)){
+                    toast('Email Arleady Exists!','error');
+                    return redirect()->back();
+                }
+                if(($request->contact_no)==($oldMember->contact_no)){
+                    toast('Contact No. Arleady Exists!','error');
+                    return redirect()->back();
+                }
+            }
+
            $member= new Member();        
            $member= $this->memberService->add($member,$request);
            toast('New Member Added Successfully!','success');
