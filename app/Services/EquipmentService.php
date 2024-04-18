@@ -33,9 +33,10 @@ class EquipmentService
         // for increasing upcoming date if upcoming date is today
         $todayDate = Carbon::now();
 
-        $datesEqual = Equipment::whereDate('upcoming_date', $todayDate)
+        $datesEqual = Equipment::whereDate('upcoming_date', '<=', $todayDate)
             ->where('gym_id', $user_id)
             ->get();
+
 
         if ($datesEqual->isNotEmpty()) {
             foreach ($datesEqual as $equipment) {
