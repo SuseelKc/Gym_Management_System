@@ -77,6 +77,59 @@
 {{--  --}}
 <script>
     var config = {
+        "publicKey": "test_public_key_850bbcc5a5074adb8c92a79e5bf21dc8",
+        "productIdentity": "1234567890",
+        "productName": "Dragon",
+        "productUrl": "http://127.0.0.1:8000/user/ledger/1/details",
+        "paymentPreference": [
+            "KHALTI",
+            "EBANKING",
+            "MOBILE_BANKING",
+            "CONNECT_IPS",
+            "SCT",
+        ],
+        "eventHandler": {
+            onSuccess (payload) {
+                console.log("inside success function");
+                console.log(payload);
+
+                // Send payload data to PaymentController using AJAX
+                $.ajax({
+                    type: 'POST',
+                    url: '/khalti/verify',
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        'payload': payload,
+                        'member_id': {{ $ledger->member_id }},
+                        'ledger_id' : {{ $ledger->id }}
+                    },
+                    success: function(response) {
+                        console.log('Payment data sent to PaymentController.');
+                       
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error sending payment data:', error);
+                    }
+                });
+            },
+            onError (error) {
+                console.log(error);
+            },
+            onClose () {
+                console.log('widget is closing');
+            }
+        }
+    };
+
+    var checkout = new KhaltiCheckout(config);
+    var btn = document.getElementById("payment-button");
+    btn.onclick = function () {
+        checkout.show({amount: 20000});
+    }
+</script>
+
+{{-- <script>
+    var config = {
         // replace the publicKey with yours
         "publicKey": "test_public_key_850bbcc5a5074adb8c92a79e5bf21dc8",
         "productIdentity": "1234567890",
@@ -158,6 +211,6 @@
         // minimum transaction amount must be 10, i.e 1000 in paisa.
         checkout.show({amount: 1000});
     }
-</script>
+</script> --}}
 {{--  --}}
 @endsection
