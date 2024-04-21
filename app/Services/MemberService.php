@@ -163,14 +163,17 @@ public function update(Member $member, $id, Request $request)
 
         // when member's package/pricing is choosen(ledger creation)
    
-     
+       
         if( $member->pricing_id == null){
-          
+           
             $pricing = $this->pricingRepository->getById($request->pricing);
+            
+            if($pricing != null){
             $member->pricing_id = $request->pricing; 
             $member->pricing_type=$pricing->costs_type;
             $member->pricing_date=Carbon::now();
             $this->ledgerService->add($member, $pricing);
+            }
                      
         }
 
