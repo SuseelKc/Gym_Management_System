@@ -43,7 +43,7 @@
                                             <th>Costs</th>                                                                                                                                                               
                                             <th>Type</th> 
                                             <th>Start Date</th>                                   
-                                            <th>End Date</th> 
+                                            {{-- <th>End Date</th>  --}}
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -65,7 +65,7 @@
                                                 @endif
                                             </td>
                                             <td>{{$expenses->start_date}}</td>
-                                            <td>{{$expenses->end_date}}</td>
+                                            {{-- <td>{{$expenses->end_date}}</td> --}}
                                             <td>
                                                 <a 
                                                 href="{{route('expenses.edit', $expenses->id)}}" 
