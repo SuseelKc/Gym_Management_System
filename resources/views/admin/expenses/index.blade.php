@@ -42,7 +42,7 @@
                                             <th>Expenses Name</th>
                                             <th>Costs</th>                                                                                                                                                               
                                             <th>Type</th> 
-                                            <th>Start Date</th>                                   
+                                            <th>Entered Date</th>                                   
                                             {{-- <th>End Date</th>  --}}
                                             <th>Action</th>
                                         </tr>
