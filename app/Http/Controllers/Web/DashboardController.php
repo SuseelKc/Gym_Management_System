@@ -47,8 +47,6 @@ class DashboardController extends Controller
             $expiredMemberships=$this->memberService->all()->whereNull('pricing_id');
             $totalMemberships=$this->memberService->all();
           
-            // dd($expiredMemberships);
-            // 
 
             // pie chart
             $data = [
@@ -65,8 +63,6 @@ class DashboardController extends Controller
             // 
             //
             
-
-
             return view('admin.dashboard.index',compact('latestRecords','topTransactions','chart','expiredMemberships','data','comingMainteneceDate'));
         }
         catch(Exception $e){

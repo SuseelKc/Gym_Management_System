@@ -22,13 +22,10 @@ class PricingController extends Controller
     public function index(){
         try{
 
-            $pricing=$this->pricingRepository->allWithCountMembers();
-           
-           
+            $pricing=$this->pricingRepository->allWithCountMembers();        
             return view('admin.pricing.index',compact('pricing'));
         }
         catch(Exception $e){
-
         }
     }
 
@@ -40,7 +37,6 @@ class PricingController extends Controller
             return view('admin.pricing.create',compact('gym'));
         }
         catch(Exception $e){
-
         }
     }
 
@@ -49,11 +45,9 @@ class PricingController extends Controller
            $pricing= new Pricing();        
            $pricing=  $this->pricingService->add($pricing,$request);
            toast('Gym Package Added Successfully!','success');
-           return redirect()->intended(route('pricing.index'));
-           
+           return redirect()->intended(route('pricing.index'));          
         }
         catch(Exception $e){
-
         }
     }
 
