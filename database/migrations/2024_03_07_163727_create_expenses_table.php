@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('type')->nullable();
-            $table->decimal('costs', 8, 3);
+            $table->decimal('costs', 12, 2);
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->foreignId('gym_id')->constrained('users','id');
