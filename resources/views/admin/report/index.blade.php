@@ -228,7 +228,7 @@
 
                 <div class="card w-100 shadow">
                     <div class="card-body">
-                        <h6 class="title-head mb-3">Cash Outflows Per Month</h6>
+                        <h6 class="title-head mb-3">Cash Outflows This Month</h6>
                       
                         <div class="table-responsive">
                             <table class="table table-striped align-middle">
@@ -259,7 +259,7 @@
                 
                 <div class="card w-100 shadow">
                     <div class="card-body">
-                        <h6 class="title-head mb-3">Cash Inflows Per Month</h6>
+                        <h6 class="title-head mb-3">Cash Inflows This Month</h6>
                       
                         <div class="table-responsive">
                             <table class="table table-striped align-middle">

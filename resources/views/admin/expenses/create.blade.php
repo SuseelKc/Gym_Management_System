@@ -73,7 +73,7 @@
                                             </div>
 
                                             <div class="d-flex align-items-center">
-                                                <input type="number" class="form-control mr-2" id="costs" style="width: 150px;"
+                                                <input type="decimal" class="form-control mr-2" id="costs" style="width: 150px;"
                                                        name="costs" value="" required>
                                                     <select id="type" style="height: 30px; display: block;" name="type" >
                                                         <option value="" selected>Select Type</option>
