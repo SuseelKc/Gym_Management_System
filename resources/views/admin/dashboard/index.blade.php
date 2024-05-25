@@ -128,6 +128,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($latestRecords->sortByDesc('balance') as $latestRecord)
+                                 @if($latestRecord->balance>0)
                                 <tr>
                                     <td><h6 class="fw-bold mb-0">{{$latestRecord->member->serial_no}}</h6></td>
                                     <td>
@@ -148,6 +149,7 @@
                                         <h6 class="fw-bold mb-0 fs-4">{{$latestRecord->balance}}</h6>
                                     </td>
                                 </tr> 
+                                @endif
                                 @endforeach                     
                             </tbody>
                         </table>
