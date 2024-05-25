@@ -4,6 +4,7 @@ namespace App\Http\Controllers\GymMember;
 
 use Carbon\Carbon;
 use App\Models\Ledger;
+use App\Models\Member;
 use Illuminate\Http\Request;
 use App\Services\UserService;
 use App\Services\MemberService;
@@ -75,22 +76,28 @@ class AccountController extends Controller
             $memberId = $request->member_id;
             $ledgerId = $request->ledger_id;
 
+            $latestRecord = Ledger::where('member_id', $memberId)->latest()->first();
+            $recentBalance = $latestRecord ? $latestRecord->balance : 0;
+            $newBalance = $recentBalance - $payload['amount']; 
+
+            $member = Member::findOrFail($memberId);
+            $gymId= $member->user_id;
+
+
             
-           
-        
+                  
             $payment = Ledger::create([
                 'credit' => $payload['amount'],
                 'date'=>Carbon::now(),
-                'balance'=>0,
+                'balance'=>$newBalance,
                 'member_id'=>$memberId,
-                'gym_id'=>1,
+                'gym_id'=> $gymId,
        
                 'remarks'=>"Paid By Khalti"
          
             ]);
 
-       
-
+            
             return response()->json(['message' => 'Payment verified and stored successfully'], 200);
           }
           else
