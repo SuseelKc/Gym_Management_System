@@ -78,7 +78,7 @@ class AccountController extends Controller
 
             $latestRecord = Ledger::where('member_id', $memberId)->latest()->first();
             $recentBalance = $latestRecord ? $latestRecord->balance : 0;
-            $newBalance = $recentBalance - $payload['amount']; 
+            $newBalance = $recentBalance - ($payload['amount']/100); 
 
             $member = Member::findOrFail($memberId);
             $gymId= $member->user_id;
@@ -87,7 +87,7 @@ class AccountController extends Controller
             
                   
             $payment = Ledger::create([
-                'credit' => $payload['amount'],
+                'credit' => ($payload['amount']/100),
                 'date'=>Carbon::now(),
                 'balance'=>$newBalance,
                 'member_id'=>$memberId,
