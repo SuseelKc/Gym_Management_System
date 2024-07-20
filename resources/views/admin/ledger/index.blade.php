@@ -47,7 +47,7 @@
                                             <th>Member Name</th>
                                             <th>Debit</th>
                                             <th>Credit</th>
-                                            <th>Balance</th>
+                                            <th>Remarks</th>
                                             
                                         
                                             
@@ -62,7 +62,7 @@
                                             <td>{{$ledger->member->name}}</td>
                                             <td>{{$ledger->debit}}</td>
                                             <td>{{$ledger->credit}}</td>
-                                            <td>{{$ledger->balance}}</td>
+                                            <td>{{$ledger->remarks}}</td>
                                             
                                         
                                     
