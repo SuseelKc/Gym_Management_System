@@ -157,15 +157,16 @@
                                         </div>
 
                                     </div>
-                                    {{-- for creating gym members account --}}
-                                    {{-- <div class="card-footer">
+                                   
+                                    <div class="card-footer">
                                         <button type="submit" class="btn btn-primary px-3">Save</button>
-                                        @if($user->isEmpty())
+                                         {{-- for creating gym members account --}}
+                                        {{-- @if($user->isEmpty())
                                             <button formaction="{{route('member.create.account',$member->id)}}" class="btn btn-info px-3">Create Account</button>
                                         @else
 
-                                        @endif
-                                    </div> --}}
+                                        @endif --}}
+                                    </div>
                             </form>
                         </div>
                     </div>
