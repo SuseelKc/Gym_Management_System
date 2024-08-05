@@ -14,3 +14,6 @@ Route::get('/members/{id}',[MemberController::class,'delete'])->name('member.del
 Route::get('/members/toggle/{id}',[MemberController::class,'toggle'])->name('member.toggle');
 Route::get('/renew-membership',[MemberController::class,'renwewmembership'])->name('member.renewal');
 Route::patch('/createaccount/member/{id}',[MemberController::class,'createAccount'])->name('member.create.account');
+
+// server side data fetching
+Route::post('/allmembers',[MemberController::class,'listMember'])->name('member.list');

@@ -14,6 +14,8 @@ use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
 use App\Repositories\LedgerRepository;
 use App\Repositories\MemberRepository;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class MemberController extends Controller
 {
@@ -183,6 +185,107 @@ class MemberController extends Controller
         }
         catch(Exception $e){
 
+        }
+    }
+
+    public function listMember(Request $request)
+    {
+        try
+        {
+            $length   = $request->input('length');
+            $start    = $request->input('start');
+            $columns  = $request->input('columns');
+            $order    = $request->input('order');
+
+            $orderBySql = '';
+         
+            if (isset($order[0]) && isset($columns[$order[0]['column']]))
+            {
+                if ($columns[$order[0]['column']]['data'] != 'Action' && $columns[$order[0]['column']]['data'] != 'sn')
+                {
+                    $orderBySql = "ORDER BY " . $columns[$order[0]['column']]['data'] . " " . $order[0]['dir'];
+                }
+            }
+
+            $userId = Auth::id();
+            $whereAllSql = "WHERE status='active' AND user_id = $userId";
+
+            foreach ($columns as $key => $value)
+            {
+                if (!empty($value['search']['value']))
+                {
+                    $sqlString =  " AND " . $value['data'] . " LIKE '%" .  $value['search']['value'] . "%' ";
+                    $whereAllSql .=  $sqlString;
+                }
+            }
+            
+            $basicQuery = "SELECT
+                            id, serial_no, name, email, dob, contact_no, shifts, pricing_id, status, user_id
+                        FROM
+                            `members`";
+            
+            $members = DB::select("$basicQuery $whereAllSql $orderBySql LIMIT $start, $length");
+
+            $count = 1;
+            $result = array();
+            
+            foreach ($members as $member) 
+            {
+                $row = (array) $member;
+
+                $row['sn'] = $count;
+                
+                // Generate the shifts badge HTML
+                if ($member->shifts == \App\Enums\Shifts::Morning) 
+                {
+                    $shiftHtml = '<a id="shifts" href="' . route('member.toggle', $member->id) . '" class="badge p-2 rounded" style="background-color: #ceefd1;color:#53b15b">Morning</a>';
+                } elseif ($member->shifts == \App\Enums\Shifts::Day) 
+                {
+                    $shiftHtml = '<a id="shifts" href="' . route('member.toggle', $member->id) . '" class="badge p-2 rounded" style="background-color: #e1c32c;color:#3685d3">Day</a>';
+                } else 
+                {
+                    $shiftHtml = '<a id="shifts" href="' . route('member.toggle', $member->id) . '" class="badge p-2 rounded" style="background-color: #303030;color:#dedcd9">Evening</a>';
+                }
+
+                $row['shifts'] = $shiftHtml;
+
+                // Generate the edit and delete links
+                $editUrl = route('member.edit', $member->id);
+                $deleteUrl = '#'; // Assuming you will handle delete via modal and not through URL
+                $deleteDataAttributes = "data-toggle='modal' data-target='#deleteModal' data-member-id='{$member->id}' data-member-name='{$member->name}'";
+
+                $row['status'] = "
+                    <a href='{$editUrl}' title='Edit Member'>
+                        <i class='fas fa-edit fa-lg'></i>
+                    </a>
+                    <a type='button' {$deleteDataAttributes} href='{$deleteUrl}' title='Delete Member'>
+                        <i class='fas fa-times-circle fa-lg' style='color: red;'></i>
+                    </a>
+                ";
+
+                $result[] = $row;
+                
+                $count++;
+            }
+
+            $recordsFilteredQuery = "SELECT count(id) AS records_filtered FROM ($basicQuery) a $whereAllSql";
+		    $recordsFilteredResult =  DB::select($recordsFilteredQuery);
+            
+            $recordsFiltered = $recordsFilteredResult[0]->records_filtered;
+
+            $response = array(
+                'draw'            => intval($request->input('draw')) + 1,
+                'recordsTotal'    => $recordsFiltered,
+                'recordsFiltered' => $recordsFiltered,
+                'data'            => $result,
+            );
+      
+            print(json_encode($response));
+            exit();
+        }
+        catch (Exception $e)
+        {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 }

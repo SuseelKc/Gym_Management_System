@@ -1,9 +1,7 @@
 @extends('admin.admin')
 @section('title','Members')
 @section('content')
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> -->
+
 <link href="{{ asset('admin/DataTables/datatables.min.css') }}" rel="stylesheet">
 <script src="{{ asset('admin/DataTables/datatables.min.js') }}"></script>
 
@@ -33,9 +31,8 @@
                                 <table class="table table-hover table-bordered display compact" id="membership"> 
                                     <thead>
                                         <tr>
-                                            <th>S.No</th>
+                                            <th>S.N.</th>
                                             <th>ID No.</th>
-                                            <!-- <th>Photo</th> -->
                                             <th>Name</th>  
                                             <th>Email</th>
                                             <th>DOB</th>
@@ -46,62 +43,22 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($member as $member)
-                                        <tr>
-                                            <td>{{$loop->iteration}}</td>
-                                            <td>{{$member->serial_no}}</td>
-                                            <!-- <td>
-                                                    @if ($member->photo == null)
-                                                        <img src = "/images/defaultimage.jpg" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
-                                                    @else
-                                                        <img src = "/images/members/{{$member->photo}}" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
-                                                    @endif
-                                            </td> -->
-                                            <td>{{$member->name}}</td>
-                                            <td>{{$member->email}}</td>
-                                            <td>{{$member->dob}}</td>
-                                            <td>{{$member->contact_no}}</td>
-                                            <td>
-                                                @if ($member->shifts== \App\Enums\Shifts::Morning)
-                                                <a id="shifts"
-                                                href="{{ route('member.toggle', $member->id) }}"
-                                                class="badge p-2 rounded "
-                                                style="background-color: #ceefd1;color:#53b15b">
-                                                Morning</a>
-                                                @elseif($member->shifts== \App\Enums\Shifts::Day)
-                                                <a id="shifts"
-                                                href="{{ route('member.toggle', $member->id) }}"
-                                                class="badge p-2 rounded "
-                                                style="background-color: #e1c32c;color:#3685d3">
-                                                Day</a>
-                                                @else
-                                                <a id="shifts"
-                                                href="{{ route('member.toggle', $member->id) }}"
-                                                class="badge p-2 rounded "
-                                                style="background-color: #303030;color:#dedcd9">
-                                                Evening</a>
-                                                @endif
-
-
-                                            </td>
-                                            @if(($member->pricing))
-                                                <td>{{$member->pricing->name}}</td>
-                                            @else
-                                                <td>N/A</td>
-                                            @endif
-                                            <td>
-                                            <a href="{{route('member.edit', $member->id)}}" title="Edit Member">
-                                                        <i class="fas fa-edit fa-lg"></i></a>
-                                            <a type="button"  data-toggle="modal" data-target="#deleteModal"  data-member-id="{{$member->id}}"
-                                             data-member-name="{{$member->name}}"
-                                             href="#" title="Delete Member">
-                                            <i class="fas fa-times-circle fa-lg" style="color: red;"></i>
-                                            </a>                                        
-                                            </td>
-
-                                        </tr>
-                                        @endforeach    
+                                       
                                     </tbody>
+
+                                    <tfoot>
+                                        <tr>
+                                            <th>S.N.</th>
+                                            <th>ID No.</th>
+                                            <th>Name</th>  
+                                            <th>Email</th>
+                                            <th>DOB</th>
+                                            <th>Contact</th>
+                                            <th>Shifts</th>
+                                            <th>Package</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                     </div>
@@ -159,11 +116,80 @@
         };
     });
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     $('#membership').dataTable({
-		"iDisplayLength": 50,
-		"bDeferRender": true,
-        "scrollX": true,
-	});
+			dom: 'lrtip',
+			destroy: true,
+			processing: true,
+			language: {
+				processing: '<span style="color:black;">Processing...</span>'
+			},
+			serverSide: true,
+			ajax: {
+				url: "/allmembers",
+				type: "POST",
+				data: function(postData) {
+					postData._token = $('meta[name="csrf-token"]').attr('content');
+				}
+			},
+			scrollY: "45vh",
+			scrollX: true,
+			// 	dom: '<<"pull-left"l>f>rt<"datatable_btns pull-left"B><"pull-right"ip>',
+			// 	buttons: [{
+			// 		extend: "excel",
+			// 		className: "btn-sm",
+			// 		text: '<i class="fa fa-file-excel-o"></i>&nbsp;Download',
+			// 		filename: 'Classic House Owner',
+			// 		title: 'House Owner',
+			// 	}, ],
+			// scrollCollapse: true,
+			lengthMenu: [
+				[10, 25, 50, -1],
+				['10', '25', '50', 'All']
+			],
+			columns: 
+			[
+                {data: "sn"},
+				{data: "serial_no"},
+				{data: "name"},
+				{data: "email"},
+				{data: "dob"},
+                {data: "contact_no"},
+				{data: "shifts"},
+                {data: "pricing_id"},
+                {data: "status"},
+			],
+			// deferRender: true,
+			// columnDefs: [{
+			// 		"orderable": false,
+			// 		"targets": [0,5]
+			// 	}
+			// ],
+            initComplete: function() 
+            {
+                this.api().columns().every(function() 
+                {
+                    var header          = $(this.header()).text();
+                    var negletColumns   = ['Action','S.N.'];
+
+                    if ($.inArray(header, negletColumns) < 0) 
+                    {
+                        var column = this;
+                        var select = $('<input style="width: 100%; padding: 5px 2px; margin: 4px 0; box-sizing: border-box;" class="input-sm" placeholder="' + header + '" title="Press Enter Key To Search" />').appendTo($(column.footer()).empty()).on('keyup', function(e) {
+                            if (e.keyCode == 13 || (e.keyCode == 8 && "" == val)) {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                column.search(val, true, true).draw();
+                            }
+                        });
+                    }
+                });
+            }
+		});  
 
 </script>
 
