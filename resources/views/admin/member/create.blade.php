@@ -90,7 +90,7 @@
                                             <div class="form-group">
                                                 <label for="contactno">Contact No.</label>
                                                 <input type="number" class="form-control" id="contact_no"
-                                                    placeholder="Enter Your Address" name="contact_no" required>
+                                                    placeholder="Enter Your Contact Number" name="contact_no" required>
                                                 @if ($errors->has('contact_no'))
                                                     <x-validation-errors>
                                                         {{ $errors->first('contact_no') }}

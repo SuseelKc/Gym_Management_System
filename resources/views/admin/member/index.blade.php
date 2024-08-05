@@ -1,6 +1,11 @@
 @extends('admin.admin')
 @section('title','Members')
 @section('content')
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> -->
+<link href="{{ asset('admin/DataTables/datatables.min.css') }}" rel="stylesheet">
+<script src="{{ asset('admin/DataTables/datatables.min.js') }}"></script>
 
 <div class="content">
     <section class="content-header">
@@ -25,14 +30,13 @@
                                     class="btn btn-primary px-4 m-2 float-right">Add</a>  
                             </div>
                             <div class="card-body table-responsive p-2">
-                                <table class="datatable table">
+                                <table class="table table-hover table-bordered display compact" id="membership"> 
                                     <thead>
                                         <tr>
                                             <th>S.No</th>
                                             <th>ID No.</th>
-                                            <th>Photo</th>
-                                            <th>Name</th>                                         
-                                            <th>Gym</th>
+                                            <!-- <th>Photo</th> -->
+                                            <th>Name</th>  
                                             <th>Email</th>
                                             <th>DOB</th>
                                             <th>Contact</th>
@@ -46,15 +50,14 @@
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$member->serial_no}}</td>
-                                            <td>
+                                            <!-- <td>
                                                     @if ($member->photo == null)
                                                         <img src = "/images/defaultimage.jpg" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
                                                     @else
                                                         <img src = "/images/members/{{$member->photo}}" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">
                                                     @endif
-                                            </td>
+                                            </td> -->
                                             <td>{{$member->name}}</td>
-                                            <td>{{$member->user->name}}</td>
                                             <td>{{$member->email}}</td>
                                             <td>{{$member->dob}}</td>
                                             <td>{{$member->contact_no}}</td>
@@ -155,6 +158,13 @@
             window.location.href = deleteRoute;
         };
     });
+
+    $('#membership').dataTable({
+		"iDisplayLength": 50,
+		"bDeferRender": true,
+        "scrollX": true,
+	});
+
 </script>
 
 <!--  -->
