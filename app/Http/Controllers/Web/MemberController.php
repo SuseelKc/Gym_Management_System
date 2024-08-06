@@ -198,7 +198,7 @@ class MemberController extends Controller
             $order    = $request->input('order');
 
             $orderBySql = '';
-         
+        
             if (isset($order[0]) && isset($columns[$order[0]['column']]))
             {
                 if ($columns[$order[0]['column']]['data'] != 'Action' && $columns[$order[0]['column']]['data'] != 'sn')
@@ -208,23 +208,31 @@ class MemberController extends Controller
             }
 
             $userId = Auth::id();
-            $whereAllSql = "WHERE status='active' AND user_id = $userId";
+            $whereAllSql = "WHERE m.status='active' AND m.user_id = $userId";
 
             foreach ($columns as $key => $value)
             {
                 if (!empty($value['search']['value']))
                 {
-                    $sqlString =  " AND " . $value['data'] . " LIKE '%" .  $value['search']['value'] . "%' ";
-                    $whereAllSql .=  $sqlString;
+                    if ($value['data'] == 'package_name') 
+                    {
+                        $sqlString = " AND p.name LIKE '%" . $value['search']['value'] . "%' ";
+                    } 
+                    else 
+                    {
+                        $sqlString = " AND m." . $value['data'] . " LIKE '%" . $value['search']['value'] . "%' ";
+                    }
+                    $whereAllSql .= $sqlString;
                 }
             }
             
-            $basicQuery = "SELECT
-                            id, serial_no, name, email, dob, contact_no, shifts, pricing_id, status, user_id
-                        FROM
-                            `members`";
+            $basicQuery = "SELECT m.id, m.serial_no, m.name, m.email, m.dob, m.contact_no, m.shifts, m.pricing_id, m.status, m.photo, p.name as package_name, m.user_id
+                FROM members m
+                JOIN pricing p ON m.pricing_id = p.id";
+
+            $query = "$basicQuery $whereAllSql $orderBySql LIMIT $start, $length";
             
-            $members = DB::select("$basicQuery $whereAllSql $orderBySql LIMIT $start, $length");
+            $members = DB::select($query);
 
             $count = 1;
             $result = array();
@@ -239,20 +247,29 @@ class MemberController extends Controller
                 if ($member->shifts == \App\Enums\Shifts::Morning) 
                 {
                     $shiftHtml = '<a id="shifts" href="' . route('member.toggle', $member->id) . '" class="badge p-2 rounded" style="background-color: #ceefd1;color:#53b15b">Morning</a>';
-                } elseif ($member->shifts == \App\Enums\Shifts::Day) 
+                } 
+                elseif ($member->shifts == \App\Enums\Shifts::Day) 
                 {
                     $shiftHtml = '<a id="shifts" href="' . route('member.toggle', $member->id) . '" class="badge p-2 rounded" style="background-color: #e1c32c;color:#3685d3">Day</a>';
-                } else 
+                } 
+                else 
                 {
                     $shiftHtml = '<a id="shifts" href="' . route('member.toggle', $member->id) . '" class="badge p-2 rounded" style="background-color: #303030;color:#dedcd9">Evening</a>';
                 }
 
                 $row['shifts'] = $shiftHtml;
 
+                $photoHtml = $member->photo == null ?
+                '<img src="/images/defaultimage.jpg" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">' :
+                '<img src="/images/members/' . $member->photo . '" style="width:65px; height:65px; float:left; border-radius:50%; margin-right:10px;">';
+                $row['photo'] = $photoHtml;
+
                 // Generate the edit and delete links
                 $editUrl = route('member.edit', $member->id);
                 $deleteUrl = '#'; // Assuming you will handle delete via modal and not through URL
                 $deleteDataAttributes = "data-toggle='modal' data-target='#deleteModal' data-member-id='{$member->id}' data-member-name='{$member->name}'";
+
+                $row['package_name'] = $member->package_name;
 
                 $row['status'] = "
                     <a href='{$editUrl}' title='Edit Member'>
@@ -268,9 +285,9 @@ class MemberController extends Controller
                 $count++;
             }
 
-            $recordsFilteredQuery = "SELECT count(id) AS records_filtered FROM ($basicQuery) a $whereAllSql";
-		    $recordsFilteredResult =  DB::select($recordsFilteredQuery);
-            
+            $recordsFilteredQuery = "SELECT count(*) AS records_filtered FROM ($basicQuery $whereAllSql) a";
+            $recordsFilteredResult = DB::select($recordsFilteredQuery);
+
             $recordsFiltered = $recordsFilteredResult[0]->records_filtered;
 
             $response = array(
@@ -279,7 +296,7 @@ class MemberController extends Controller
                 'recordsFiltered' => $recordsFiltered,
                 'data'            => $result,
             );
-      
+
             print(json_encode($response));
             exit();
         }

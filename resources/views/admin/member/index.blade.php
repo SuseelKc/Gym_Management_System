@@ -34,6 +34,7 @@
                                             <th>S.N.</th>
                                             <th>ID No.</th>
                                             <th>Name</th>  
+                                            <th>Image</th>  
                                             <th>Email</th>
                                             <th>DOB</th>
                                             <th>Contact</th>
@@ -50,7 +51,8 @@
                                         <tr>
                                             <th>S.N.</th>
                                             <th>ID No.</th>
-                                            <th>Name</th>  
+                                            <th>Name</th> 
+                                            <th>Image</th>  
                                             <th>Email</th>
                                             <th>DOB</th>
                                             <th>Contact</th>
@@ -157,11 +159,12 @@
                 {data: "sn"},
 				{data: "serial_no"},
 				{data: "name"},
+                {data: "photo"},
 				{data: "email"},
 				{data: "dob"},
                 {data: "contact_no"},
 				{data: "shifts"},
-                {data: "pricing_id"},
+                {data: "package_name"},
                 {data: "status"},
 			],
 			// deferRender: true,
@@ -175,7 +178,7 @@
                 this.api().columns().every(function() 
                 {
                     var header          = $(this.header()).text();
-                    var negletColumns   = ['Action','S.N.'];
+                    var negletColumns   = ['Action','S.N.','Image'];
 
                     if ($.inArray(header, negletColumns) < 0) 
                     {
