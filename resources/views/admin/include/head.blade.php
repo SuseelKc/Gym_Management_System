@@ -24,5 +24,10 @@
     {{-- <link rel="stylesheet" href="{{ asset('css/style.css') }}"> --}}
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> --}}
     <script src="{{ asset('admin/dist/jquery.js')}}"></script>
+
+    <!-- jQuery -->
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
+    <!-- Include Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="{{asset('css/style.css')}}">
 </head>

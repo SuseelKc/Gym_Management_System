@@ -2,6 +2,13 @@
 @section('title','Members')
 @section('content')
 
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> -->
+
+<link href="{{ asset('admin/Toastr/toastr.css') }}" rel="stylesheet">
+<script src="{{ asset('admin/Toastr/toastr.js') }}"></script>
+
 <link href="{{ asset('admin/DataTables/datatables.min.css') }}" rel="stylesheet">
 <script src="{{ asset('admin/DataTables/datatables.min.js') }}"></script>
 
@@ -24,8 +31,9 @@
                 <div class="col-12">
                     <div class="card">
                             <div class="">                             
-                                <a href="{{route('member.create')}}"
-                                    class="btn btn-primary px-4 m-2 float-right">Add</a>  
+                                <!-- <a href="{{route('member.create')}}"
+                                    class="btn btn-primary px-4 m-2 float-right">Add</a>   -->
+                                    <button class="btn btn-primary px-4 m-2 float-right" data-toggle="modal" data-target="#createMemberModal">Add</button>
                             </div>
                             <div class="card-body table-responsive p-2">
                                 <table class="table table-hover table-bordered display compact" id="membership"> 
@@ -93,6 +101,18 @@
   </div>
 </div>
 <!--  -->
+
+<!-- Modal for Creating Member -->
+<div class="modal fade" id="createMemberModal" tabindex="-1" role="dialog modal-xl" aria-labelledby="createMemberModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div id="createMemberModalContent">
+                <!-- Modal content will be loaded here dynamically -->
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
         // Update the modal input field when the anchor tag is clicked
@@ -124,75 +144,116 @@
         }
     });
 
-    $('#membership').dataTable({
-			dom: 'lrtip',
-			destroy: true,
-			processing: true,
-			language: {
-				processing: '<span style="color:black;">Processing...</span>'
-			},
-			serverSide: true,
-			ajax: {
-				url: "/allmembers",
-				type: "POST",
-				data: function(postData) {
-					postData._token = $('meta[name="csrf-token"]').attr('content');
-				}
-			},
-			scrollY: "45vh",
-			scrollX: true,
-			// 	dom: '<<"pull-left"l>f>rt<"datatable_btns pull-left"B><"pull-right"ip>',
-			// 	buttons: [{
-			// 		extend: "excel",
-			// 		className: "btn-sm",
-			// 		text: '<i class="fa fa-file-excel-o"></i>&nbsp;Download',
-			// 		filename: 'Classic House Owner',
-			// 		title: 'House Owner',
-			// 	}, ],
-			// scrollCollapse: true,
-			lengthMenu: [
-				[10, 25, 50, -1],
-				['10', '25', '50', 'All']
-			],
-			columns: 
-			[
-                {data: "sn"},
-				{data: "serial_no"},
-				{data: "name"},
-                {data: "photo"},
-				{data: "email"},
-				{data: "dob"},
-                {data: "contact_no"},
-				{data: "shifts"},
-                {data: "package_name"},
-                {data: "status"},
-			],
-			// deferRender: true,
-			// columnDefs: [{
-			// 		"orderable": false,
-			// 		"targets": [0,5]
-			// 	}
-			// ],
-            initComplete: function() 
+    var membershipData = $('#membership').DataTable({
+        dom: 'lrtip',
+        destroy: true,
+        processing: true,
+        language: {
+            processing: '<span style="color:black;">Processing...</span>'
+        },
+        serverSide: true,
+        
+        ajax: {
+            url: "/allmembers",
+            type: "POST",
+            data: function(postData) {
+                postData._token = $('meta[name="csrf-token"]').attr('content');
+            }
+        },
+        scrollY: "45vh",
+        scrollX: true,
+        // 	dom: '<<"pull-left"l>f>rt<"datatable_btns pull-left"B><"pull-right"ip>',
+        // 	buttons: [{
+        // 		extend: "excel",
+        // 		className: "btn-sm",
+        // 		text: '<i class="fa fa-file-excel-o"></i>&nbsp;Download',
+        // 		filename: 'Classic House Owner',
+        // 		title: 'House Owner',
+        // 	}, ],
+        // scrollCollapse: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            ['10', '25', '50', 'All']
+        ],
+        columns: 
+        [
+            {data: "sn"},
+            {data: "serial_no"},
+            {data: "name"},
+            {data: "photo"},
+            {data: "email"},
+            {data: "dob"},
+            {data: "contact_no"},
+            {data: "shifts"},
+            {data: "package_name"},
+            {data: "status"},
+        ],
+        // deferRender: true,
+        // columnDefs: [{
+        // 		"orderable": false,
+        // 		"targets": [0,5]
+        // 	}
+        // ],
+        initComplete: function() 
+        {
+            this.api().columns().every(function() 
             {
-                this.api().columns().every(function() 
-                {
-                    var header          = $(this.header()).text();
-                    var negletColumns   = ['Action','S.N.','Image'];
+                var header          = $(this.header()).text();
+                var negletColumns   = ['Action','S.N.','Image'];
 
-                    if ($.inArray(header, negletColumns) < 0) 
-                    {
-                        var column = this;
-                        var select = $('<input style="width: 100%; padding: 5px 2px; margin: 4px 0; box-sizing: border-box;" class="input-sm" placeholder="' + header + '" title="Press Enter Key To Search" />').appendTo($(column.footer()).empty()).on('keyup', function(e) {
-                            if (e.keyCode == 13 || (e.keyCode == 8 && "" == val)) {
-                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                                column.search(val, true, true).draw();
-                            }
-                        });
+                if ($.inArray(header, negletColumns) < 0) 
+                {
+                    var column = this;
+                    var select = $('<input style="width: 100%; padding: 5px 2px; margin: 4px 0; box-sizing: border-box;" class="input-sm" placeholder="' + header + '" title="Press Enter Key To Search" />').appendTo($(column.footer()).empty()).on('keyup', function(e) {
+                        if (e.keyCode == 13 || (e.keyCode == 8 && "" == val)) {
+                            var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                            column.search(val, true, true).draw();
+                        }
+                    });
+                }
+            });
+        }
+    }); 
+    
+    // Load the modal content and attach event listener after the content is loaded
+    $('#createMemberModal').on('shown.bs.modal', function () {
+        $('#createMemberModalContent').load('{{ route("member.displayCreateModal") }}', function() {
+            $('#saveMemberForm').on('submit', function(e) {
+                e.preventDefault();
+
+                var formData = new FormData(this);
+   
+                $.ajax({
+                    url: '{{ route("member.save") }}',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json',  
+                    success: function (response) {
+                        if (response.success) 
+                        {
+                            toastr.success(response.success);
+                            $('#createMemberModal').modal('hide').on('hidden.bs.modal', function () {
+                                membershipData.ajax.reload();  
+                                $('.modal-backdrop').remove();
+                            });
+                        }
+                    },
+                    error: function (xhr) {
+                        if (xhr.status === 422) {
+                            var errors = xhr.responseJSON.errors;
+                            $.each(errors, function (key, value) {
+                                toastr.error(value[0]);
+                            });
+                        } else {
+                            toastr.error('An error occurred while saving the member.');
+                        }
                     }
                 });
-            }
-		});  
+            });
+        });
+    });
 
 </script>
 

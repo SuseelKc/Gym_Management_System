@@ -17,3 +17,5 @@ Route::patch('/createaccount/member/{id}',[MemberController::class,'createAccoun
 
 // server side data fetching
 Route::post('/allmembers',[MemberController::class,'listMember'])->name('member.list');
+Route::get('/member/create', [MemberController::class, 'displayCreateModal'])->name('member.displayCreateModal');
+Route::post('/members/save',[MemberController::class,'saveMember'])->name('member.save');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use Exception;
 use App\Models\User;
 use App\Models\Member;
+use App\Models\Pricing;
 use Illuminate\Http\Request;
 use App\Services\UserService;
 use App\Services\LedgerService;
@@ -16,6 +17,8 @@ use App\Repositories\LedgerRepository;
 use App\Repositories\MemberRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class MemberController extends Controller
 {
@@ -230,7 +233,16 @@ class MemberController extends Controller
                 FROM members m
                 JOIN pricing p ON m.pricing_id = p.id";
 
-            $query = "$basicQuery $whereAllSql $orderBySql LIMIT $start, $length";
+            if ($length != -1) 
+            {
+                $limitSql = " LIMIT $start, $length";
+            } 
+            else 
+            {
+                $limitSql = "";
+            }
+
+            $query = "$basicQuery $whereAllSql $orderBySql $limitSql";
             
             $members = DB::select($query);
 
@@ -301,6 +313,44 @@ class MemberController extends Controller
             exit();
         }
         catch (Exception $e)
+        {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function displayCreateModal()
+    {
+        $gym_id=auth()->id();
+        $gym=User::FindOrFail($gym_id);
+        $pricing = $this->pricingService->all();  
+
+        return view('admin.member.create_member_modal', compact('pricing', 'gym'));
+    }
+
+    public function saveMember(Request $request)
+    {
+        try
+        {   
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'dob' => 'required|date',
+                'address' => 'required|string|max:255',
+                'contact_no' => 'required|max:10',
+                'email' => 'required|email|max:255',
+                'pricing' => 'required',
+            ]);
+
+            if ($validator->fails()) 
+            {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+
+           $member= new Member();        
+           $member= $this->memberService->add($member,$request);
+           
+           return response()->json(['success' => 'Member saved successfully.'], 200);
+        }
+        catch(Exception $e)
         {
             return response()->json(['error' => $e->getMessage()], 500);
         }
