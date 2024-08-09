@@ -27,9 +27,7 @@
                 <div class="col-12">
                     <div class="card">
                             <div class="">                             
-                                <!-- <a href="{{route('member.create')}}"
-                                    class="btn btn-primary px-4 m-2 float-right">Add</a>   -->
-                                    <button class="btn btn-primary px-4 m-2 float-right" data-toggle="modal" data-target="#createMemberModal">Add</button>
+                                    <button class="btn btn-primary px-4 m-2 float-right" id="add-member-btn">Add</button>
                             </div>
                             <div class="card-body table-responsive p-2">
                                 <table class="table table-hover table-bordered display compact" id="membership"> 
@@ -103,7 +101,7 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div id="createMemberModalContent">
-                <!-- Modal content will be loaded here dynamically -->
+            <!-- load the body -->
             </div>
         </div>
     </div>
@@ -293,15 +291,18 @@
             });
         }
     }); 
-    
-    // Load the modal content and attach event listener after the content is loaded
-    $('#createMemberModal').on('shown.bs.modal', function () {
+
+    $(document).on('click', '#add-member-btn', function () {
+
+        $('#createMemberModal').modal('show');
+
         $('#createMemberModalContent').load('{{ route("member.displayCreateModal") }}', function() {
+            
             $('#saveMemberForm').on('submit', function(e) {
                 e.preventDefault();
 
                 var formData = new FormData(this);
-   
+    
                 $.ajax({
                     url: '{{ route("member.save") }}',
                     type: 'POST',
@@ -310,8 +311,7 @@
                     processData: false,
                     dataType: 'json',  
                     success: function (response) {
-                        if (response.success) 
-                        {
+                        if (response.success) {
                             toastr.success(response.success);
                             $('#createMemberModal').modal('hide').on('hidden.bs.modal', function () {
                                 membershipData.ajax.reload();  
@@ -417,5 +417,4 @@
 
 </script>
 
-<!--  -->
 @endsection
