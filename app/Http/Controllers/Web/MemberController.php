@@ -211,7 +211,7 @@ class MemberController extends Controller
             }
 
             $userId = Auth::id();
-            $whereAllSql = "WHERE m.status='active' AND m.user_id = $userId";
+            $whereAllSql = "WHERE m.status='active' AND m.user_id = $userId ";
 
             foreach ($columns as $key => $value)
             {
@@ -284,7 +284,7 @@ class MemberController extends Controller
                 $row['package_name'] = $member->package_name;
 
                 $row['status'] = "
-                    <a href='{$editUrl}' title='Edit Member'>
+                    <a href='#' class='edit-member-btn' data-id='$member->id' title='Edit Member'>
                         <i class='fas fa-edit fa-lg'></i>
                     </a>
                     <a type='button' {$deleteDataAttributes} href='{$deleteUrl}' title='Delete Member'>
@@ -349,6 +349,52 @@ class MemberController extends Controller
            $member= $this->memberService->add($member,$request);
            
            return response()->json(['success' => 'Member saved successfully.'], 200);
+        }
+        catch(Exception $e)
+        {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getDataForMemberEdit($id)
+    {
+        try
+        {       
+            $member=Member::FindOrFail($id);
+            $userName = $member->user->name;
+            $pricing = $this->pricingService->all(); 
+  
+            return response()->json(['success' => true, 'member' => $member, 'pricing' => $pricing, 'userName' => $userName], 200);      
+        }
+        catch(Exception $e)
+        {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function updateMember(Request $request){
+        try
+        { 
+            $validator = Validator::make($request->all(), [
+                'member_id' => 'required',
+                'name' => 'required|string|max:255',
+                'dob' => 'required|date',
+                'address' => 'required|string|max:255',
+                'contact_no' => 'required|max:10',
+                'email' => 'required|email|max:255',
+                // 'pricing' => 'required',
+            ]);
+
+            if ($validator->fails()) 
+            {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+
+            $id = $request->member_id;
+            $member=Member::FindOrFail($id);
+            $member = $this->memberService->update($member, $id, $request);
+         
+            return response()->json(['success' => 'Member saved successfully.'], 200);
         }
         catch(Exception $e)
         {

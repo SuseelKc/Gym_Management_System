@@ -19,3 +19,5 @@ Route::patch('/createaccount/member/{id}',[MemberController::class,'createAccoun
 Route::post('/allmembers',[MemberController::class,'listMember'])->name('member.list');
 Route::get('/member/create', [MemberController::class, 'displayCreateModal'])->name('member.displayCreateModal');
 Route::post('/members/save',[MemberController::class,'saveMember'])->name('member.save');
+Route::get('/members/{id}/edit', [MemberController::class, 'getDataForMemberEdit'])->name('member.getDataForEdit');
+Route::post('/members/update', [MemberController::class, 'updateMember'])->name('member.updateMember');

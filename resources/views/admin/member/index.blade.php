@@ -2,10 +2,6 @@
 @section('title','Members')
 @section('content')
 
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> -->
-
 <link href="{{ asset('admin/Toastr/toastr.css') }}" rel="stylesheet">
 <script src="{{ asset('admin/Toastr/toastr.js') }}"></script>
 
@@ -108,6 +104,89 @@
         <div class="modal-content">
             <div id="createMemberModalContent">
                 <!-- Modal content will be loaded here dynamically -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Editing Member -->
+<div class="modal fade" id="editMemberModal" tabindex="-1" role="dialog modal-xl" aria-labelledby="editMemberModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div id="editMemberModalContent">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editMemberModalLabel">Edit Member</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form  id="editMemberForm"> 
+                        @csrf
+                        <div class="card-body">
+                            <div class="row">
+                                <input type="hidden" name="member_id" id="member_id" value="">
+                                <!-- name -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name">Name</label>
+                                        <input type="text" class="form-control" id="name" placeholder="Enter Name Here" name="name" >
+                                    </div>
+                                </div>
+                                <!--  -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="gym_name">Gym Name</label>
+                                        <input type="text" class="form-control" id="gym_name" placeholder="Enter Name Here" name="gym_name" value="" readonly>
+                                    </div>
+                                </div>
+                                <!--  -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="dob">Date Of Birth</label>
+                                        <input type="date" class="form-control" id="dob"  name="dob" value="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="address">Address</label>
+                                        <input type="text" class="form-control" id="address" placeholder="Enter Your Address" name="address" >
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="contactno">Contact No.</label>
+                                        <input type="number" class="form-control" id="contact_no" placeholder="Enter Your Contact Number" name="contact_no" >
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="text" class="form-control" id="email" placeholder="Enter Your Email" name="email" >
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="pricing">Package</label><br>
+                                        <select id="pricing" name="pricing">
+                                            <option value="">Not Selected</option>
+                                           
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="photo">Upload Image</label>
+                                        <input type="file" class="form-control" id="photo" name="photo">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary px-3">Update</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -252,6 +331,87 @@
                     }
                 });
             });
+        });
+    });
+
+    $(document).on('click', '.edit-member-btn', function(e) 
+    {
+        e.preventDefault();
+
+        var memberId = $(this).data('id'); 
+
+        $.ajax({
+            url: '/members/' + memberId + '/edit',
+            type: 'GET',
+            success: function(response) 
+            {
+                if (response.success) 
+                {
+                    $('#editMemberForm #member_id').val(response.member.id);
+                    $('#editMemberForm #name').val(response.member.name);
+                    $('#editMemberForm #gym_name').val(response.userName);
+                    $('#editMemberForm #dob').val(response.member.dob);
+                    $('#editMemberForm #address').val(response.member.address);
+                    $('#editMemberForm #contact_no').val(response.member.contact_no);
+                    $('#editMemberForm #email').val(response.member.email);
+                    
+                    $('#editMemberForm #pricing').empty();
+
+                    // Add a default "Not Selected" option
+                    $('#editMemberForm #pricing').append('<option value="">Not Selected</option>');
+
+                    Object.values(response.pricing).forEach(function(packageItem) 
+                    {
+                        const selected = packageItem.id === response.member.pricing_id ? 'selected' : '';
+                        $('#editMemberForm #pricing').append(
+                            `<option value="${packageItem.id}" ${selected}>${packageItem.name}</option>`
+                        );
+                    });
+
+                    $('#editMemberModal').modal('show');
+                }
+            },
+            error: function(xhr) {
+                toastr.error('Failed to fetch member details.');
+            }
+        });
+    });
+
+    // Handle the form submission for editing member
+    $('#editMemberForm').on('submit', function(e) 
+    {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: '/members/update', 
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) 
+            {
+                if (response.success) 
+                {
+                    toastr.success(response.success);
+                    $('#editMemberModal').modal('hide');
+                    membershipData.ajax.reload();  
+                }
+            },
+            error: function(xhr) 
+            {
+                if (xhr.status === 422) {
+                    var errors = xhr.responseJSON.errors;
+                    $.each(errors, function (key, value) 
+                    {
+                        toastr.error(value[0]);
+                    });
+                } else 
+                {
+                    toastr.error('An error occurred while updating the member.');
+                }
+            }
         });
     });
 
