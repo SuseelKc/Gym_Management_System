@@ -21,3 +21,4 @@ Route::get('/member/create', [MemberController::class, 'displayCreateModal'])->n
 Route::post('/members/save',[MemberController::class,'saveMember'])->name('member.save');
 Route::get('/members/{id}/edit', [MemberController::class, 'getDataForMemberEdit'])->name('member.getDataForEdit');
 Route::post('/members/update', [MemberController::class, 'updateMember'])->name('member.updateMember');
+Route::get('/deletemembers/{id}',[MemberController::class,'deleteMember'])->name('member.deletemember');

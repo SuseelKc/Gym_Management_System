@@ -278,16 +278,14 @@ class MemberController extends Controller
 
                 // Generate the edit and delete links
                 $editUrl = route('member.edit', $member->id);
-                $deleteUrl = '#'; // Assuming you will handle delete via modal and not through URL
-                $deleteDataAttributes = "data-toggle='modal' data-target='#deleteModal' data-member-id='{$member->id}' data-member-name='{$member->name}'";
-
+           
                 $row['package_name'] = $member->package_name;
 
                 $row['status'] = "
                     <a href='#' class='edit-member-btn' data-id='$member->id' title='Edit Member'>
                         <i class='fas fa-edit fa-lg'></i>
                     </a>
-                    <a type='button' {$deleteDataAttributes} href='{$deleteUrl}' title='Delete Member'>
+                    <a href='#' class='delete-member-btn' data-id='$member->id' data-name='$member->name' title='Delete Member'>
                         <i class='fas fa-times-circle fa-lg' style='color: red;'></i>
                     </a>
                 ";
@@ -395,6 +393,22 @@ class MemberController extends Controller
             $member = $this->memberService->update($member, $id, $request);
          
             return response()->json(['success' => 'Member saved successfully.'], 200);
+        }
+        catch(Exception $e)
+        {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function deleteMember($id){
+        try
+        { 
+            $member = Member::findOrFail($id);
+
+            $member->status = 'deleted';
+            $member->save();
+            
+            return response()->json(['success' => 'Member Deleted Successfully.'], 200);
         }
         catch(Exception $e)
         {

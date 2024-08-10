@@ -72,27 +72,27 @@
     </section>
 </div>
 <!--  -->
-<!-- Modal -->
+<!-- Modal for Delete Confirmation -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-    <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <input type="hidden" id="memberIdToDelete">
-                 <p id="memberNameToDelete"></p>
+                <p id="memberNameToDelete"></p>
                 <!-- ... other modal content ... -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-danger" onclick="deleteMember()">Delete</button>
             </div>
+        </div>
     </div>
-  </div>
 </div>
 <!--  -->
 
@@ -191,30 +191,6 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-        // Update the modal input field when the anchor tag is clicked
-        $('a[data-target="#deleteModal"]').on('click', function () {
-            var memberId = $(this).data('member-id');
-            var memberName = $(this).data('member-name');
-
-            $('#memberIdToDelete').val(memberId);
-            $('#memberNameToDelete').text('Are you sure you want to delete ' + memberName + '?');
-        });
-
-        // Function to handle the delete button click
-        window.deleteMember = function () {
-            // Get the ID from the input field
-            var memberId = $('#memberIdToDelete').val();
-
-            // Construct the delete route with the memberId
-            var deleteRoute = '{{ route("member.delete", ":id") }}';
-            deleteRoute = deleteRoute.replace(':id', memberId);
-
-            // Perform the delete operation by navigating to the delete route
-            window.location.href = deleteRoute;
-        };
-    });
-
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -414,6 +390,36 @@
             }
         });
     });
+
+    $(document).on('click', '.delete-member-btn', function (e) {
+        e.preventDefault();
+
+        var memberId = $(this).data('id');
+        var memberName = $(this).data('name');
+       
+        $('#deleteModal').modal('show');
+        $('#memberIdToDelete').val(memberId);
+        $('#memberNameToDelete').text('Are you sure you want to delete ' + memberName + '?');
+    });
+
+    function deleteMember() {
+        var memberId = $('#memberIdToDelete').val();
+      
+        $.ajax({
+            url: '/deletemembers/' + memberId, 
+            type: 'GET', 
+            success: function(response) {
+                if (response.success) {
+                    $('#deleteModal').modal('hide');
+                    toastr.success(response.success);
+                    membershipData.ajax.reload();
+                }
+            },
+            error: function(xhr) {
+                toastr.error('An error occurred while deleting the member.');
+            }
+        });
+    };  
 
 </script>
 
