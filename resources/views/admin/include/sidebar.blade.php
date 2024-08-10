@@ -70,7 +70,7 @@
                 {{-- Staff --}}
                 <li class="nav-item">
                     <a href="
-                    {{ route('staffs.index') }}
+                    {{ route('staffs.staffindex') }}
                     "
                         class="nav-link {{ request()->is('staffs*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user-friends  m-1 p-1"></i>

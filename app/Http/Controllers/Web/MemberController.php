@@ -370,7 +370,8 @@ class MemberController extends Controller
         }
     }
 
-    public function updateMember(Request $request){
+    public function updateMember(Request $request)
+    {
         try
         { 
             $validator = Validator::make($request->all(), [
@@ -400,7 +401,8 @@ class MemberController extends Controller
         }
     }
 
-    public function deleteMember($id){
+    public function deleteMember($id)
+    {
         try
         { 
             $member = Member::findOrFail($id);

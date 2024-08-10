@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('contact_no');
             $table->string('position');
             $table->string('email')->nullable();
+            $table->enum('status', ['active', 'inactive', 'deleted'])->default('active');
             $table->timestamps();
         });
     }
