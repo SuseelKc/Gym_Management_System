@@ -274,9 +274,12 @@
 
         $('#createMemberModalContent').load('{{ route("member.displayCreateModal") }}', function() {
             
-            $('#saveMemberForm').on('submit', function(e) {
+            $('#saveMemberForm').on('submit', function(e) 
+            {
                 e.preventDefault();
 
+                $('#submitForm').prop('disabled', true);
+              
                 var formData = new FormData(this);
     
                 $.ajax({
@@ -289,21 +292,31 @@
                     success: function (response) {
                         if (response.success) {
                             toastr.success(response.success);
-                            $('#createMemberModal').modal('hide').on('hidden.bs.modal', function () {
+                            $('#createMemberModal').modal('hide').on('hidden.bs.modal', function () 
+                            {
                                 membershipData.ajax.reload();  
                                 $('.modal-backdrop').remove();
+
+                                $('#submitForm').prop('disabled', false);
                             });
                         }
                     },
-                    error: function (xhr) {
-                        if (xhr.status === 422) {
+                    error: function (xhr) 
+                    {
+                        if (xhr.status === 422) 
+                        {
                             var errors = xhr.responseJSON.errors;
-                            $.each(errors, function (key, value) {
+                            $.each(errors, function (key, value) 
+                            {
                                 toastr.error(value[0]);
                             });
-                        } else {
+                        } 
+                        else 
+                        {
                             toastr.error('An error occurred while saving the member.');
                         }
+
+                        $('#submitForm').prop('disabled', false);
                     }
                 });
             });

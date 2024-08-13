@@ -137,7 +137,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary px-3">Add</button>
+                            <button type="submit" class="btn btn-primary px-3" id="submitStaffButton">Add</button>
                         </div>
                     </form>
                 </div>
@@ -310,8 +310,11 @@
 
         $('#addStaffModal').modal('show');
         
-        $('#addStaffForm').on('submit', function(e) {
+        $('#addStaffForm').on('submit', function(e) 
+        {
             e.preventDefault();
+
+            $('#submitStaffButton').prop('disabled', true);
 
             var formData = new FormData(this);
 
@@ -327,24 +330,30 @@
                     if (response.success) 
                     {
                         toastr.success(response.success);
-                        $('#addStaffModal').modal('hide')
-                        staffTable.ajax.reload();  
+                        $('#addStaffModal').modal('hide').on('hidden.bs.modal', function () 
+                        {
+                            $('#submitStaffButton').prop('disabled', false);
+                            staffTable.ajax.reload();  
+                        });
                     }
                 },
-                error: function (xhr) {
+                error: function (xhr) 
+                {
                     if (xhr.status === 422) 
                     {
                         var errors = xhr.responseJSON.errors;
                         $.each(errors, function (key, value) {
                             toastr.error(value[0]);
                         });
-                    } else 
+                        $('#submitStaffButton').prop('disabled', false);
+                    } 
+                    else 
                     {
                         toastr.error('An error occurred while adding the staff.');
+                        $('#submitStaffButton').prop('disabled', false);
                     }
                 }
             });
-            
         });
     });
 
