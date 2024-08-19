@@ -11,6 +11,10 @@ use App\Services\MemberService;
 use App\Http\Controllers\Controller;
 use App\Repositories\LedgerRepository;
 use App\Repositories\MemberRepository;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class LedgerController extends Controller
 {
@@ -24,10 +28,10 @@ class LedgerController extends Controller
        
     }
     public function index(){
-        try{
-            $ledger=$this->ledgerService->all(); 
+        try
+        {
             $members= $this->memberService->all()->ToArray();                   
-            return view('admin.ledger.index',compact('ledger','members'));
+            return view('admin.ledger.index',compact('members'));
         }
         catch(Exception $e){
 
@@ -73,6 +77,68 @@ class LedgerController extends Controller
         }
     }
     
-   
+    public function ledger()
+    {
+        try
+        {  
+            $condition = "";
 
+            if(!empty(request()->input('employeeId')))
+            {
+                $employeeId = request()->input('employeeId');
+                $condition = " AND member_id = '$employeeId'";
+            }
+            
+            
+            $gym_id = Auth::id();
+
+            $basicQuery = " SELECT *, m.serial_no, m.name
+                FROM ledger 
+                JOIN members m on m.id=ledger.member_id
+                WHERE ledger.gym_id = $gym_id $condition ORDER BY ledger.id desc";
+
+            $ledger = DB::select($basicQuery);
+        
+            $count = 1;
+            $result = array();
+            
+            foreach ($ledger as $led) 
+            {
+                $row = (array) $led;
+
+                $row['sn'] = $count;
+
+                $result[] = $row;
+                
+                $count++;
+            }
+
+            return response()->json([
+                "draw" => intval(request()->input('draw')),
+                "recordsTotal" => count($ledger),
+                "recordsFiltered" => count($ledger),
+                "data" => $result
+            ]);
+        }
+        catch (Exception $e)
+        {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getEmployees(Request $request)
+    {
+        $gym_id = Auth::id();
+        $searchTerm = $request->input('searchTerm');
+    
+        $employees = Member::where('user_id', $gym_id)
+                            ->where('status', 'active')
+                            ->where(function($query) use ($searchTerm) {
+                                $query->where('name', 'LIKE', '%' . $searchTerm . '%')
+                                      ->orWhere('serial_no', 'LIKE', '%' . $searchTerm . '%');
+                            })
+                            ->get(['id', 'name', 'serial_no']); 
+    
+        return response()->json($employees);
+    }
 }

@@ -1,7 +1,35 @@
 @extends('admin.admin')
 @section('title', 'Payment Ledger')
 @section('content')
-{{--  --}}
+
+<link href="{{ asset('admin/Toastr/toastr.css') }}" rel="stylesheet">
+<script src="{{ asset('admin/Toastr/toastr.js') }}"></script>
+
+<link href="{{ asset('admin/DataTables/datatables.min.css') }}" rel="stylesheet">
+<script src="{{ asset('admin/DataTables/datatables.min.js') }}"></script>
+
+<link href="{{ asset('admin/Select2/select2.min.css') }}" rel="stylesheet">
+<script src="{{ asset('admin/Select2/select2.min.js') }}"></script>
+
+<style>
+    .select2-container--default .select2-selection--single {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    height: 38px;
+    line-height: 36px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        padding-left: 10px;
+        color: #495057;
+        font-size: 14px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 36px;
+        right: 10px;
+    }
+</style>
 <div class="content">
     <section class="content-header">
         <div class="container-fluid">
@@ -23,22 +51,20 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="ml-2 mt-3 mb-3">
-                                        <label>Members</label>
-                                        <select name="members" id="members">
-                                            <option href="{{route('ledger.index')}}" value="">Select Memeber</option>
-                                            @foreach($members as $singleMember)
-                                                <option value="{{ $singleMember['id'] }}">{{ $singleMember['name'] }}</option>
-                                            @endforeach
-                                        </select>
-                                        <a href="#" class="btn btn-primary" id="searchBtn" style="padding: 4px 10px;"><i class='fas fa-search'></i></a>
-
+                                        <label for="members">Members</label>
+                                        <div class="form-group d-flex">
+                                            <select name="members" id="members" class="form-control">
+                                            </select>
+                                            <a href="#" class="btn btn-primary ml-2" id="searchBtn">
+                                                <i class='fas fa-search'></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            
                             </div>
 
                             <div class="card-body table-responsive p-2">
-                                <table class="datatable table">
+                            <table class="table table-hover table-bordered display compact" id="paymentLedgerTable">
                                     <thead>
                                         <tr>
                                             <th>S.No</th>
@@ -48,26 +74,9 @@
                                             <th>Debit</th>
                                             <th>Credit</th>
                                             <th>Remarks</th>
-                                            
-                                        
-                                            
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($ledger as $ledger)
-                                        <tr>
-                                            <td>{{$loop->iteration}}</td>
-                                            <td>{{$ledger->date}}</td>
-                                            <td>{{$ledger->member->serial_no}}</td>
-                                            <td>{{$ledger->member->name}}</td>
-                                            <td>{{$ledger->debit}}</td>
-                                            <td>{{$ledger->credit}}</td>
-                                            <td>{{$ledger->remarks}}</td>
-                                            
-                                        
-                                    
-                                        </tr>
-                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -79,22 +88,106 @@
     </section>
 </div>
 
-<!--  -->
-    <script>
-        $(document).ready(function() {
-            $('#members').on('change', function(){
-                var memberId = $(this).val();
-                console.log("Selected member ID:", memberId); // Debugging line
-                
-                // Construct the URL dynamically with the selected member's ID
-                var url = "{{ route('ledger.search', ':id') }}";
-                url = url.replace(':id', memberId);
-                console.log("Dynamic URL:", url); // Debugging line
-                
-                // Update the href attribute of the search button with the constructed URL
-                $('#searchBtn').attr('href', url);
-                console.log("Href updated:", $('#searchBtn').attr('href')); // Debugging line
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    var paymentLedgerTable = $('#paymentLedgerTable').DataTable({
+        destroy: true,
+        processing: true,
+        language: {
+            processing: '<span style="color:black;">Processing...</span>'
+        },
+        serverSide: false,
+        
+        ajax: {
+            url: "/filterLedger",
+            type: "POST",
+            data: function(postData) 
+            {
+                postData._token = $('meta[name="csrf-token"]').attr('content');
+            }
+        },
+        scrollY: "55vh",
+        scrollX: true,
+    
+        lengthMenu: [
+            [10, 25, 50, -1],
+            ['10', '25', '50', 'All']
+        ],
+        columns: 
+        [
+            {data: "sn"},
+            {data: "date"},
+            {data: "serial_no"},
+            {data: "name"},
+            {data: "debit"},
+            {data: "credit"},
+            {data: "remarks"},
+        ],
+    }); 
+
+    $('#members').select2({
+        placeholder: "Select Member",
+        allowClear: true,
+        width: '100%',
+        ajax: {
+            url: '/get-employees',
+            type: 'POST',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    searchTerm: params.term, 
+                    _token: $('meta[name="csrf-token"]').attr('content') 
+                };
+            },
+            processResults: function(data) {
+                return {
+                    results: data.map(function(employee) {
+                        return {
+                            id: employee.id,
+                            text: `${employee.name} [${employee.serial_no}]`
+                        };
+                    })
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 1
+    });
+
+    $(document).on('click', '#searchBtn', function(e) {
+        e.preventDefault();
+
+        var employeeId = $('#members').val(); 
+
+        if (employeeId) {
+            $.ajax({
+                url: '/filterLedger',
+                type: 'POST',
+                data: {
+                    employeeId: employeeId,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) 
+                {
+                    paymentLedgerTable.clear().rows.add(response.data).draw();
+                },
+                error: function(xhr) 
+                {
+                    toastr.error('Failed to filter ledger data.');
+                }
             });
-        });
-    </script>
+        } 
+        else 
+        {
+            toastr.warning('Please select a member before searching.');
+            paymentLedgerTable.ajax.reload();  
+        }
+    });
+</script>
 @endsection
