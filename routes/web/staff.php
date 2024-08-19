@@ -14,7 +14,7 @@ Route::patch('/staffs/update/{id}',[StaffController::class,'update'])->name('sta
 Route::get('/staffs/{id}',[StaffController::class,'delete'])->name('staffs.delete');
 
 Route::get('/staffs',[StaffController::class,'staffIndex'])->name('staffs.staffindex');
-Route::post('/allStaff',[StaffController::class,'listStaff'])->name('staffs.list');
+Route::post('/allStaff',[StaffController::class,'listStaff'])->name('staffs.list');//fetches data to the table
 Route::post('/staff/save',[StaffController::class,'saveStaff'])->name('staffs.save');
 Route::get('/staff/{id}/edit', [StaffController::class, 'getDataForStaffEdit'])->name('staffs.getDataForEdit');
 Route::post('/staff/update', [StaffController::class, 'updateStaff'])->name('staffs.updateStaff');

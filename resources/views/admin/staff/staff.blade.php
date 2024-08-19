@@ -22,36 +22,36 @@
     </section>
 
     <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="">                             
-                        <button class="btn btn-primary px-4 m-2 float-right" id="add-staff-btn">Add</button>
-                        </div>
-                        <div class="card-body table-responsive p-2">
-                            <table class="table table-hover table-bordered display compact" id="staffTable">
-                                <thead>
-                                    <tr>
-                                        <th>S.No</th>
-                                        <th>ID No.</th>
-                                        <th>Image</th>
-                                        <th>Name</th>            
-                                        <th>D.O.B</th>
-                                        <th>Address</th>  
-                                        <th>Position</th>                                                                                  
-                                        <th>Contact No.</th>                                            
-                                        <th>Email</th>                                                                     
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="">                             
+                                <button class="btn btn-primary px-4 m-2 float-right" id="add-staff-btn">Add</button>
+                            </div>
+                            <div class="card-body table-responsive p-2">
+                                <table class="table table-hover table-bordered display compact" id="staffTable">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>ID No.</th>
+                                            <th>Image</th>
+                                            <th>Name</th>            
+                                            <th>D.O.B</th>
+                                            <th>Address</th>  
+                                            <th>Position</th>                                                                                  
+                                            <th>Contact No.</th>                                            
+                                            <th>Email</th>                                                                     
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
 </div>
 <!--  -->
@@ -193,7 +193,7 @@
                                             placeholder="Enter Address Here" name="address" >
                                     </div>
                                 </div>
-                                    <div class="col-md-6">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="contact_no">Contact No</label>
                                         <input type="number" class="form-control" id="contact_no"
@@ -293,12 +293,12 @@
             {data: "sn"},
             {data: "serial_no"},
             {data: "photo"},
-            {data: "name"},
-            {data: "dob"},
-            {data: "address"},
+            {data: "name"},  //
+            {data: "dob"},   //
+            {data: "address"}, //
             {data: "position"},
-            {data: "contact_no"},
-            {data: "email"},
+            {data: "contact_no"}, //
+            {data: "email"},  //
             {data: "action"},
         ],
     }); 
@@ -333,6 +333,7 @@
                         $('#addStaffModal').modal('hide').on('hidden.bs.modal', function () 
                         {
                             $('#submitStaffButton').prop('disabled', false);
+                            window.location.reload(); 
                             staffTable.ajax.reload();  
                         });
                     }
