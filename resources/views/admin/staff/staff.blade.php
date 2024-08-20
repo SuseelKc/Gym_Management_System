@@ -310,7 +310,7 @@
 
         $('#addStaffModal').modal('show');
         
-        $('#addStaffForm').on('submit', function(e) 
+        $('#addStaffForm').off('submit').on('submit', function(e) 
         {
             e.preventDefault();
 
@@ -333,7 +333,6 @@
                         $('#addStaffModal').modal('hide').on('hidden.bs.modal', function () 
                         {
                             $('#submitStaffButton').prop('disabled', false);
-                            window.location.reload(); 
                             staffTable.ajax.reload();  
                         });
                     }
