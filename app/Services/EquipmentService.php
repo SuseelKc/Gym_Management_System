@@ -165,6 +165,7 @@ class EquipmentService
     public function update(Equipment $equipment,$id,Request $request ){
 
         try{
+           
             DB::beginTransaction();
             $user = auth()->user();
             $equipment->gym_id = $user->id;

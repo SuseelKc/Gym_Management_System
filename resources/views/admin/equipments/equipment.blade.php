@@ -223,7 +223,29 @@
     </div>
 </div>
 
-
+{{-- deleting --}}
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+      <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <input type="hidden" id="equipmentIdToDelete">
+                   <p id="equipmentNameToDelete"></p>
+                  <!-- ... other modal content ... -->
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-danger" onclick="deleteEquipment()">Delete</button>
+              </div>
+      </div>
+    </div>
+  </div>
+{{--  --}}
 
 
 
@@ -347,7 +369,7 @@
                     $('#editEquipmentForm #qty').val(response.equipment.qty);
                     $('#editEquipmentForm #maintenance_period_input').val(response.equipment.maintenance_period);
                     $('#editEquipmentForm #maintenance_type').val(response.equipment.maintenance_type);
-
+                    
                     
                     $('#editEquipmentModal').modal('show');
                 }
@@ -358,7 +380,73 @@
         });
     });
 
-  
+//   for saving the edited equipment
+    $('#editEquipmentForm').on('submit', function(e) 
+    {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: '/equipment/update', 
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) 
+            {
+                if (response.success) 
+                {
+                    toastr.success(response.success);
+                    $('#editEquipmentModal').modal('hide');
+                    equipmentTable.ajax.reload();  
+                }
+            },
+            error: function(xhr) 
+            {
+                if (xhr.status === 422) {
+                    var errors = xhr.responseJSON.errors;
+                    $.each(errors, function (key, value) 
+                    {
+                        toastr.error(value[0]);
+                    });
+                } else 
+                {
+                    toastr.error('An error occurred while updating the equipment.');
+                }
+            }
+        });
+    });
+
+      $(document).on('click', '.delete-equipment-btn', function (e) {
+        e.preventDefault();
+
+        var equipmentId = $(this).data('id');
+        var equipmentName = $(this).data('name');
+       
+        $('#deleteModal').modal('show');
+        $('#equipmentIdToDelete').val(equipmentId);
+        $('#equipmentNameToDelete').text('Are you sure you want to delete ' + equipmentName + '?');
+    });
+
+    function deleteEquipment() {
+        var equipmentId = $('#equipmentIdToDelete').val();
+      
+        $.ajax({
+            url: '/deleteEquipment/' + equipmentId, 
+            type: 'GET', 
+            success: function(response) {
+                if (response.success) {
+                    $('#deleteModal').modal('hide');
+                    toastr.success(response.success);
+                    equipmentTable.ajax.reload();
+                }
+            },
+            error: function(xhr) {
+                toastr.error('An error occurred while deleting the equipment.');
+            }
+        });
+    }; 
 
 </script>    
 @endsection

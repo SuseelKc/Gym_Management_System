@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('maintenance_type')->nullable();
             $table->date('upcoming_date')->nullable();
             $table->foreignId('gym_id')->constrained('users','id');
+            $table->enum('status', ['active', 'inactive', 'deleted'])->default('active');
             $table->timestamps();
         });
     }

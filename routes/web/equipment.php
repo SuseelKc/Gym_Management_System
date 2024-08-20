@@ -15,3 +15,5 @@ Route::get('/equipments/{id}',[EquipmentsController::class,'delete'])->name('equ
 Route::post('/fetchEquipments',[EquipmentsController::class,'fetchEquipments'])->name('fetchEquipments');//fetch equipments to its table
 Route::post('/equipment/save',[EquipmentsController::class,'saveEquipment'])->name('equipments.save');//save equipments from modal
 Route::get('/equipment/{id}/edit',[EquipmentsController::class,'editEquipment'])->name('equipment.edit');
+Route::post('/equipment/update', [EquipmentsController::class, 'updateEquipment'])->name('equipment.update');
+Route::get('/deleteEquipment/{id}',[EquipmentsController::class,'deleteEquipment'])->name('equipment.delete');

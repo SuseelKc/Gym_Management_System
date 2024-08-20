@@ -114,7 +114,7 @@ class EquipmentsController extends Controller
         try {
             $gym_id = Auth::id();
     
-            $equipments = DB::select('SELECT * FROM equipments WHERE gym_id = ? ORDER BY id DESC', [$gym_id]);
+            $equipments = DB::select("SELECT * FROM equipments WHERE gym_id = ? and status='active' ORDER BY id DESC", [$gym_id]);
     
             if (empty($equipments)) {
                 return response()->json([
@@ -205,4 +205,54 @@ class EquipmentsController extends Controller
         }
     }
     
+    public function updateEquipment(Request $request){
+
+        try{
+
+            $validator = Validator::make($request->all(),[
+                'name' => 'required|string|max:255',
+                'weight' => 'required|numeric|min:0', 
+                'qty' => 'required|integer|min:1', 
+                'maintenance_period' => 'required|integer|min:1|max:10', 
+                'maintenance_type' => 'required|in:year,month,days', 
+                'equipment_id'  => 'required',
+                //'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+
+            ]
+            );
+
+            if($validator->fails()){
+
+                return response()->json(['errors'=> $validator->errors()],422);
+            }
+            $id =$request->equipment_id;
+            $equipment=Equipment::FindOrFail($id);
+            $equipment=$this->equipmentService->update($equipment,$id,$request);
+
+            return response()->json(['success'=>'staff saved successfuly.'],200);
+        }
+        catch(Exception $e){
+
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+
+
+    }
+
+    public function deleteEquipment($id)
+    {
+        try
+        { 
+            $equipment = Equipment::findOrFail($id);
+
+            $equipment->status = 'deleted';
+            $equipment->save();
+            
+            return response()->json(['success' => 'Equipment Deleted Successfully.'], 200);
+        }
+        catch(Exception $e)
+        {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 }
