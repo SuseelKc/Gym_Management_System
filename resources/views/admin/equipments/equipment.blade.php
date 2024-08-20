@@ -342,7 +342,7 @@
                 {
                     $('#editEquipmentForm #equipment_id').val(response.equipment.id);
                     $('#editEquipmentForm #name').val(response.equipment.name);
-                    $('#editEquipmentForm #gym_name').val(response.userName);
+                    $('#editEquipmentForm #gym_name').val(response.gymName);
                     $('#editEquipmentForm #weight').val(response.equipment.weight);
                     $('#editEquipmentForm #qty').val(response.equipment.qty);
                     $('#editEquipmentForm #maintenance_period_input').val(response.equipment.maintenance_period);

@@ -195,9 +195,9 @@ class EquipmentsController extends Controller
         try
         {       
             $equipment = Equipment::FindOrFail($id);
-            $userName = $equipment->user->name;
+            $gymName = $equipment->user->name;
     
-            return response()->json(['success' => true, 'equipment' => $equipment, 'userName' => $userName], 200);      
+            return response()->json(['success' => true, 'equipment' => $equipment, 'gymName' => $gymName], 200);      
         }
         catch(Exception $e)
         {
