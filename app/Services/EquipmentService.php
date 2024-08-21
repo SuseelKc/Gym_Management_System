@@ -73,7 +73,7 @@ class EquipmentService
          $gym=User::FindOrFail($user->id);
          $equipmentName=(string) $request->name; 
             
-    
+        
         $count=Equipment::where('gym_id',$user->id)->count();   
        
         if($count>1){
@@ -82,8 +82,11 @@ class EquipmentService
                 for ($i = 0; $i < min(3, count($words)); $i++) {
                     $initials .= strtoupper($words[$i][0]);
                 }
-                $lastRecordMember=Member::where('user_id',$user->id)->latest()->first();
-                $last_serialno=$lastRecordMember->serial_no;
+                
+                $lastRecordEquipment=Equipment::where('gym_id',$user->id)->latest()->first();
+                
+                $last_serialno=$lastRecordEquipment->serial_no;
+               
                 // aplabetic and numeric seperation
                 $alphabeticalPart = preg_replace('/[^A-Za-z]/', '', $last_serialno);
                 $numericPart = preg_replace('/[^0-9]/', '', $last_serialno);

@@ -299,7 +299,7 @@
 
         $('#addEquipmentModal').modal('show'); // show model
         
-        $('#addEquipmentForm').on('submit', function(e) 
+        $('#addEquipmentForm').off('submit').on('submit', function(e) 
         {
             e.preventDefault();
 
@@ -323,7 +323,7 @@
                         $('#addEquipmentModal').modal('hide').on('hidden.bs.modal', function () 
                         {
                             $('#submitEquipmentButton').prop('disabled', false);
-                            window.location.reload(); 
+                            // window.location.reload(); 
                             equipmentTable.ajax.reload();  
                             
                         });
