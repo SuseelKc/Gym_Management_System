@@ -216,6 +216,7 @@ class EquipmentsController extends Controller
                 'maintenance_period' => 'required|integer|min:1|max:10', 
                 'maintenance_type' => 'required|in:year,month,days', 
                 'equipment_id'  => 'required',
+                'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif'
                 //'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
 
             ]

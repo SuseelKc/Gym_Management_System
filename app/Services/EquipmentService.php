@@ -182,7 +182,7 @@ class EquipmentService
                 $equipment->maintenance_period= null; 
                 $equipment->upcoming_date= null; 
             }    
-                     
+               
             if($request->maintenance_period){
 
                 if ($request->maintenance_type === 'year') {
@@ -216,8 +216,8 @@ class EquipmentService
                 }
 
         }
-                      
-            if ($request->hasFile('photo')) {
+              
+            if ($request->hasFile('image')) {
 
                 $path='images/equipments/'.$equipment->image;
                 if(File::exists($path)){
@@ -225,14 +225,15 @@ class EquipmentService
                 }
 
     
-                $gallery = $request->file('photo');
+                $gallery = $request->file('image');
                 $extension = $gallery->getClientOriginalExtension();
                 $filename = $gallery->getClientOriginalName() . '.' . $extension;
                 $gallery->move('./images/equipments/', $filename);
                 $equipment->photo = $filename;
             }
-
+           
             $equipment->update();
+            
             DB::commit();
             return $equipment;
         }
