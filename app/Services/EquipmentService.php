@@ -185,7 +185,7 @@ class EquipmentService
                
             if($request->maintenance_period){
 
-                if ($request->maintenance_type === 'year') {
+                if ($request->maintenance_type === 'Year') {
                    
                     $equipment->maintenance_period = $request->maintenance_period;
                     $equipment->maintenance_type = "Year";
@@ -195,7 +195,7 @@ class EquipmentService
                     // Assign the calculated date to the upcoming_date property
                     $equipment->upcoming_date = $upcomingDate;
 
-                } elseif ($request->maintenance_type === 'month') {
+                } elseif ($request->maintenance_type === 'Month') {
                    
                     $equipment->maintenance_period = $request->maintenance_period;
                     $equipment->maintenance_type = "Month";

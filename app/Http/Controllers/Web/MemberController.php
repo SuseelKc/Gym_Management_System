@@ -335,7 +335,7 @@ class MemberController extends Controller
                 'address' => 'required|string|max:255',
                 'contact_no' => 'required|max:10',
                 'email' => 'required|email|max:255',
-                'pricing' => 'required',
+                // 'pricing' => 'required',
             ]);
 
             if ($validator->fails()) 

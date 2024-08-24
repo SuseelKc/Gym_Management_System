@@ -169,7 +169,7 @@ class EquipmentsController extends Controller
                 'qty' => 'required|integer|min:1', 
                 'maintenance_period' => 'required|integer|min:1|max:10', 
                 'maintenance_type' => 'required|in:year,month,days', 
-                //'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+                //'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
             ]);
             if ($validator->fails()){
                 return response()->json(['errors'=>$validator->errors()],422);
@@ -216,7 +216,7 @@ class EquipmentsController extends Controller
                 'maintenance_period' => 'required|integer|min:1|max:10', 
                 'maintenance_type' => 'required|in:year,month,days', 
                 'equipment_id'  => 'required',
-                'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif'
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif'
                 //'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
 
             ]

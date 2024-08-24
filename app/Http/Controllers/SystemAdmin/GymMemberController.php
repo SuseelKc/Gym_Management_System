@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\SystemAdmin;
 
+use App\Models\Member;
 use Illuminate\Http\Request;
 use App\Services\UserService;
 use App\Services\LedgerService;
 use App\Services\MemberService;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
 use App\Repositories\LedgerRepository;
@@ -113,4 +115,67 @@ class GymMemberController extends Controller
 
         }
     }
+
+    public function getDetails(){
+        try{
+           
+        $members=DB::select("SELECT * FROM members");
+        return view('systemadmin.members.members',compact('members'));
+
+        
+
+        }
+        catch(Exception $e){
+
+        }
+    }
+
+    public function getMemberDetails($id)
+    {
+        $member = Member::find($id);
+        $ledgerEntries = DB::select("SELECT * FROM Ledger WHERE member_id = ?", [$id]);
+
+        if ($member) {
+            return response()->json([
+                'success' => true,
+                'member' => $member,
+                // 'ledger' => $ledgerEntries
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Member not found.'
+            ]);
+        }
+    }
+    
+    public function fetchLedger($id)
+    {
+        try {
+            // Fetch the ledger entries for the given member ID
+            $ledgerEntries = DB::select("SELECT * FROM Ledger WHERE member_id = ?", [$id]);
+
+        
+            if (!empty($ledgerEntries)) {
+                return response()->json([
+                    'success' => true, 
+                    'ledger' => $ledgerEntries
+                ]);
+            } else {
+                
+                return response()->json([
+                    'success' => false, // Operation was not successful
+                    'message' => 'No ledger entries found for the given member.' // Error message
+                ]);
+            }
+        } catch (Exception $e) {
+        
+            return response()->json([
+                'success' => false, // Operation failed
+                'message' => 'An error occurred while fetching the ledger entries.', // Generic error message
+                'error' => $e->getMessage() // Include the actual error message for debugging (optional)
+            ]);
+        }
+    }
+
 }

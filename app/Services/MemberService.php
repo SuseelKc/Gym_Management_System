@@ -100,8 +100,9 @@ public function add(Member $member, Request $request)
             $gallery->move('./images/members/', $filename);
             $member->photo = $filename;
         }
-
+       
         $pricing = $this->pricingRepository->getById($member->pricing_id);
+        dd($pricing);
         if( $pricing){ 
             $member->pricing_type=$pricing->costs_type;
             $member->pricing_date=Carbon::now();
