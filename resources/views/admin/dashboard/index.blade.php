@@ -32,25 +32,23 @@
                 <div class="col-lg-12">
                     <!-- Yearly Breakup -->
                     <div class="card w-100 shadow">
-                        <div class="card-body p-0">
-                            {{-- <div class="mb-2">
-                                <h5 class="card-title fw-bold mb-4">Upcoming Maintenance</h5>
-                            </div> --}}
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <tbody>
-                                        @foreach ($comingMainteneceDate as $topTransaction)
-                                        <tr>
-                                            <td><strong>{{ $topTransaction->name }}</strong></td>
-                                            <td><span class="text-muted">Maintenance On:</span> {{ $topTransaction->upcoming_date }}</td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                    
-                                </table>
+                        <div class="card-body p-2">
+                            <!-- Members Dropdown -->
+                            <div class="mb-4">
+                                <h5 class="card-title mb-9 fw-semibold">Members</h5>
+                                {{-- <select name="members" id="members" class="form-control"></select> --}}
+                            </div>
+                            <!-- Search bar -->
+                            <div class="form-group d-flex">
+                                <input type="text" class="form-control" placeholder="Search..." id="searchInput">
+                                <a href="#" class="btn btn-primary ml-2" id="searchBtn">
+                                    <i class='fas fa-search'></i>
+                                </a>
                             </div>
                         </div>
                     </div>
+                    
+                    
                 </div>
                 
             

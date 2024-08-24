@@ -126,12 +126,12 @@ class LedgerController extends Controller
         }
     }
 
-    public function getEmployees(Request $request)
+    public function getMembers(Request $request)
     {
         $gym_id = Auth::id();
         $searchTerm = $request->input('searchTerm');
     
-        $employees = Member::where('user_id', $gym_id)
+        $members = Member::where('user_id', $gym_id)
                             ->where('status', 'active')
                             ->where(function($query) use ($searchTerm) {
                                 $query->where('name', 'LIKE', '%' . $searchTerm . '%')
@@ -139,6 +139,6 @@ class LedgerController extends Controller
                             })
                             ->get(['id', 'name', 'serial_no']); 
     
-        return response()->json($employees);
+        return response()->json($members);
     }
 }

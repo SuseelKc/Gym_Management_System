@@ -10,4 +10,4 @@ Route::get('/ledger-search/{id}',[LedgerController::class,'search'])->name('ledg
 Route::post('/ledger/storepayment/{id}',[LedgerController::class,'storeMemberPayment'])->name('ledger.storepayment');
 
 Route::post('/filterLedger',[LedgerController::class,'ledger']);
-Route::post('/get-employees', [LedgerController::class, 'getEmployees']);
+Route::post('/get-members', [LedgerController::class, 'getMembers']);

@@ -135,7 +135,7 @@
         allowClear: true,
         width: '100%',
         ajax: {
-            url: '/get-employees',
+            url: '/get-members',
             type: 'POST',
             dataType: 'json',
             delay: 250,
@@ -147,10 +147,10 @@
             },
             processResults: function(data) {
                 return {
-                    results: data.map(function(employee) {
+                    results: data.map(function(members) {
                         return {
-                            id: employee.id,
-                            text: `${employee.name} [${employee.serial_no}]`
+                            id: members.id,
+                            text: `${members.name} [${members.serial_no}]`
                         };
                     })
                 };

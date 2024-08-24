@@ -20,8 +20,7 @@ class DashboardController extends Controller
         $this->memberService= $memberService;
         $this->equipmentRepository=$equipmentRepository;
     }
-
-    
+ 
     public function index(){     
         try{
             // for knowing remaining balance of the member query     
@@ -63,6 +62,9 @@ class DashboardController extends Controller
             // 
             //
             
+            
+
+
             return view('admin.dashboard.index',compact('latestRecords','topTransactions','chart','expiredMemberships','data','comingMainteneceDate'));
         }
         catch(Exception $e){
