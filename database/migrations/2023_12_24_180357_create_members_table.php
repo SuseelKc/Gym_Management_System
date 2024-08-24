@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('contact_no');
             $table->string('email')->nullable();
             $table->integer('shifts')->default(Shifts::Morning);
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->enum('status', ['active', 'inactive', 'deleted'])->default('active');
             $table->timestamps();
         });
