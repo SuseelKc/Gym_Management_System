@@ -190,6 +190,27 @@
     </div>
 </div>
 
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmUpdateModal" tabindex="-1" role="dialog" aria-labelledby="confirmUpdateModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmUpdateModalLabel">Confirm Update</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to update this member?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="confirmUpdateBtn">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $.ajaxSetup({
         headers: {
@@ -366,13 +387,19 @@
         });
     });
 
-    // Handle the form submission for editing member
+    let formData;
+
     $('#editMemberForm').on('submit', function(e) 
     {
         e.preventDefault();
 
-        var formData = new FormData(this);
+        formData = new FormData(this);
 
+        $('#confirmUpdateModal').modal('show');
+    });
+
+    $('#confirmUpdateBtn').on('click', function() 
+    {
         $.ajax({
             url: '/members/update', 
             type: 'POST',
@@ -390,18 +417,22 @@
             },
             error: function(xhr) 
             {
-                if (xhr.status === 422) {
+                if (xhr.status === 422) 
+                {
                     var errors = xhr.responseJSON.errors;
                     $.each(errors, function (key, value) 
                     {
                         toastr.error(value[0]);
                     });
-                } else 
+                } 
+                else 
                 {
                     toastr.error('An error occurred while updating the member.');
                 }
             }
         });
+
+        $('#confirmUpdateModal').modal('hide');
     });
 
     $(document).on('click', '.delete-member-btn', function (e) {
