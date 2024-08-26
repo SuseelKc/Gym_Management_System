@@ -37,7 +37,7 @@
                                         <div class="form-group">
                                             <label for="Name">Name</label>
                                             <input type="text" class="form-control" id="name"
-                                                placeholder="Enter Name Here" name="name" >
+                                                placeholder="Enter Name Here" name="name" required>
                                             @if ($errors->has('name'))
                                                 <x-validation-errors>
                                                     {{ $errors->first('name') }}
@@ -60,9 +60,9 @@
                                     </div>
                                     <!--  -->
 
-                                    <div class="col-md-6">
+                                    <!-- <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="costs">Costs</label>
+                                            <label for="costs">Price</label>
                                             <div class="d-flex align-items-center">
                                                 <input type="decimal" class="form-control mr-2" id="costs" style="width: 150px;"
                                                        name="costs">
@@ -78,12 +78,25 @@
                                                 </x-validation-errors>
                                             @endif
                                         </div>
+                                    </div> -->
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="costs">Price</label>
+                                            <input type="decimal" class="form-control" id="costs" placeholder="Enter Package Price" name="costs" required>
+                                        </div>
                                     </div>
 
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="duration">Duration (In Days)</label>
+                                            <input type="number" class="form-control" id="duration" placeholder="Enter Duration days for this Package" name="duration" required>
+                                        </div>
+                                    </div>
 
                                     
                                     {{--  --}}
-                                    <div class="col-md-6">
+                                    <!-- <div class="col-md-6">
                                         <div class="form-row">
                                             <div class="form-group" style="margin-right: 10px;">
                                                 <label for="start_date">Start Date</label>
@@ -108,7 +121,7 @@
                                         </div>
                                         
 
-                                   </div>
+                                   </div> -->
                                     {{--  --}}
 
                                                                                                                                          

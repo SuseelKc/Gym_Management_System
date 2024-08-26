@@ -127,7 +127,7 @@
                                 <!-- name -->
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="name">Name</label>
+                                        <label for="name">Full Name</label>
                                         <input type="text" class="form-control" id="name" placeholder="Enter Name Here" name="name" >
                                     </div>
                                 </div>
@@ -165,11 +165,30 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="pricing">Package</label><br>
-                                        <select id="pricing" name="pricing">
-                                            <option value="">Not Selected</option>
-                                           
+                                        <label for="pricing">Package</label>
+                                        <input type="text" class="form-control" id="pricing" name="pricing" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="shift">Shift</label><br>
+                                        <select id="shift" name="shift" class="form-control">
+                                            <option value="Morning">Morning</option>
+                                            <option value="Day">Day</option>
+                                            <option value="Evening">Evening</option>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="start_date">Start Date</label>
+                                        <input type="date" class="form-control" id="start_date"  name="start_date" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="end_date">End Date</label>
+                                        <input type="date" class="form-control" id="end_date"  name="end_date" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -364,19 +383,10 @@
                     $('#editMemberForm #address').val(response.member.address);
                     $('#editMemberForm #contact_no').val(response.member.contact_no);
                     $('#editMemberForm #email').val(response.member.email);
-                    
-                    $('#editMemberForm #pricing').empty();
-
-                    // Add a default "Not Selected" option
-                    $('#editMemberForm #pricing').append('<option value="">Not Selected</option>');
-
-                    Object.values(response.pricing).forEach(function(packageItem) 
-                    {
-                        const selected = packageItem.id === response.member.pricing_id ? 'selected' : '';
-                        $('#editMemberForm #pricing').append(
-                            `<option value="${packageItem.id}" ${selected}>${packageItem.name}</option>`
-                        );
-                    });
+                    $('#editMemberForm #pricing').val(response.package_name);
+                    $('#editMemberForm #shift').val(response.member.shifts);
+                    $('#editMemberForm #start_date').val(response.member.start_date);
+                    $('#editMemberForm #end_date').val(response.member.end_date);
 
                     $('#editMemberModal').modal('show');
                 }

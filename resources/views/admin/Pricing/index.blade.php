@@ -32,10 +32,11 @@
                                         <tr>
                                             <th>S.No</th> 
                                             <th>Name</th>                        
-                                            <th>Costs</th>
-                                            <th>Costs Type</th>                                                                                  
-                                            <th>Start Date</th>                                            
-                                            <th>End Date</th>   
+                                            <th>Price</th>
+                                            <th>Duration Days</th>
+                                            <!-- <th>Costs Type</th>                                                                                   -->
+                                            <!-- <th>Start Date</th>                                             -->
+                                            <!-- <th>End Date</th>    -->
                                             <th>Members Enrolled</th>                          
                                             <th>Action</th>
                                         </tr>
@@ -45,10 +46,11 @@
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$pricing->name}}</td>                  
-                                            <td>{{$pricing->costs}}</td>                                         
-                                            <td>{{$pricing->costs_type}}</td>
-                                            <td>{{$pricing->start_date}}</td>
-                                            <td>{{$pricing->end_date}}</td>   
+                                            <td>{{$pricing->costs}}</td> 
+                                            <td>{{$pricing->duration}}</td>                                         
+                                            <!-- <td>{{$pricing->costs_type}}</td> -->
+                                            <!-- <td>{{$pricing->start_date}}</td> -->
+                                            <!-- <td>{{$pricing->end_date}}</td>    -->
                                             <td>{{$pricing->members_count}} Members</td>                                  
                                             <td>
                                                 <a href="{{route('pricing.edit', $pricing->id)}}" title="Edit Package">

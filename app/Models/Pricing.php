@@ -17,7 +17,8 @@ class Pricing extends Model
         'costs_type',
         'start_date',
         'end_date',
-        'gym_id'
+        'gym_id',
+        'duration'
     ];
 
     public function members()
