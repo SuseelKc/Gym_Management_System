@@ -19,6 +19,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
+                        
+                        <div class="">                             
+                            <button class="btn btn-primary px-4 m-2 float-right" 
+                             onclick="submitPostRequest()">Member's Details</button>
+                        </div>
                             
                             <div class="card-body table-responsive p-2">
                                 <table class="datatable table">
@@ -114,6 +119,23 @@
             window.location.href = deleteRoute;
         };
     });
+
+    //BUTTON SUBMIT FOR MEMBERS DETAILS
+    function submitPostRequest() {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = "{{ route('members.details') }}";
+
+        const csrfToken = document.createElement('input');
+        csrfToken.type = 'hidden';
+        csrfToken.name = '_token';
+        csrfToken.value = '{{ csrf_token() }}'; // Laravel CSRF token
+
+        form.appendChild(csrfToken);
+        document.body.appendChild(form);
+        form.submit();
+    }
+    
 </script>
 
 @endsection

@@ -59,6 +59,7 @@ Route::middleware('auth','verified', 'role:' . UserRole::SystemAdmin)->group(fun
 Route::middleware('auth','verified', 'role:' . UserRole::GymAdmin)->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    route::get('/fetch/member-details', [DashboardController::class, 'fetchMemberDetails']);
    
     require __DIR__ . '/web/member.php';
     require __DIR__ . '/web/user.php';

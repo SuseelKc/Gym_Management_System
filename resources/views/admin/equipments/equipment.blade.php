@@ -29,7 +29,7 @@
                             <div class="">                             
                                 <button class="btn btn-primary px-4 m-2 float-right" id="add-equipment-btn">Add</button>
                             </div>
-                            <div class="card-body table-responsive p-2">
+                            <div class="card-body table-responsive p-2 table-container">
                                 <table class="table table-hover table-bordered display compact" id="equipmentTable">
                                     <thead>
                                         <tr>
@@ -195,9 +195,9 @@
                                         <input type="number" class="form-control mr-2" id="maintenance_period_input" style="width: 150px;"
                                                name="maintenance_period" value="">
                                         <select id="maintenance_type" style="height: 30px;" name="maintenance_type">
-                                            <option value="year">Year</option>
-                                            <option value="month">Month</option>
-                                            <option value="days">Days</option>
+                                            <option value="Year">Year</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Days">Days</option>
                                         </select>
                                     </div>
                                 </div>
@@ -369,7 +369,7 @@
                     $('#editEquipmentForm #qty').val(response.equipment.qty);
                     $('#editEquipmentForm #maintenance_period_input').val(response.equipment.maintenance_period);
                     $('#editEquipmentForm #maintenance_type').val(response.equipment.maintenance_type);
-                    
+                    console.log(response.equipment.maintenance_type);
                     
                     $('#editEquipmentModal').modal('show');
                 }

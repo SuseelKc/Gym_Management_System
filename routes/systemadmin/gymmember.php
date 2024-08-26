@@ -9,3 +9,8 @@ Route::get('/membersgym',[GymMemberController::class,'index'])->name('membersgym
 Route::get('/membersgym/delete/{id}',[GymMemberController::class,'delete'])->name('membersgym.delete');
 Route::get('/membersgym/edit/{id}',[GymMemberController::class,'edit'])->name('membersgym.edit');
 Route::patch('/membersgym/update/{id}',[GymMemberController::class,'update'])->name('membersgym.update');
+// members details
+Route::post('/membersgym/details',[GymMemberController::class,'getDetails'])->name('members.details');
+
+Route::get('/getMemberDetails/{id}', [GymMemberController::class, 'getMemberDetails']);//fetches the details 
+Route::get('/fetchledger/{id}', [GymMemberController::class, 'fetchledger']);
