@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('costs', 8, 3);
-            $table->int('duration')->nullable();
+            $table->integer('duration')->nullable();
             $table->string('costs_type')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
