@@ -131,7 +131,7 @@ class LedgerController extends Controller
         $gym_id = Auth::id();
         $searchTerm = $request->input('searchTerm');
     
-        $members = Member::where('user_id', $gym_id)
+        $members = Member::where('gym_id', $gym_id)
                             ->where('status', 'active')
                             ->where(function($query) use ($searchTerm) {
                                 $query->where('name', 'LIKE', '%' . $searchTerm . '%')
