@@ -15,20 +15,22 @@ class Member extends Model
     protected $fillable=[
     'name',
     'photo',
-    'user_id',
+    'gym_id',
     'serial_no',
     'dob',
     'address',
     'contact_no',
     'email',
+    'shifts',
     'pricing_id',
-    'pricing_type',
-    'pricing_date'
+    'start_date',
+    'end_date',
+    'status'
     ];
     
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'gym_id');
     }
     public function pricing()
     {

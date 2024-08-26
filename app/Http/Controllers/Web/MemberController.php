@@ -211,7 +211,7 @@ class MemberController extends Controller
             }
 
             $userId = Auth::id();
-            $whereAllSql = "WHERE m.status='active' AND m.user_id = $userId ";
+            $whereAllSql = "WHERE m.status='active' AND m.gym_id = $userId ";
 
             foreach ($columns as $key => $value)
             {
@@ -229,9 +229,9 @@ class MemberController extends Controller
                 }
             }
             
-            $basicQuery = "SELECT m.id, m.serial_no, m.name, m.email, m.dob, m.contact_no, m.shifts, m.pricing_id, m.status, m.photo, p.name as package_name, m.user_id
+            $basicQuery = "SELECT m.id, m.serial_no, m.name, m.email, m.dob, m.contact_no, m.shifts, m.pricing_id, m.status, m.photo, p.name as package_name, m.gym_id
                 FROM members m
-                JOIN pricing p ON m.pricing_id = p.id";
+                LEFT JOIN pricing p ON m.pricing_id = p.id";
 
             if ($length != -1) 
             {
@@ -256,17 +256,17 @@ class MemberController extends Controller
                 $row['sn'] = $count;
                 
                 // Generate the shifts badge HTML
-                if ($member->shifts == \App\Enums\Shifts::Morning) 
+                if ($member->shifts == "Morning") 
                 {
-                    $shiftHtml = '<a id="shifts" href="' . route('member.toggle', $member->id) . '" class="badge p-2 rounded" style="background-color: #ceefd1;color:#53b15b">Morning</a>';
+                    $shiftHtml = '<a id="shifts" class="badge p-2 rounded" style="background-color: #ceefd1;color:#53b15b">Morning</a>';
                 } 
-                elseif ($member->shifts == \App\Enums\Shifts::Day) 
+                elseif ($member->shifts == "Day") 
                 {
-                    $shiftHtml = '<a id="shifts" href="' . route('member.toggle', $member->id) . '" class="badge p-2 rounded" style="background-color: #e1c32c;color:#3685d3">Day</a>';
+                    $shiftHtml = '<a id="shifts" class="badge p-2 rounded" style="background-color: #e1c32c;color:#3685d3">Day</a>';
                 } 
                 else 
                 {
-                    $shiftHtml = '<a id="shifts" href="' . route('member.toggle', $member->id) . '" class="badge p-2 rounded" style="background-color: #303030;color:#dedcd9">Evening</a>';
+                    $shiftHtml = '<a id="shifts" class="badge p-2 rounded" style="background-color: #303030;color:#dedcd9">Evening</a>';
                 }
 
                 $row['shifts'] = $shiftHtml;
@@ -335,7 +335,7 @@ class MemberController extends Controller
                 'address' => 'required|string|max:255',
                 'contact_no' => 'required|max:10',
                 'email' => 'required|email|max:255',
-                'pricing' => 'required',
+                // 'pricing' => 'required',
             ]);
 
             if ($validator->fails()) 
@@ -343,7 +343,7 @@ class MemberController extends Controller
                 return response()->json(['errors' => $validator->errors()], 422);
             }
 
-           $member= new Member();        
+           $member= new Member();
            $member= $this->memberService->add($member,$request);
            
            return response()->json(['success' => 'Member saved successfully.'], 200);
@@ -360,9 +360,10 @@ class MemberController extends Controller
         {       
             $member=Member::FindOrFail($id);
             $userName = $member->user->name;
-            $pricing = $this->pricingService->all(); 
-  
-            return response()->json(['success' => true, 'member' => $member, 'pricing' => $pricing, 'userName' => $userName], 200);      
+            
+            $package_name = $member->pricing->name;
+            
+            return response()->json(['success' => true, 'member' => $member, 'package_name' => $package_name, 'userName' => $userName], 200);      
         }
         catch(Exception $e)
         {
@@ -381,7 +382,7 @@ class MemberController extends Controller
                 'address' => 'required|string|max:255',
                 'contact_no' => 'required|max:10',
                 'email' => 'required|email|max:255',
-                // 'pricing' => 'required',
+                'shift' => 'required',
             ]);
 
             if ($validator->fails()) 
@@ -415,6 +416,22 @@ class MemberController extends Controller
         catch(Exception $e)
         {
             return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getPackageDuration(Request $request)
+    {
+        $packageId = $request->input('package_id');
+
+        $package = Pricing::find($packageId);
+
+        if ($package) 
+        {
+            return response()->json(['duration' => $package->duration], 200);
+        } 
+        else 
+        {
+            return response()->json(['error' => 'Package not found'], 404);
         }
     }
 }

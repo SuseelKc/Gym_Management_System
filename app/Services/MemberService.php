@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Enums\Shifts;
 use App\Models\Ledger;
+use App\Models\PackageAdmissionLog;
 use App\Models\Member;
 use App\Enums\UserRole;
 use App\Models\Pricing;
@@ -56,9 +57,8 @@ public function add(Member $member, Request $request)
         $user = auth()->user();
         $gym=User::FindOrFail($user->id);
         $gymName = (string) $gym->name;
-
-        // 
-        $count=Member::where('user_id',$user->id)->count();
+        
+        $count=Member::where('gym_id',$user->id)->count();
         
         if($count>1){
                 $words = explode(' ', $gymName);
@@ -66,7 +66,7 @@ public function add(Member $member, Request $request)
                 for ($i = 0; $i < min(3, count($words)); $i++) {
                     $initials .= strtoupper($words[$i][0]);
                 }
-                $lastRecordMember=Member::where('user_id',$user->id)->latest()->first();
+                $lastRecordMember=Member::where('gym_id',$user->id)->latest()->first();
                 $last_serialno=$lastRecordMember->serial_no;
                 // aplabetic and numeric seperation
                 $alphabeticalPart = preg_replace('/[^A-Za-z]/', '', $last_serialno);
@@ -82,16 +82,18 @@ public function add(Member $member, Request $request)
             }
             $serialNumber = $initials . sprintf('%03d', $count + 1);    
         }  
-        // 
-        // dd($serialNumber);
+
         $member->serial_no =  $serialNumber;
-        $member->user_id = $user->id;
+        $member->gym_id = $user->id;
         $member->name = $request->name;
         $member->dob = $request->dob;      
         $member->address = $request->address;
         $member->contact_no = $request->contact_no;
         $member->email = $request->email;
         $member->pricing_id = $request->pricing;
+        $member->start_date    = $request->start_date;
+        $member->end_date      = $request->end_date;
+        $member->shifts        = $request->shift;
 
         if ($request->hasFile('photo')) {
             $gallery = $request->file('photo');
@@ -101,25 +103,45 @@ public function add(Member $member, Request $request)
             $member->photo = $filename;
         }
 
-        $pricing = $this->pricingRepository->getById($member->pricing_id);
-        if( $pricing){ 
-            $member->pricing_type=$pricing->costs_type;
-            $member->pricing_date=Carbon::now();
-        }
-       
+        // $pricing = $this->pricingRepository->getById($member->pricing_id);
+        // if( $pricing){ 
+        //     $member->pricing_type=$pricing->costs_type;
+        //     $member->pricing_date=Carbon::now();
+        // }
+ 
         $member->save();
-        // if package(pricing)exists
-        if( $member->pricing_id != null){
-                      
-            $this->ledgerService->add($member, $pricing);
-                //   
+        
+        // if( $member->pricing_id != null)
+        // {
+        //     $this->ledgerService->add($member, $pricing);
+        // }
+
+        if($request->admission_charge_toggle == "yes")
+        {
+            $admission_log                  = new PackageAdmissionLog();        
+            $admission_log->admission_price = $request->admission_charge;
+            $admission_log->gym_id          = $user->id;
+            $admission_log->member_id       = $member->id;
+
+            $admission_log->save();
         }
 
-        //      
+
+        if(!empty($request->pricing))
+        {
+            $package_log                = new PackageAdmissionLog();        
+            $package_log->gym_id        = $user->id;
+            $package_log->member_id     = $member->id;
+            $package_log->package_id    = $request->pricing;
+            $package_log->start_date    = $request->start_date;
+            $package_log->end_date      = $request->end_date;
+
+            $package_log->save();
+        }
 
         DB::commit();
+
         return $member;
-        
         
     } catch (Exception $e) {
         DB::rollBack();
@@ -137,13 +159,13 @@ public function update(Member $member, $id, Request $request)
 
         $user = auth()->user();
    
-        $member->user_id = $user->id;
+        $member->gym_id = $user->id;
         $member->name = $request->name;
         $member->dob = $request->dob;      
         $member->address = $request->address;
         $member->contact_no = $request->contact_no;
         $member->email = $request->email;
-        
+        $member->shifts = $request->shift;
 
 
         if ($request->hasFile('photo')) {
@@ -186,7 +208,7 @@ public function update(Member $member, $id, Request $request)
     } catch (Exception $e) {
         DB::rollBack();
         // Log the error message
-        Log::info('Error during member save: ' . $e->getMessage());
+        \Log::info('Error during member save: ' . $e->getMessage());
         // Display a generic error message to the user
         return redirect()->back()->with('error', 'An error occurred while saving the member information.');
     }

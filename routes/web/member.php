@@ -22,3 +22,4 @@ Route::post('/members/save',[MemberController::class,'saveMember'])->name('membe
 Route::get('/members/{id}/edit', [MemberController::class, 'getDataForMemberEdit'])->name('member.getDataForEdit');
 Route::post('/members/update', [MemberController::class, 'updateMember'])->name('member.updateMember');
 Route::get('/deletemembers/{id}',[MemberController::class,'deleteMember'])->name('member.deletemember');
+Route::post('/get-package-duration', [MemberController::class, 'getPackageDuration']);

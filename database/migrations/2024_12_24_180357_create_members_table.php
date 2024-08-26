@@ -16,13 +16,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('photo')->nullable();
-            $table->foreignId('user_id')->constrained('users','id');
+            $table->foreignId('gym_id')->constrained('users','id');
             $table->string('serial_no');
             $table->string('dob')->nullable();
             $table->string('address');
             $table->string('contact_no');
             $table->string('email')->nullable();
-            $table->integer('shifts')->default(Shifts::Morning);
+            $table->enum('shifts', ['Morning', 'Day', 'Evening'])->default('Morning');
+            $table->foreignId('pricing_id')->nullable()->constrained('pricing','id');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->enum('status', ['active', 'inactive', 'deleted'])->default('active');
