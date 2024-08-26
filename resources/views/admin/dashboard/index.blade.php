@@ -62,14 +62,11 @@
                             <div class="card-body p-4">
                                 {{-- <h5 class="card-title mb-9 fw-semibold">Memebership Expired Members</h5> --}}
                                 <div class="mb-4">    
-                                <h5 class="card-title mb-9 fw-semibold">Members Overall</h5>
-                                
+                                    <h5 class="card-title mb-9 fw-semibold">Members Overall</h5>                             
                                 </div>
-                                    
                                             <div style="width: 80%; margin: auto;">
                                                 <canvas id="pieChart"></canvas>
-                                            </div>
-                                                        
+                                            </div>                              
                             </div>
                         </div>
                     </div>
@@ -191,8 +188,8 @@
 
 
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
     var ctx = document.getElementById('pieChart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'pie',
@@ -203,7 +200,7 @@
                 backgroundColor: [
                     'rgba(54, 162, 235, 0.9)',// Expired Member
                     'rgba(255, 99, 132, 0.9)' // Total Member
-                     
+                        
                     // Add more colors if needed
                 ],
                 hoverOffset: 9, // Offset when hovering over slices
@@ -255,31 +252,6 @@
         }
     });
 
-    
-    // $(document).ready(function() {
-    //         // Function to dynamically update datalist based on search input
-    //         $('#membersInput').on('input', function() {
-    //             var query = $(this).val();
-    //             $.ajax({
-    //                 url: '/fetch/members',
-    //                 type: 'GET',
-    //                 data: { search: query },
-    //                 success: function(data) {
-    //                     var datalist = $('#membersList');
-    //                     datalist.empty(); // Clear existing options
-    //                     $.each(data, function(index, member) {
-    //                         datalist.append('<option value="' + member.name + '"></option>');
-    //                     });
-    //                 },
-    //                 error: function(xhr, status, error) {
-    //                     console.error('Error fetching members:', error);
-    //                 }
-    //             });
-    //         });
-    //     });
-    
-
-
         // pop up the modal
         $(document).ready(function() {
         $('#searchBtn').on('click', function() {
@@ -307,7 +279,7 @@
                 console.error('No matching member found');
             }
         });
-});
+    });
 
 
 </script>
