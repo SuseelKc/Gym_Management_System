@@ -20,11 +20,11 @@ class MemberRepository
     }
     public function groupByPricing($id){
         return Member::where('pricing_id',$id)
-        ->where('user_id',auth()->id())
+        ->where('gym_id',auth()->id())
         ->count();
     }
     public function countMembers(){
-        return Member::where('user_id',auth()->id())->count();
+        return Member::where('gym_id',auth()->id())->count();
     }
 
     // public function latestCountMembers()
@@ -43,12 +43,12 @@ class MemberRepository
         $previousMonthStart = $programInceptionDate->startOfMonth();
         $previousMonthEnd = Carbon::now()->subMonth()->endOfMonth();
 
-        return Member::where('user_id', auth()->id())
+        return Member::where('gym_id', auth()->id())
                     ->whereBetween('created_at', [$previousMonthStart, $previousMonthEnd])
                     ->count();
     }
 
     public function gymMembers($gymId){
-        return Member::all()->where('user_id',$gymId);
+        return Member::all()->where('gym_id',$gymId);
     }
 }
