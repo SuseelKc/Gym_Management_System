@@ -60,25 +60,25 @@
                                     </div>
                                     <!--  -->
 
-                                    <!-- <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="costs">Price</label>
+                                            <label for="duration">Duration</label>
                                             <div class="d-flex align-items-center">
-                                                <input type="decimal" class="form-control mr-2" id="costs" style="width: 150px;"
-                                                       name="costs">
-                                                <select id="costs_type" style="height: 30px;" name="costs_type">
-                                                    <option value="Year">Yearly</option>
-                                                    <option value="Month">Monthly</option>
-                                                    <option value="Days">Daily</option>
+                                                <input type="decimal" class="form-control mr-2" id="duration" style="width: 150px;"
+                                                    name="duration">
+                                                <select id="duration_type" style="height: 30px;" name="duration_type">
+                                                    <option value="Year">Year</option>
+                                                    <option value="Month" selected>Month</option>
+                                                    <option value="Days">Day</option>
                                                 </select>
                                             </div>
-                                            @if ($errors->has('costs'))
+                                            @if ($errors->has('duration'))
                                                 <x-validation-errors>
-                                                    {{ $errors->first('costs') }}
+                                                    {{ $errors->first('duration') }}
                                                 </x-validation-errors>
                                             @endif
                                         </div>
-                                    </div> -->
+                                    </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -87,12 +87,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <!-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="duration">Duration (In Days)</label>
                                             <input type="number" class="form-control" id="duration" placeholder="Enter Duration days for this Package" name="duration" required>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     
                                     {{--  --}}
