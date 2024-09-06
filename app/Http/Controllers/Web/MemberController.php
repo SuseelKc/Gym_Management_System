@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Carbon\Carbon;
 
 class MemberController extends Controller
 {
@@ -255,7 +256,11 @@ class MemberController extends Controller
 
                 $row['sn'] = $count;
                 
-                // Generate the shifts badge HTML
+                $dob = $row['dob'];
+                
+                $age = Carbon::parse($dob)->age;
+                $row['age'] = $age;
+
                 if ($member->shifts == "Morning") 
                 {
                     $shiftHtml = '<a id="shifts" class="badge p-2 rounded" style="background-color: #ceefd1;color:#53b15b">Morning</a>';
@@ -422,12 +427,37 @@ class MemberController extends Controller
     public function getPackageDuration(Request $request)
     {
         $packageId = $request->input('package_id');
-
         $package = Pricing::find($packageId);
-
+    
         if ($package) 
         {
-            return response()->json(['duration' => $package->duration], 200);
+            $startDate = Carbon::now();
+            $endDate = $startDate; 
+    
+            if ($package->costs_type === 'Days') 
+            {
+                $endDate = $startDate->copy()->addDays($package->duration);
+            } 
+            elseif ($package->costs_type === 'Month') 
+            {
+                $endDate = $startDate->copy()->addMonths($package->duration);
+            } 
+            elseif ($package->costs_type === 'Year') 
+            {
+                $endDate = $startDate->copy()->addYears($package->duration);
+            } else 
+            {
+                return response()->json(['error' => 'Invalid costs type'], 400);
+            }
+    
+            $totalDays = $startDate->diffInDays($endDate);
+            
+            // You can print and view if the data is accurate or not guys
+            // dd($startDate->format('Y-m-d'), $endDate->format('Y-m-d'), $totalDays);
+
+            return response()->json([
+                'duration' => $totalDays,
+            ], 200);
         } 
         else 
         {

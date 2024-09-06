@@ -31,7 +31,7 @@
                                     <thead>
                                         <tr>
                                             <th>S.No</th> 
-                                            <th>Name</th>                        
+                                            <th>Package Name</th>                        
                                             <th>Price</th>
                                             <!-- <th>Duration Days</th> -->
                                             <th>Duration</th>

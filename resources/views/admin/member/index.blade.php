@@ -38,7 +38,7 @@
                                             <th>Name</th>  
                                             <th>Image</th>  
                                             <th>Email</th>
-                                            <th>DOB</th>
+                                            <th>Age</th>
                                             <th>Contact</th>
                                             <th>Shifts</th>
                                             <th>Package</th>
@@ -56,7 +56,7 @@
                                             <th>Name</th> 
                                             <th>Image</th>  
                                             <th>Email</th>
-                                            <th>DOB</th>
+                                            <th>Age</th>
                                             <th>Contact</th>
                                             <th>Shifts</th>
                                             <th>Package</th>
@@ -275,24 +275,24 @@
             {data: "name"},
             {data: "photo"},
             {data: "email"},
-            {data: "dob"},
+            {data: "age"},
             {data: "contact_no"},
             {data: "shifts"},
             {data: "package_name"},
             {data: "status"},
         ],
         // deferRender: true,
-        // columnDefs: [{
-        // 		"orderable": false,
-        // 		"targets": [0,5]
-        // 	}
-        // ],
+        columnDefs: [{
+        		"orderable": false,
+        		"targets": [0,5,9]
+        	}
+        ],
         initComplete: function() 
         {
             this.api().columns().every(function() 
             {
                 var header          = $(this.header()).text();
-                var negletColumns   = ['Action','S.N.','Image'];
+                var negletColumns   = ['Action','S.N.','Image','Age'];
 
                 if ($.inArray(header, negletColumns) < 0) 
                 {
