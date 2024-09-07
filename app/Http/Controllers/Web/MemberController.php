@@ -230,7 +230,7 @@ class MemberController extends Controller
                 }
             }
             
-            $basicQuery = "SELECT m.id, m.serial_no, m.name, m.email, m.dob, m.contact_no, m.shifts, m.pricing_id, m.status, m.photo, p.name as package_name, m.gym_id
+            $basicQuery = "SELECT m.id, m.serial_no, m.name, m.email, m.dob, m.contact_no, m.shifts, m.pricing_id, m.status, m.photo, p.name as package_name, m.gym_id, m.end_date
                 FROM members m
                 LEFT JOIN pricing p ON m.pricing_id = p.id";
 
@@ -285,7 +285,7 @@ class MemberController extends Controller
                 $editUrl = route('member.edit', $member->id);
            
                 $row['package_name'] = $member->package_name;
-
+              
                 $row['status'] = "
                     <a href='#' class='edit-member-btn' data-id='$member->id' title='Edit Member'>
                         <i class='fas fa-edit fa-lg'></i>
@@ -293,8 +293,11 @@ class MemberController extends Controller
                     <a href='#' class='delete-member-btn' data-id='$member->id' data-name='$member->name' title='Delete Member'>
                         <i class='fas fa-times-circle fa-lg' style='color: red;'></i>
                     </a>
+                    <a href='#' class='renew-member-btn' data-id='$member->id' data-name='$member->name' data-renew='$member->end_date' title='Renew Member'>
+                        <i class='fas fa-sync-alt fa-lg' style='color: green;'></i>
+                    </a>
                 ";
-
+                
                 $result[] = $row;
                 
                 $count++;
@@ -366,7 +369,11 @@ class MemberController extends Controller
             $member=Member::FindOrFail($id);
             $userName = $member->user->name;
             
-            $package_name = $member->pricing->name;
+            $package_name = "N/A";
+            if(!empty($member->pricing))
+            {
+                $package_name = $member->pricing->name;
+            }
             
             return response()->json(['success' => true, 'member' => $member, 'package_name' => $package_name, 'userName' => $userName], 200);      
         }
@@ -452,9 +459,6 @@ class MemberController extends Controller
     
             $totalDays = $startDate->diffInDays($endDate);
             
-            // You can print and view if the data is accurate or not guys
-            // dd($startDate->format('Y-m-d'), $endDate->format('Y-m-d'), $totalDays);
-
             return response()->json([
                 'duration' => $totalDays,
             ], 200);
@@ -462,6 +466,47 @@ class MemberController extends Controller
         else 
         {
             return response()->json(['error' => 'Package not found'], 404);
+        }
+    }
+
+    public function displayRenewModal()
+    {
+        $pricing = $this->pricingService->all();  
+
+        return view('admin.member.renew_member_modal', compact('pricing'));
+    }
+
+    public function renewMember(Request $request)
+    {
+        try
+        {   
+            $validator = Validator::make($request->all(), [
+                'pricing_renew' => 'required',
+                'shift' => 'required',
+                'member_id' => 'required',
+                'renew_start_date' => 'required|date',
+                'renew_end_date' => 'required|date',
+            ]);
+
+            if ($validator->fails()) 
+            {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+
+            $member = Member::findOrFail($request->member_id);
+
+            if ($member->renew($request->all())) 
+            {
+                return response()->json(['success' => 'Member renewed successfully.'], 200);
+            } 
+            else 
+            {
+                return response()->json(['error' => 'Failed to renew member.'], 500);
+            }
+        }
+        catch(Exception $e)
+        {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 }

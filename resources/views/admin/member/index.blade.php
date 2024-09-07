@@ -107,6 +107,16 @@
     </div>
 </div>
 
+<!-- Modal for Renewing Member -->
+<div class="modal fade" id="renewModal" tabindex="-1" role="dialog" aria-labelledby="renewModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div id="renewModalContent">
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Modal for Editing Member -->
 <div class="modal fade" id="editMemberModal" tabindex="-1" role="dialog modal-xl" aria-labelledby="editMemberModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
@@ -308,8 +318,8 @@
         }
     }); 
 
-    $(document).on('click', '#add-member-btn', function () {
-
+    $(document).on('click', '#add-member-btn', function () 
+    {
         $('#createMemberModal').modal('show');
 
         $('#createMemberModalContent').load('{{ route("member.displayCreateModal") }}', function() {
@@ -445,7 +455,8 @@
         $('#confirmUpdateModal').modal('hide');
     });
 
-    $(document).on('click', '.delete-member-btn', function (e) {
+    $(document).on('click', '.delete-member-btn', function (e) 
+    {
         e.preventDefault();
 
         var memberId = $(this).data('id');
@@ -456,7 +467,8 @@
         $('#memberNameToDelete').text('Are you sure you want to delete ' + memberName + '?');
     });
 
-    function deleteMember() {
+    function deleteMember() 
+    {
         var memberId = $('#memberIdToDelete').val();
       
         $.ajax({
@@ -474,6 +486,80 @@
             }
         });
     };  
+
+    $(document).on('click', '.renew-member-btn', function () 
+    {
+        var memberId = $(this).data('id');
+        var memberName = $(this).data('name');
+        var renewStartDate = $(this).data('renew');
+        
+        $('#renewModal').modal('show');
+
+        $('#renewModalContent').load('{{ route("member.displayRenewModal") }}', function() 
+        {
+            $('#renewMemberModalLabel').text('Renew Member - ' + memberName);
+
+            if (!renewStartDate) 
+            {
+                var today = new Date().toISOString().split('T')[0]; 
+                $('#renew_start_date').val(today).prop('disabled', false); 
+            } else 
+            {
+                $('#renew_start_date').val(renewStartDate).prop('disabled', true);
+            }
+         
+            $('#renewMemberForm').on('submit', function(e) 
+            {
+                var newstartdate = $('#renew_start_date').val();
+                
+                e.preventDefault();
+
+                $('#renewsubmitForm').prop('disabled', true);
+            
+                var formData = new FormData(this);
+                formData.append('renew_start_date', newstartdate);
+                formData.append('member_id', memberId);
+
+                $.ajax({
+                    url: '{{ route("member.renew") }}',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json',  
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success(response.success);
+                            $('#renewModal').modal('hide').on('hidden.bs.modal', function () 
+                            {
+                                membershipData.ajax.reload();  
+                                $('.modal-backdrop').remove();
+
+                                $('#renewsubmitForm').prop('disabled', false);
+                            });
+                        }
+                    },
+                    error: function (xhr) 
+                    {
+                        if (xhr.status === 422) 
+                        {
+                            var errors = xhr.responseJSON.errors;
+                            $.each(errors, function (key, value) 
+                            {
+                                toastr.error(value[0]);
+                            });
+                        } 
+                        else 
+                        {
+                            toastr.error(response.error);
+                        }
+
+                        $('#renewsubmitForm').prop('disabled', false);
+                    }
+                });
+            });
+        });
+    });
 
 </script>
 
