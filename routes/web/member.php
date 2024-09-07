@@ -23,3 +23,7 @@ Route::get('/members/{id}/edit', [MemberController::class, 'getDataForMemberEdit
 Route::post('/members/update', [MemberController::class, 'updateMember'])->name('member.updateMember');
 Route::get('/deletemembers/{id}',[MemberController::class,'deleteMember'])->name('member.deletemember');
 Route::post('/get-package-duration', [MemberController::class, 'getPackageDuration']);
+
+// renew member
+Route::get('/member/renew', [MemberController::class, 'displayRenewModal'])->name('member.displayRenewModal');
+Route::post('/members/renew',[MemberController::class,'renewMember'])->name('member.renew');

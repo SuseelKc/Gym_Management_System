@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Carbon\Carbon;
 
 class MemberController extends Controller
 {
@@ -232,7 +233,7 @@ class MemberController extends Controller
                 }
             }
             
-            $basicQuery = "SELECT m.id, m.serial_no, m.name, m.email, m.dob, m.contact_no, m.shifts, m.pricing_id, m.status, m.photo, p.name as package_name, m.gym_id
+            $basicQuery = "SELECT m.id, m.serial_no, m.name, m.email, m.dob, m.contact_no, m.shifts, m.pricing_id, m.status, m.photo, p.name as package_name, m.gym_id, m.end_date
                 FROM members m
                 LEFT JOIN pricing p ON m.pricing_id = p.id";
 
@@ -258,7 +259,11 @@ class MemberController extends Controller
 
                 $row['sn'] = $count;
                 
-                // Generate the shifts badge HTML
+                $dob = $row['dob'];
+                
+                $age = Carbon::parse($dob)->age;
+                $row['age'] = $age;
+
                 if ($member->shifts == "Morning") 
                 {
                     $shiftHtml = '<a id="shifts" class="badge p-2 rounded" style="background-color: #ceefd1;color:#53b15b">Morning</a>';
@@ -291,8 +296,11 @@ class MemberController extends Controller
                     <a href='#' class='delete-member-btn' data-id='$member->id' data-name='$member->name' title='Delete Member'>
                         <i class='fas fa-times-circle fa-lg' style='color: red;'></i>
                     </a>
+                    <a href='#' class='renew-member-btn' data-id='$member->id' data-name='$member->name' data-renew='$member->end_date' title='Renew Member'>
+                        <i class='fas fa-sync-alt fa-lg' style='color: green;'></i>
+                    </a>
                 ";
-
+                
                 $result[] = $row;
                 
                 $count++;
@@ -364,7 +372,11 @@ class MemberController extends Controller
             $member=Member::FindOrFail($id);
             $userName = $member->user->name;
             
-            $package_name = $member->pricing->name;
+            $package_name = "N/A";
+            if(!empty($member->pricing))
+            {
+                $package_name = $member->pricing->name;
+            }
             
             return response()->json(['success' => true, 'member' => $member, 'package_name' => $package_name, 'userName' => $userName], 200);      
         }
@@ -425,16 +437,79 @@ class MemberController extends Controller
     public function getPackageDuration(Request $request)
     {
         $packageId = $request->input('package_id');
-
         $package = Pricing::find($packageId);
-
+    
         if ($package) 
         {
-            return response()->json(['duration' => $package->duration], 200);
+            $startDate = Carbon::now();
+            $endDate = $startDate; 
+    
+            if ($package->costs_type === 'Days') 
+            {
+                $endDate = $startDate->copy()->addDays($package->duration);
+            } 
+            elseif ($package->costs_type === 'Month') 
+            {
+                $endDate = $startDate->copy()->addMonths($package->duration);
+            } 
+            elseif ($package->costs_type === 'Year') 
+            {
+                $endDate = $startDate->copy()->addYears($package->duration);
+            } else 
+            {
+                return response()->json(['error' => 'Invalid costs type'], 400);
+            }
+    
+            $totalDays = $startDate->diffInDays($endDate);
+            
+            return response()->json([
+                'duration' => $totalDays,
+            ], 200);
         } 
         else 
         {
             return response()->json(['error' => 'Package not found'], 404);
+        }
+    }
+
+    public function displayRenewModal()
+    {
+        $pricing = $this->pricingService->all();  
+
+        return view('admin.member.renew_member_modal', compact('pricing'));
+    }
+
+    public function renewMember(Request $request)
+    {
+        try
+        {   
+            $validator = Validator::make($request->all(), [
+                'pricing_renew' => 'required',
+                'shift' => 'required',
+                'member_id' => 'required',
+                'renew_start_date' => 'required|date',
+                'renew_end_date' => 'required|date',
+            ]);
+
+            if ($validator->fails()) 
+            {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+
+            $member = Member::findOrFail($request->member_id);
+
+            if ($member->renew($request->all())) 
+            {
+                return response()->json(['success' => 'Member renewed successfully.'], 200);
+            } 
+            else 
+            {
+                return response()->json(['error' => 'Failed to renew member.'], 500);
+            }
+        }
+        catch(Exception $e)
+        {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 }

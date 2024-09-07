@@ -41,9 +41,9 @@ public function add(Pricing $pricing,Request $request){
         $pricing->name=$request->name;
         $pricing->costs=$request->costs;
         $pricing->duration=$request->duration;
-        $pricing->costs_type=$request->costs_type;
-        $pricing->start_date=$request->start_date;
-        $pricing->end_date=$request->end_date;
+        $pricing->costs_type=$request->duration_type;
+        // $pricing->start_date=$request->start_date;
+        // $pricing->end_date=$request->end_date;
         $pricing->gym_id=$user->id;
 
         $pricing->save();

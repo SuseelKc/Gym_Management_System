@@ -74,7 +74,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="start_date">Start Date</label>
-                        <input type="date" class="form-control" id="start_date"  name="start_date" value="{{ date('Y-m-d') }}">
+                        <input type="date" class="form-control" id="start_date"  name="start_date" value="" disabled>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -127,6 +127,19 @@
 
         $('#pricing').on('change', function() 
         {
+            var today = new Date().toISOString().split('T')[0];
+            if (!$('#start_date').val()) 
+            {
+                $('#start_date').val(today);
+                $('#start_date').prop('disabled', false);
+            }
+
+            if (!$('#pricing').val()) 
+            {
+                $('#start_date').val("");
+                $('#start_date').prop('disabled', true);
+            }
+
             var packageId = $(this).val();
             var startDate = $('#start_date').val();
 
