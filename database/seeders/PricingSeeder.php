@@ -34,7 +34,7 @@ class PricingSeeder extends Seeder
     
             // Batch size for insertion
             $batchSize = 1000;  // Insert 1000 records at a time
-            $totalRecords = 5000;
+            $totalRecords = 20000;
     
             // Seed the pricing table
             for ($i = 0; $i < $totalRecords; $i += $batchSize) {

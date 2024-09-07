@@ -279,7 +279,7 @@
             {data: "contact_no"},
             {data: "shifts"},
             {data: "package_name"},
-            {data: "status"},
+            {data: "action"},
         ],
         // deferRender: true,
         // columnDefs: [{

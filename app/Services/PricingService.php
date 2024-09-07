@@ -85,7 +85,7 @@ public function update(Pricing $pricing,$id,Request $request){
     }
     catch(Exception $e){
         DB::rollBack();
-        dd("Here");
+        // dd("Here");
         // Log the error message
         \Log::info('Error during package update: ' . $e->getMessage());
         // Display a generic error message to the user

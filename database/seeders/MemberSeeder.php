@@ -16,31 +16,35 @@ class MemberSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        $members = [];
-        for ($i = 0; $i < 10000; $i++) {
-            $members[] = [
-                'name' => $faker->name,
-                'photo' => $faker->imageUrl(),
-                'user_id' => rand(1, 4), // Adjust according to the existing user ids
-                'serial_no' => Str::random(10),
-                'dob' => $faker->date(),
-                'address' => $faker->address,
-                'contact_no' => $faker->phoneNumber,
-                'email' => $faker->safeEmail,
-                'shifts' => rand(1, 3), // Adjust according to your Shifts enum values
-                'status' => $faker->randomElement(['active', 'inactive', 'deleted']),
-                'pricing_id' => rand(1, 3),
-                'pricing_type' => null,
-                'pricing_date' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
-        }
+        $batchSize = 1000; // Batch size for insertion
+        $totalRecords = 100000;
 
-        // Insert in chunks to handle large data insertion
-        $chunks = array_chunk($members, 1000);
-        foreach ($chunks as $chunk) {
-            DB::table('members')->insert($chunk);
+        // Generate and insert members in chunks
+        for ($i = 0; $i < $totalRecords; $i += $batchSize) {
+            $members = [];
+
+            for ($j = 0; $j < $batchSize; $j++) {
+                $members[] = [
+                    'name' => $faker->name,
+                    'photo' => $faker->imageUrl(),
+                    'gym_id' => rand(1, 4), // Adjust according to existing gym/user IDs
+                    'serial_no' => Str::random(10),
+                    'dob' => $faker->optional()->date(), // Adjusted for date type
+                    'address' => $faker->address,
+                    'contact_no' => $faker->phoneNumber,
+                    'email' => $faker->optional()->safeEmail,
+                    'shifts' => $faker->randomElement(['Morning', 'Day', 'Evening']),
+                    'pricing_id' => $faker->optional()->numberBetween(1, 3),
+                    'start_date' => $faker->optional()->date(),
+                    'end_date' => $faker->optional()->date(),
+                    'status' => $faker->randomElement(['active', 'inactive', 'deleted']),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+
+            // Insert members in batches
+            DB::table('members')->insert($members);
         }
     }
 }

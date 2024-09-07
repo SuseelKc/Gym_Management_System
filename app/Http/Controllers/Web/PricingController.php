@@ -7,7 +7,9 @@ use App\Models\User;
 use App\Models\Pricing;
 use Illuminate\Http\Request;
 use App\Services\PricingService;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Repositories\MemberRepository;
 use App\Repositories\PricingRepository;
 
@@ -22,7 +24,11 @@ class PricingController extends Controller
     public function index(){
         try{
 
-            $pricing=$this->pricingRepository->allWithCountMembers();        
+            $gym_id=Auth::id();
+            
+            $pricing=DB::select("Select * from pricing where gym_id= ? AND status = ?",[$gym_id, 'active']);
+
+            // $pricing=$this->pricingRepository->allWithCountMembers();        
             return view('admin.pricing.index',compact('pricing'));
         }
         catch(Exception $e){

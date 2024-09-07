@@ -193,20 +193,23 @@ class MemberController extends Controller
 
     public function listMember(Request $request)
     {
-        try
+        try 
         {
-            $length   = $request->input('length');
-            $start    = $request->input('start');
-            $columns  = $request->input('columns');
-            $order    = $request->input('order');
+            // dd($request);
+            $length   = $request->input('length');  //how many pages to be displayed in a page
+            $start    = $request->input('start');   //starting index of the records to be fetched
+            $columns  = $request->input('columns'); //contains information about each column in the DataTable
+            $order    = $request->input('order');   //provides information about the column(s) by which the data should be sorted
 
             $orderBySql = '';
-        
+            // dd($columns[$order[0]['column']]);
+            // dd($columns[$order[0]['column']]['data']);
             if (isset($order[0]) && isset($columns[$order[0]['column']]))
-            {
-                if ($columns[$order[0]['column']]['data'] != 'Action' && $columns[$order[0]['column']]['data'] != 'sn')
+            {   //isset($order[0]) checks array has at least one element in order 
+                //isset($columns[$order[0]['column']) 
+                if ($columns[$order[0]['column']]['data'] != 'Action' && $columns[$order[0]['column']]['data'] != 'sn')  // if the column data is not sn and action
                 {
-                    $orderBySql = "ORDER BY " . $columns[$order[0]['column']]['data'] . " " . $order[0]['dir'];
+                    $orderBySql = "ORDER BY " . $columns[$order[0]['column']]['data'] . " " . $order[0]['dir'];  //then that column which are selected is ordered by ascending order
                 }
             }
 
@@ -215,9 +218,9 @@ class MemberController extends Controller
 
             foreach ($columns as $key => $value)
             {
-                if (!empty($value['search']['value']))
+                if (!empty($value['search']['value']))  //if column has empty 
                 {
-                    if ($value['data'] == 'package_name') 
+                    if ($value['data'] == 'package_name')  //if the column has package_name in the array
                     {
                         $sqlString = " AND p.name LIKE '%" . $value['search']['value'] . "%' ";
                     } 
@@ -281,7 +284,7 @@ class MemberController extends Controller
            
                 $row['package_name'] = $member->package_name;
 
-                $row['status'] = "
+                $row['action'] = "
                     <a href='#' class='edit-member-btn' data-id='$member->id' title='Edit Member'>
                         <i class='fas fa-edit fa-lg'></i>
                     </a>
