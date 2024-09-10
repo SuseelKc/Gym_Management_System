@@ -2,7 +2,28 @@
 @section('title','Dashboard')
 @section('content')
 
+<link href="{{ asset('admin/Select2/select2.min.css') }}" rel="stylesheet">
+<script src="{{ asset('admin/Select2/select2.min.js') }}"></script>
 
+<style>
+    .select2-container--default .select2-selection--single {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    height: 38px;
+    line-height: 36px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        padding-left: 10px;
+        color: #495057;
+        font-size: 14px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 36px;
+        right: 10px;
+    }
+</style>
 
 <div class="container-fluid pt-2 pd-2">
         <!--  Row 1 -->
@@ -33,20 +54,16 @@
                     <div class="card w-100 shadow">
                         <div class="card-body p-2">
                             <div class="col mb-2">
-                                <h5 class="card-title mb-1 mr-3 fw-semibold">Member Details</h5>
+                                <h5 class="card-title mb-1 mr-3 fw-semibold">Member History</h5>
                                 <br>
-                                <div class="mb-2 mt-2" style="float: left;">
-                                    <div style="display: flex; align-items: center; width: 100%;">
-                                        <input list="membersList" id="membersInput" class="form-control" placeholder="Search or select a member..." style="width: calc(100% - 10px); max-width: 600px; margin-right: 10px;">
-                                        <a href="#" class="btn btn-primary" id="searchBtn">
+                                <div class="mb-2 mt-2">
+                                    <div class="form-group d-flex" >
+                                        <select name="members" id="members" class="form-control">
+                                        </select>
+                                        <a href="#" class="btn btn-primary ml-2" id="searchBtn">
                                             <i class='fas fa-search'></i>
                                         </a>
                                     </div>
-                                    <datalist id="membersList">
-                                        @foreach($members as $member)
-                                            <option data-id="{{ $member->id }}" value="{{ $member->name . ' - ' . $member->serial_no }}"></option>
-                                        @endforeach
-                                    </datalist>
                                 </div>   
                             </div>
                         </div>
@@ -165,7 +182,7 @@
 <!-- Modal -->
 
 <div class="modal fade" id="memberModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="memberModalLabel">Member Details</h5>
@@ -252,33 +269,59 @@
         }
     });
 
-        // pop up the modal
-        $(document).ready(function() {
-        $('#searchBtn').on('click', function() {
-            var input = $('#membersInput').val();
-            var selectedOption = $('#membersList option[value="' + input + '"]');
-            var memberId = selectedOption.data('id'); // Get the ID from the data-id attribute
-            
-            if (memberId) {
-                $.ajax({
-                    url: '/fetch/member-details',  // Change this to your actual route
-                    type: 'GET',
-                    data: { member_id: memberId }, // Send the member ID as the query parameter
-                    success: function(data) {
-                        // Populate the modal with member details
-                        $('#memberDetails').html(data);
+    $('#members').select2({
+        placeholder: "Select Member",
+        allowClear: true,
+        width: '100%',
+        ajax: {
+            url: '/get-members',
+            type: 'POST',
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    searchTerm: params.term, 
+                    _token: $('meta[name="csrf-token"]').attr('content') 
+                };
+            },
+            processResults: function(data) {
+                return {
+                    results: data.map(function(members) {
+                        return {
+                            id: members.id,
+                            text: `${members.name} [${members.serial_no}]`
+                        };
+                    })
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 1
+    });
 
-                        // Show the modal
-                        $('#memberModal').modal('show');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching member details:', error);
-                    }
-                });
-            } else {
-                console.error('No matching member found');
-            }
-        });
+    $('#searchBtn').on('click', function() {
+        var selectedMember = $('#members').val(); 
+
+        if (selectedMember) {
+            $.ajax({
+                url: '/fetch/member-details',  
+                type: 'GET',
+                data: { member_id: selectedMember }, 
+                success: function(data) 
+                {
+                    $('#memberDetails').html(data);
+
+                    $('#memberModal').modal('show');
+                },
+                error: function(xhr, status, error) 
+                {
+                    console.error('Error fetching member details:', error);
+                }
+            });
+        } else 
+        {
+            console.error('No member selected');
+        }
     });
 
 

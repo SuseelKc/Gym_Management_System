@@ -51,7 +51,8 @@
                                             <td>{{$pricing->duration}} {{$pricing->costs_type}}</td>
                                             <!-- <td>{{$pricing->start_date}}</td>
                                             <td>{{$pricing->end_date}}</td>    -->
-                                            <td>{{$pricing->members_count}} Members</td>                                  
+                                            <!-- <td>{{$pricing->members_count}} Members</td>                                   -->
+                                            <td>hello</td>
                                             <td>
                                                 <a href="{{route('pricing.edit', $pricing->id)}}" title="Edit Package">
                                                             <i class="fas fa-edit fa-lg"></i></a>
